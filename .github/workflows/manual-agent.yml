@@ -1,0 +1,38 @@
+name: Manual evidence extraction
+on:
+  workflow_dispatch:
+    inputs:
+      max_chunks_per_source:
+        description: Maximum keyword-matched chunks to send per PDF
+        required: true
+        default: "20"
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: gpt-4.1-mini
+      SEC_USER_AGENT: MA-Synergy-Analyzer research contact@users.noreply.github.com
+      AGENT_MAX_CHUNKS_PER_SOURCE: ${{ inputs.max_chunks_per_source }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python -m agent.run_agent
+      - run: python -m agent.evaluate_extraction
+      - name: Commit reproducible extraction results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for f in agent/output/page_chunks.csv agent/output/extracted_claims.jsonl agent/output/extraction_metrics.csv agent/output/retrieval_failures.csv README.md; do
+            if [ -f "$f" ]; then git add -f "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m "Add manually run evidence extraction results [skip ci]"
+            git push
+          fi

@@ -1,0 +1,9 @@
+{
+  "deals": [
+    {"deal_id": "HDFC", "name": "HDFC Ltd–HDFC Bank", "country": "India", "sector": "Financial services", "completion_date": "2023-07-01", "case_type": "estimated"},
+    {"deal_id": "AIR_INDIA", "name": "Air India–Vistara", "country": "India", "sector": "Airlines", "completion_date": "2024-11-12", "case_type": "qualitative"},
+    {"deal_id": "ZOMATO", "name": "Zomato–Blinkit", "country": "India", "sector": "Consumer internet / quick commerce", "completion_date": "2022-08", "case_type": "financial_diligence"},
+    {"deal_id": "MICROSOFT", "name": "Microsoft–LinkedIn", "country": "United States", "sector": "Technology", "completion_date": "2016-12-08", "case_type": "event_study"},
+    {"deal_id": "KRAFT_HEINZ", "name": "Kraft Foods–H.J. Heinz", "country": "United States", "sector": "Consumer packaged goods", "announcement_date": "2015-03-25", "completion_date": "2015-07", "case_type": "announced_target_backtest"}
+  ]
+}

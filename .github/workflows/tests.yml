@@ -1,0 +1,54 @@
+name: Project validation and artifact build
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: project-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SEC_USER_AGENT: MA-Synergy-Analyzer research contact@users.noreply.github.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python run.py
+      - name: Commit refreshed market cache and event-study results
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for f in data/market_prices.csv dashboard/event_study_results.csv README.md; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh cached market data and event study [skip ci]"
+            git push
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ma-synergy-analyzer-deliverables
+          path: |
+            output/MA_Synergy_Model.xlsx
+            output/MA_Executive_Deck.pptx
+            output/executive_deck/evidence_backtest_summary.md
+            dashboard/tableau_synergy_data.csv
+            dashboard/deal_evidence_backtest.csv
+            dashboard/financial_due_diligence.csv
+            dashboard/microsoft_sec_companyfacts.csv
+            dashboard/event_study_results.csv
+            data/market_prices.csv
+            agent/output/page_chunks.csv
+            agent/output/extracted_claims.jsonl
+            agent/output/extraction_metrics.csv
+          if-no-files-found: ignore

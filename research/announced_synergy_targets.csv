@@ -1,0 +1,2 @@
+deal_id,announcement_date,management_target,target_type,target_value,currency,target_timing,source_id,source_url,realised_update,realised_value,caveat
+KRAFT_HEINZ,2015-03-25,Annual cost savings run-rate by end-2017,annual_run_rate,1500,USD million,2017,KHC-01,https://www.sec.gov/Archives/edgar/data/1545158/000119312515104824/d898084d425.htm,Management reported cumulative savings above target by end-2017,1700,Reported cumulative savings >$1.7bn by end-2017 net of approx $200m business investments; cumulative savings are not directly comparable to annual run-rate target.

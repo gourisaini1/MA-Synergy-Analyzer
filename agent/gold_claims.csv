@@ -1,0 +1,47 @@
+gold_id,deal_id,source_id,claim_type,gold_claim,expected_page_or_section
+G-KHC-01,KRAFT_HEINZ,KHC-01,management_synergy_target,"Management announced USD 1.5bn annual cost savings run-rate by end-2017",Transaction FAQ
+G-KHC-02,KRAFT_HEINZ,KHC-02,financial_metric,"Cumulative pre-tax integration savings reached approximately USD 990m by 2 Oct 2016",Integration Program note
+G-HDFC-01,HDFC,HDFC-01,financial_metric,"FY25 cost-to-income ratio was 40.5%, versus 40.2% in FY24; NIM was 3.48%",Financial performance
+G-MS-01,MICROSOFT,MS-01,financial_metric,"LinkedIn contributed USD 2.268bn revenue and USD 948m operating loss in partial FY17 period",Segment results and Note 9
+HDFC-G01,HDFC,HDFC-05,financial_metric,"FY23 standalone total revenue was INR 60,223.65 crore",Standalone statement of profit and loss p.124
+HDFC-G02,HDFC,HDFC-05,financial_metric,"FY23 standalone finance cost was INR 35,994.74 crore",Standalone statement of profit and loss p.124
+HDFC-G03,HDFC,HDFC-05,financial_metric,"FY23 standalone employee benefit expense was INR 1,025.25 crore",Standalone statement of profit and loss p.124
+HDFC-G04,HDFC,HDFC-05,financial_metric,"FY23 standalone depreciation amortisation and impairment was INR 275.86 crore",Standalone statement of profit and loss p.124
+HDFC-G05,HDFC,HDFC-05,financial_metric,"FY23 standalone other expenses were INR 1,118.76 crore",Standalone statement of profit and loss p.124
+HDFC-G06,HDFC,HDFC-05,financial_metric,"FY23 standalone total expenses were INR 40,209.61 crore",Standalone statement of profit and loss p.124
+HDFC-G07,HDFC,HDFC-05,financial_metric,"FY23 standalone profit before tax was INR 20,014.04 crore",Standalone statement of profit and loss p.124
+HDFC-G08,HDFC,HDFC-05,financial_metric,"FY23 standalone profit after tax was INR 16,239.36 crore",Standalone statement of profit and loss p.124
+HDFC-G09,HDFC,HDFC-06,financial_metric,"FY23 cost-to-income ratio was 9.2 percent",Q4 FY23 earnings call transcript p.11
+HDFC-G10,HDFC,HDFC-06,financial_metric,"Market borrowings including NCDs and commercial paper were 45 percent of borrowings",Q4 FY23 earnings call transcript p.11
+HDFC-G11,HDFC,HDFC-06,financial_metric,"Deposits were INR 152,111 crore and 27 percent of borrowings",Q4 FY23 earnings call transcript p.11
+HDFC-G12,HDFC,HDFC-06,financial_metric,"Term loans including ECBs and NHB refinance accounted for 28 percent of borrowings",Q4 FY23 earnings call transcript p.11
+HDFC-G13,HDFC,HDFC-06,financial_metric,"Retail deposits represented 73 percent of deposits compared with 62 percent in March 2022",Q4 FY23 earnings call transcript p.11
+HDFC-G14,HDFC,HDFC-07,integration_milestone,"Bank CRR and SLR requirements were 4 percent and 18 percent respectively",Merger investor presentation p.21
+HDFC-G15,HDFC,HDFC-07,management_qualitative_claim,"HDFC said Day 0 CRR was organically met and SLR assets generated positive net returns",Merger investor presentation p.21
+HDFC-G16,HDFC,HDFC-07,management_qualitative_claim,"HDFC expected higher-cost HDFC Ltd borrowings to be replaced by lower-cost bank funds",Merger investor presentation p.21
+HDFC-G17,HDFC,HDFC-01,financial_metric,"FY25 HDFC Bank cost-to-income ratio was 40.5 percent compared with 40.2 percent in FY24",Financial performance p.40
+HDFC-G18,HDFC,HDFC-01,financial_metric,"FY25 HDFC Bank net interest margin was 3.48 percent",Financial performance p.40
+KHC-G01,KRAFT_HEINZ,KHC-01,management_synergy_target,"Management announced USD 1.5 billion annual cost savings run-rate by end 2017",Merger announcement
+KHC-G02,KRAFT_HEINZ,KHC-01,management_qualitative_claim,"The combination was expected to create a company with approximately USD 28 billion revenue",Merger announcement
+KHC-G03,KRAFT_HEINZ,KHC-01,management_qualitative_claim,"The combined company was described as the third largest food and beverage company in North America",Merger announcement
+KHC-G04,KRAFT_HEINZ,KHC-01,financial_metric,"Kraft shareholders were to own 49 percent of the combined company",Merger announcement
+KHC-G05,KRAFT_HEINZ,KHC-01,financial_metric,"Kraft shareholders were to receive a USD 16.50 per share special cash dividend",Merger announcement
+KHC-G06,KRAFT_HEINZ,KHC-01,financial_metric,"Berkshire Hathaway and 3G Capital committed USD 10 billion of equity funding",Merger announcement
+KHC-G07,KRAFT_HEINZ,KHC-02,financial_metric,"Cumulative pre-tax integration savings reached approximately USD 990 million by 2 October 2016",Integration Program note
+KHC-G08,KRAFT_HEINZ,KHC-03,financial_metric,"Management reported more than USD 1.7 billion cumulative savings by end 2017",Post-integration presentation slide 75
+KHC-G09,KRAFT_HEINZ,KHC-03,financial_metric,"Reported cumulative savings were net of approximately USD 200 million of business investments",Post-integration presentation slide 75
+KHC-G10,KRAFT_HEINZ,KHC-06,financial_metric,"FY18 goodwill impairment losses were USD 7.008 billion",FY2019 10-K consolidated statements
+KHC-G11,KRAFT_HEINZ,KHC-06,financial_metric,"FY18 intangible asset impairment losses were USD 8.928 billion",FY2019 10-K consolidated statements
+KHC-G12,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 goodwill impairment losses were USD 1.197 billion",FY2019 10-K consolidated statements
+KHC-G13,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 intangible asset impairment losses were USD 702 million",FY2019 10-K consolidated statements
+KHC-G14,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 net sales were USD 24.977 billion compared with USD 26.268 billion in FY18",FY2019 10-K consolidated statements
+KHC-G15,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 cost of products sold was USD 16.830 billion compared with USD 17.347 billion in FY18",FY2019 10-K consolidated statements
+KHC-G16,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 SG&A excluding impairment losses was USD 3.178 billion",FY2019 10-K consolidated statements
+KHC-G17,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 operating income was USD 3.070 billion compared with FY18 operating loss of USD 10.205 billion",FY2019 10-K consolidated statements
+KHC-G18,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 interest expense was USD 1.361 billion",FY2019 10-K consolidated statements
+KHC-G19,KRAFT_HEINZ,KHC-06,financial_metric,"FY18 goodwill and intangible impairment charges totalled USD 15.936 billion",FY2019 10-K consolidated statements
+KHC-G20,KRAFT_HEINZ,KHC-06,financial_metric,"FY19 goodwill and intangible impairment charges totalled USD 1.899 billion",FY2019 10-K consolidated statements
+HDFC-G21,HDFC,HDFC-09,financial_metric,"HDFC Bank rose 10.01 percent close-to-close on the 4 April 2022 merger announcement",SEBI adjudication order
+HDFC-G22,HDFC,HDFC-09,financial_metric,"HDFC Ltd rose 9.29 percent close-to-close on the 4 April 2022 merger announcement",SEBI adjudication order
+KHC-G21,KRAFT_HEINZ,KHC-07,financial_metric,"Kraft Foods Group closed at USD 61.33 on 24 March 2015 before the merger announcement",SEC S-4 Market Prices section
+KHC-G22,KRAFT_HEINZ,KHC-07,financial_metric,"Kraft Foods Group closed at USD 89.40 on 9 April 2015 after the merger announcement",SEC S-4 Market Prices section

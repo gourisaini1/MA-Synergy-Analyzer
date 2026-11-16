@@ -1,0 +1,13 @@
+deal_id,risk,likelihood,impact,leading_indicator,mitigation,owner_role,evidence_status
+HDFC,Legacy systems and process integration,Medium,High,Service incidents and unresolved migration backlog,Phased migration with parallel controls and customer-impact monitoring,Technology integration lead,Management risk disclosure
+HDFC,Regulatory and balance-sheet constraints,Medium,High,Capital/liquidity metrics and regulatory observations,ALM and regulatory capital oversight,Chief Risk Officer,Public regulatory filings
+HDFC,Customer/employee attrition,Medium,High,Attrition and complaints in migrated cohorts,Retention plans and service continuity,HR and customer operations,Management risk disclosure
+AIR_INDIA,Flight operations and safety continuity,Medium,Very High,Delays cancellations safety events and crew rostering issues,Operational readiness gates and regulator coordination,COO / Safety Officer,Merger completion release
+AIR_INDIA,IT cutover and reservation migration,Medium,High,Booking errors and service disruptions,"Reconciliation, rollback plans and customer communications",CIO / Operations,Integration milestone evidence
+AIR_INDIA,Labour and culture integration,Medium,High,Attrition grievances and training completion,Structured change management and harmonised procedures,CHRO,Integration milestone evidence
+ZOMATO,Customer cross-sell cannibalisation,Medium,Medium,Incremental order contribution by customer cohort,Holdout tests and contribution-margin guardrails,Growth lead,Analyst hypothesis
+ZOMATO,Dark-store and delivery unit economics,High,High,"Cost per order, inventory turns and store contribution",City-level cohort economics and store-level thresholds,COO / Finance,Analyst hypothesis
+MICROSOFT,Product integration and privacy/trust,Medium,High,Enterprise attach opt-outs and customer retention,Consent-based integration and product-level cohort tests,Product / Privacy leads,Analyst hypothesis
+MICROSOFT,Revenue attribution confounded by standalone growth,High,High,Attach-rate lift vs matched control cohorts,Counterfactual cohort design and transparent attribution,Corporate strategy / Finance,Analytical limitation
+KRAFT_HEINZ,Cost reduction damages brand investment or service levels,Medium,High,"Product availability, organic sales, customer service and marketing spend",Protect brand-building investment and test savings net of dis-synergies,Chief Transformation Officer,Analyst risk based on post-merger integration programme
+KRAFT_HEINZ,Cumulative savings are misreported as recurring run-rate,Medium,High,Run-rate bridge and audited baseline reconciliation,Reconcile cumulative savings to recurring ledger-level savings and one-off costs,Integration Finance Lead,SEC filings and management presentation

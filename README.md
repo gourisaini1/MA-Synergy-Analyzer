@@ -1,47 +1,98 @@
 # AI-Assisted M&A Synergy & Due Diligence Analyzer
 
-> Initial research and engineering foundation. Deal-specific synergy values remain blank until evidence and assumptions have been reviewed.
+**Conclusion:** HDFC's merger economics are funding-led: cheaper bank deposits can replace HDFC Ltd's market borrowings, offset by CRR/SLR reserve carry and PSL obligations. Kraft Heinz shows the other essential lesson: cost synergies were delivered, but major subsequent asset impairments meant synergy delivery did not guarantee value creation.
 
-## Deal universe
-1. HDFC Ltd–HDFC Bank (India; effective 1 July 2023)
-2. Air India–Vistara (India; completed 12 November 2024)
-3. Zomato–Blinkit (India; completed August 2022)
-4. Microsoft–LinkedIn (US; completed 8 December 2016)
+![Outside-in synergy scenarios](docs/synergy_estimate.svg)
 
-## Deliverables
-- Public-source register: annual reports, exchange filings, SEC EDGAR, investor presentations and earnings-call transcripts.
-- Python extraction, cleaning, standardisation and validation pipeline designed to mirror an Alteryx flow.
-- Transparent synergy model for SG&A, procurement, headcount, other cost levers and cross-sell revenue, with base/bull/bear cases.
-- Evidence-first AI research agent with page/section citations.
-- Tableau dashboard specification and five-slide consulting-style deck template.
-- Back-test separating independent estimates, management targets and reported outcomes.
-- Add-ons: outside-in commercial diligence for a D2C brand and a synthetic PMI cost tracker.
+## Headline cases
 
-## Methodology
-Keep three values distinct: management-announced synergy, independent estimate and subsequently reported realisation. Integration milestones are not proof of financial savings. Every quantitative claim needs a source or assumption ID; unknowns remain null, not zero. Do not mix run-rate, cumulative savings, one-off costs, pre-tax and post-tax figures. Financial institutions require sector-specific adjustments.
+| Deal | Independent scenario | Announced / reported evidence | Key conclusion |
+|---|---:|---|---|
+| **HDFC Ltd–HDFC Bank** | Funding benefit ₹27–411cr; reserve drag ₹22–134cr; small standalone cost overlap ₹4–25cr. Net steady-state scenario approx. **₹8–302cr**, base **₹86cr** before programme costs and unquantified PSL impact. | HDFC Ltd reported 45% of borrowings from market borrowings; deposits were ₹1,52,111cr or 27% of borrowings. | Funding substitution is the main upside. CRR/SLR and PSL are explicit offsets; PSL remains unquantified. |
+| **Kraft Heinz** | USD 0.71–2.04bn gross annual run-rate; base USD 1.40bn. Five-year NPV: USD 715m / 2,983m / 5,632m (low/base/high), after spreading programme costs over three years and discounting at 10%. | USD 1.5bn annual run-rate target; management reported >USD 1.7bn cumulative savings by end-2017. | Savings were delivered, but FY18 and FY19 impairment charges totalled USD 17.835bn. Value creation is not the same as cost synergy delivery. |
 
-The model captures baseline, overlap, addressability, achievability, ramp, gross run-rate, one-off integration costs and net first-year impact. The AI agent extracts claims; it does not invent or calculate synergies.
+**Important estimate caveat:** Kraft Heinz's 7%/9%/11% overlap range is an ex-post sensitivity chosen after the target and reported savings were public. It is not an externally benchmarked, blind estimate. HDFC's funding spreads and reserve opportunity-cost ranges are analyst sensitivities, not reported realised savings. All estimates are separate from management claims.
 
-## Setup
-```bash
-python -m venv .venv
-pip install -r requirements.txt
-python pipeline/build_source_register.py
-python pipeline/validate_inputs.py
-pytest -q
-```
+## Core conclusion
 
-## SEC EDGAR
-Microsoft submissions and XBRL facts are available without an API key. See https://www.sec.gov/search-filings/edgar-application-programming-interfaces. Use a descriptive User-Agent and follow SEC fair-access guidance.
+"Synergies were delivered, but value was destroyed anyway" is the key Kraft Heinz lesson. The company reported more than USD 1.7bn cumulative savings by end-2017, but recorded USD 15.936bn of goodwill and intangible impairment in FY18 and a further USD 1.899bn in FY19. These write-downs signal severe value erosion; they do not alone prove that the merger caused all of it.
 
-## Limitations
-Public disclosures rarely provide granular cost bases. Management targets may not be comparable. Operating milestones do not prove savings. Comparisons require accounting, fiscal-year, business-mix and currency adjustments. These are outside-in estimates, not investment advice or a fairness opinion.
+For HDFC, the model does not apply a generic cost-overlap percentage to the merged bank. It uses HDFC Ltd's standalone cost base only for a small operating-cost opportunity and models the larger funding substitution mechanism against CRR/SLR reserve carry. PSL compliance remains unquantified until the incremental shortfall and PSLC cost are known.
 
-## Status
-- [x] Four-deal universe and source register foundation
-- [x] Python pipeline scaffold
-- [x] Evidence extraction scaffold
-- [x] Tableau and add-on specifications
-- [ ] Downloaded source corpus and page-level evidence
-- [ ] Deal-level estimates and back-test
-- [ ] Published dashboard and final deck
+## Event-study sanity check
+
+The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of **+10.01% for HDFC Bank** and **+9.29% for HDFC Ltd**, according to SEBI's adjudication order. These are not abnormal returns: the Nifty 50 also rose approximately 2.17% that day, according to Reuters. The multi-deal event-study workflow estimates market-model CAR and t-statistics for the listed acquirer/target securities; Heinz and Blinkit were private at announcement and therefore have no target-share-price series. For each listed security, the market model uses the 120 to 20 trading-session pre-event estimation window and reports CAR over [-1,+1], [-2,+2] and [-5,+5]. Benchmarks are the S&P 500 for Kraft and Nifty 50 for Indian securities. HDFC Ltd's delisted daily series and KRFT's historical daily feed are not available in the current cache, so their sourced raw-price reactions are shown separately and never labelled CAR.
+
+<!-- EVENT_STUDY_TABLE_START -->
+| Deal | Security | [-1,+1] CAR (t) | [-2,+2] CAR (t) | [-5,+5] CAR (t) |
+|---|---|---:|---:|---:|
+| HDFC | HDFC Bank (acquirer) | +7.03% (t=+4.20) | +4.18% (t=+1.93) | +3.09% (t=+0.93) |
+| HDFC | HDFC Ltd (target) | n/a; SEBI reports +9.29% close-to-close on announcement day; raw return, not CAR. | n/a | n/a |
+| KRAFT_HEINZ | Kraft Foods Group (listed target) | n/a; SEC S-4 reports USD 61.33 on 24 Mar and USD 89.40 on 9 Apr (+45.8% cumulative); not event-window CAR. | n/a | n/a |
+| ZOMATO | Zomato (acquirer) | -14.90% (t=-2.23) | -16.78% (t=-1.92) | -18.99% (t=-1.43) |
+<!-- EVENT_STUDY_TABLE_END -->
+
+[SEBI adjudication order (HDFC announcement-day reaction)](https://www.sebi.gov.in/web/?file=https%3A%2F%2Fwww.sebi.gov.in%2Fsebi_data%2Fattachdocs%2Fjul-2025%2F1753789804303_1.pdf) · [Reuters market close report](https://www.marketscreener.com/quote/stock/HOUSING-AND-DEVELOPMENT-B-6498420/news/Indian-shares-surge-on-HDFC-twins-merger-plan-39956925/)
+
+## Evidence extraction evaluation
+
+The gold set contains 46 manually curated claims across HDFC and Kraft Heinz. The agent is manual-only, filters filing pages by keyword, uses structured JSON-schema outputs and checks every excerpt against the exact cited PDF page.
+
+| Metric | Result |
+|---|---|
+| Gold claims | 46 |
+| Model-extracted claims | Not run in this repository revision |
+| Precision | Not reported |
+| Recall | Not reported |
+
+Precision and recall remain undefined until the manual extraction workflow has run with the repository OPENAI_API_KEY secret. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return. The evaluator does not write 0.000/0.000 for an empty file.
+
+## Run the model and tests
+
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    python run.py
+
+The unified run validates sources and assumptions, builds the directional low/base/high model, downloads SEC Companyfacts, creates financial diligence tables, refreshes the event study when market data is available, generates the workbook and PowerPoint deck, and runs pytest. If the market-data provider is unavailable and no cache exists, the event study skips safely so pytest still runs.
+
+## Manual refresh workflows
+
+- **Manual evidence extraction:** add OPENAI_API_KEY in GitHub repository secrets, then run Actions → Manual evidence extraction. It commits page chunks, verified claims and precision/recall output.
+- **Refresh multi-deal event study:** run Actions → Refresh multi-deal event study. It downloads and commits data/market_prices.csv plus dashboard/event_study_results.csv. The workflow includes Kraft Foods Group/KRFT, HDFC Bank/HDFC Ltd and Zomato; Heinz and Blinkit are private targets.
+
+## Outputs
+
+- output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence.
+- output/MA_Executive_Deck.pptx: answer-led deck with native PowerPoint scenario, Blinkit EBITDA and HDFC cost-to-income charts, plus Air India/Microsoft appendix slides.
+- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.
+- dashboard/financial_due_diligence.csv: financial metrics, before/after changes and caveats.
+- dashboard/event_study_results.csv: event-window CAR and t-statistics after manual market-data refresh.
+- agent/output/: committed only after the manual extraction workflow has produced real output.
+
+## Tableau and Alteryx
+
+The repository contains Tableau-ready data sources and a dashboard specification in dashboard/tableau_spec.md. A Tableau Public workbook has **not** been published from this environment; publishing requires an authenticated Tableau Public session. The Alteryx source-cleaning workflow is in alteryx/source_register_cleaning.yxmd; it has not been executed or screenshot-verified in Alteryx Designer.
+
+## Secondary deal cases
+
+Air India–Vistara remains a qualitative PMI appendix because public data does not support a harmonised financial synergy back-test. Microsoft–LinkedIn remains a financial trajectory appendix; LinkedIn growth is not proof of cross-sell attribution. Zomato–Blinkit provides Blinkit's standalone financial trajectory and the acquisition event-study acquirer series; Blinkit itself was privately held.
+
+## Evidence and caveats
+
+- data/source_register.csv: source-of-truth register.
+- research/evidence_ledger.csv: hand-built evidence claims and attribution caveats.
+- agent/gold_claims.csv: 42-claim evaluation set.
+- research/financial_due_diligence.csv: HDFC funding mix, standalone cost base, regulatory requirements, Kraft Heinz impairments and segment financial metrics.
+- research/integration_risk_register.csv: integration risks and mitigations.
+- model/assumptions_register.csv and model/synergy_inputs.csv: analyst assumptions separated from management disclosures.
+
+## Project structure
+
+- agent/: structured extraction, keyword filtering, exact-page quote checks and gold-set evaluation.
+- pipeline/: source validation, financial analysis, SEC XBRL, event study, synergy model and artifact generation.
+- research/: deal briefs, evidence ledger, financial diligence, announced targets and risk register.
+- model/: directional low/base/high inputs and five-year NPV assumptions.
+- dashboard/: Tableau-ready outputs and specifications.
+- alteryx/: source-register cleaning workflow.
+- tests/: model, agent and event-study tests.

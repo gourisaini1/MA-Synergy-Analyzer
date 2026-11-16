@@ -1,0 +1,29 @@
+name: Refresh multi-deal event study
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  event-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      REFRESH_MARKET_DATA: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python -m pipeline.event_study
+      - name: Require market data and event-study output
+        run: |
+          test -s data/market_prices.csv
+          test -s dashboard/event_study_results.csv
+      - name: Commit market cache and event-study tables
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market_prices.csv dashboard/event_study_results.csv README.md
+          git commit -m "Add cached prices and multi-deal event study [skip ci]"
+          git push
