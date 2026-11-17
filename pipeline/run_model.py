@@ -137,7 +137,7 @@ def main():
             })
         rows.extend(build_stress_rows(record))
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(rows).to_csv(OUT, index=False)
+    pd.DataFrame(rows).round(6).to_csv(OUT, index=False)
     estimated = sum(row["evidence_status"] == "estimated" for row in rows)
     print(f"Wrote {len(rows)} scenarios: {estimated} estimated, {len(rows) - estimated} unverified.")
 
