@@ -37,7 +37,7 @@ For HDFC, the model does not apply a generic cost-overlap percentage to the merg
 
 ## Event-study sanity check
 
-The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of **+10.01% for HDFC Bank** and **+9.29% for HDFC Ltd**, according to SEBI's adjudication order. These are not abnormal returns: the Nifty 50 also rose approximately 2.17% that day, according to Reuters. The multi-deal event-study workflow estimates market-model CAR and t-statistics for the listed acquirer/target securities; Heinz and Blinkit were private at announcement and therefore have no target-share-price series. For each listed security, the market model uses the 120 to 20 trading-session pre-event estimation window and reports CAR over [-1,+1], [-2,+2] and [-5,+5]. Benchmarks are the S&P 500 for Kraft and Nifty 50 for Indian securities. HDFC Ltd's delisted daily series and KRFT's historical daily feed are not available in the current cache, so their sourced raw-price reactions are shown separately and never labelled CAR.
+The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of **+10.01% for HDFC Bank** and **+9.29% for HDFC Ltd**, according to SEBI's adjudication order. These are not abnormal returns: the Nifty 50 also rose approximately 2.17% that day, according to Reuters. The event-study workflow estimates market-model CAR and t-statistics for the two headline deals where a listed security and usable price history are available; Heinz was private at announcement and therefore has no target-share-price series. For each listed security, the market model uses the 120 to 20 trading-session pre-event estimation window and reports CAR over [-1,+1], [-2,+2] and [-5,+5]. Benchmarks are the S&P 500 for Kraft and Nifty 50 for Indian securities. HDFC Ltd's delisted daily series and KRFT's historical daily feed are not available in the current cache, so their sourced raw-price reactions are shown separately and never labelled CAR.
 
 <!-- EVENT_STUDY_TABLE_START -->
 | Deal | Security | [-1,+1] CAR (t) | [-2,+2] CAR (t) | [-5,+5] CAR (t) |
@@ -45,7 +45,6 @@ The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of
 | HDFC | HDFC Bank (acquirer) | +7.03% (t=+4.20) | +4.18% (t=+1.93) | +3.09% (t=+0.93) |
 | HDFC | HDFC Ltd (target) | n/a; SEBI reports +9.29% close-to-close on announcement day; raw return, not CAR. | n/a | n/a |
 | KRAFT_HEINZ | Kraft Foods Group (listed target) | n/a; SEC S-4 reports USD 61.33 on 24 Mar and USD 89.40 on 9 Apr (+45.8% cumulative); not event-window CAR. | n/a | n/a |
-| ZOMATO | Zomato (acquirer) | -14.90% (t=-2.23) | -16.78% (t=-1.92) | -18.99% (t=-1.43) |
 <!-- EVENT_STUDY_TABLE_END -->
 
 [SEBI adjudication order (HDFC announcement-day reaction)](https://www.sebi.gov.in/web/?file=https%3A%2F%2Fwww.sebi.gov.in%2Fsebi_data%2Fattachdocs%2Fjul-2025%2F1753789804303_1.pdf) · [Reuters market close report](https://www.marketscreener.com/quote/stock/HOUSING-AND-DEVELOPMENT-B-6498420/news/Indian-shares-surge-on-HDFC-twins-merger-plan-39956925/)
@@ -65,6 +64,8 @@ The gold set contains 46 manually curated claims across HDFC and Kraft Heinz. Th
 Manual extraction workflow run #2 completed, but the OpenAI API returned HTTP 429 because the account had no remaining credits. No claims were extracted, so precision and recall are undefined. Add API credits and rerun before treating the agent as operational. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return.
 
 ## Run the model and tests
+
+Dependencies are pinned to the direct-package versions installed by the successful Python 3.11 CI run (17 November 2026); transitive packages remain resolver-managed.
 
     python -m venv .venv
     source .venv/bin/activate
@@ -91,9 +92,13 @@ The unified run validates sources and assumptions, builds the directional low/ba
 
 The repository contains Tableau-ready data sources and a dashboard specification in dashboard/tableau_spec.md. A Tableau Public workbook has **not** been published from this environment; publishing requires an authenticated Tableau Public session. The Alteryx source-cleaning workflow is in alteryx/source_register_cleaning.yxmd; it has not been executed or screenshot-verified in Alteryx Designer.
 
-## Secondary deal cases
+## Appendix: qualitative cases
 
-Air India–Vistara remains a qualitative PMI appendix because public data does not support a harmonised financial synergy back-test. Microsoft–LinkedIn remains a financial trajectory appendix; LinkedIn growth is not proof of cross-sell attribution. Zomato–Blinkit provides Blinkit's standalone financial trajectory and the acquisition event-study acquirer series; Blinkit itself was privately held.
+These cases are retained as supporting research, not headline synergy valuations. They are excluded from the headline conclusions because public data does not support comparable, attributable financial synergy estimates.
+
+- **Air India–Vistara:** a qualitative post-merger integration case. Public milestones include vendor-contract consolidation, IT-system alignment and migration activity, but these are integration outputs rather than verified procurement savings or revenue uplift. See `research/deal_briefs/AIR_INDIA_VISTARA.md`.
+- **Zomato–Blinkit:** Blinkit's standalone financial trajectory is useful context, while the Zomato acquirer event-study series is a separate market-reaction check. Blinkit was privately held at announcement; neither operating improvement nor the acquirer share-price reaction establishes attributable acquisition synergies.
+- **Microsoft–LinkedIn:** a financial trajectory case. LinkedIn's revenue growth is not proof of Microsoft cross-sell attribution. See the deal brief and source material retained in `research/`.
 
 ## Evidence and caveats
 
@@ -107,7 +112,7 @@ Air India–Vistara remains a qualitative PMI appendix because public data does 
 ## Limitations & next steps
 
 - HDFC post-merger actuals are observational. Balance-sheet mix, deposit pricing, interest-rate cycles, growth calibration and the merger all changed; the available disclosures do not isolate a causal synergy effect.
-- The HDFC PSL shortfall and PSLC purchase cost remain unquantified.
+- The HDFC PSL shortfall and PSLC purchase cost remain an analyst sensitivity until the phased regulatory shortfall and certificate purchase mix are supported by source data.
 - The HDFC funding and CRR/SLR calculations use simplified migration and spread sensitivities; a liability-level NDTL, reserve and maturity schedule is required for a bank-grade estimate.
 - Kraft Heinz's overlap range is ex-post calibrated. A blind estimate requires pre-2015 comparable food/consumer merger benchmarks and pre-close category cost bases.
 - Event-study CARs are single-event market-model estimates, not causal proof; data-provider adjustment conventions are selected consistently within each ticker.
