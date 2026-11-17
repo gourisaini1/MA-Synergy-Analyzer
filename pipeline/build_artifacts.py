@@ -394,11 +394,11 @@ def build_deck():
 
     add_slide(
         prs,
-        "Kraft Heinz reported >$1.7bn cumulative savings against a $1.5bn annual run-rate target",
+        "Kraft Heinz reported >$1.7bn cumulative savings; its $1.5bn target was 6.52% of the cost-pool proxy",
         "The deal provides a real announced-versus-estimated-versus-reported back-test",
         [
             "Management target: $1.5bn annual cost savings run-rate by end-2017.",
-            "Independent base case: $0.21bn gross annual run-rate; low/high range $0.04bn–$0.91bn using pre-2015 benchmark ratios.",
+            "Benchmark-equivalent run-rate: $0.31bn base; low/high $0.09bn–$1.13bn using pre-2015 announced-target ratios directly.",
             "Reported delivery: >$1.7bn cumulative savings by end-2017, net of approx. $200m business investments.",
             "Important: cumulative realised savings and annual run-rate are different measurement bases.",
         ],
@@ -408,12 +408,12 @@ def build_deck():
     add_slide(
         prs,
         "HDFC's value case is funding substitution, with regulatory drag explicitly netted",
-        "Base-case five-year NPV after the new PSL/PSLC lever: approximately –₹261cr",
+        "Base-case five-year NPV after blended-price PSL/PSLC lever: approximately –₹348cr",
         [
             "HDFC Ltd's FY23 funding mix: market borrowings 45%; deposits ₹1,52,111cr or 27% of borrowings. Implied market-borrowing pool ~₹2.54 lakh crore.",
             "Funding benefit uses 25/50/75 bps spread sensitivities and 10%/20%/30% substitution; all are analyst assumptions, not realised savings.",
             "CRR 4% and SLR 18% are modelled as a reserve opportunity-cost sensitivity; HDFC's merger deck said Day-0 CRR was organically met and SLR assets earned positive returns.",
-            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. Phased PSL/PSLC base sensitivity contributes ~–₹382cr five-year NPV; this is not a disclosed shortfall.",
+            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. Blended-price PSL/PSLC base sensitivity contributes ~–₹469cr five-year NPV; this is not a disclosed shortfall.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger investor deck. Low-confidence sensitivities.",
     )
@@ -422,10 +422,10 @@ def build_deck():
         "HDFC: matched migration stress turns five-year NPV negative",
         "Five-year NPV by lever (₹ crore); programme costs are included in the operating-cost lever",
         [
-            "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; phased PSL/PSLC cost –₹382cr; combined ~–₹261cr.",
-            "Matched stress before PSL remains –₹352cr (30% / 80%) and –₹278cr (20% / 65%). Including high PSL/PSLC downside, totals become ~–₹2,680cr and ~–₹2,606cr respectively.",
+            "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; blended-price PSL/PSLC cost –₹469cr; combined ~–₹348cr.",
+            "Matched stress before PSL remains –₹352cr (30% / 80%) and –₹278cr (20% / 65%). Including blended-price PSL/PSLC downside, totals become ~–₹1,055cr and ~–₹981cr respectively.",
             "The operating-cost lever is negative in low/base/high because the three-year programme cost exceeds the discounted savings.",
-            "These are analyst sensitivities, not realised merger savings. PSL assumes the high PSLC-SMF premium and 75% of the non-individual loan-book proxy is not met organically.",
+            "These are analyst sensitivities, not realised merger savings. PSL uses a 0.589% blended certificate premium and assumes 75% of the residual proxy shortfall is bought through certificates.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger deck and post-merger results. Model outputs from scenario inputs.",
     )
@@ -447,8 +447,8 @@ def build_deck():
         "HDFC: funding-led net synergy sensitivity | Kraft Heinz: announced target versus reported delivery",
         [
             "HDFC: funding substitution is offset by CRR/SLR reserve carry and a quantified-but-low-confidence PSL/PSLC downside sensitivity.",
-            "Kraft Heinz: USD 1.5bn annual run-rate target; >USD 1.7bn cumulative reported savings by end-2017. The target exceeds the pre-2015 benchmark overlap range.",
-            "Kraft Heinz overlap range uses three pre-March-2015 deals (0.38% / 1.36% / 4.91%); the $1.5bn target equals 6.52% of the $23bn cost-pool proxy and exceeds the benchmark high.",
+            "Kraft Heinz: USD 1.5bn annual run-rate target; >USD 1.7bn cumulative reported savings by end-2017. The announced target exceeds every pre-2015 announced-synergy precedent.",
+            "Kraft Heinz's $1.5bn target equals 6.52% of the $23bn cost-pool proxy, above every precedent including 4.91% for AB InBev–Anheuser-Busch. Apply benchmark ratios directly; no second addressability or achievability haircut.",
             "Air India–Vistara and Microsoft–LinkedIn are moved to the appendix; Blinkit is retained only as a financial trend chart.",
         ],
         "Four-way status remains: announced, estimated, realised and unverified. See source register and evidence ledger.",
