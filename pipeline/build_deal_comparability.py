@@ -63,10 +63,10 @@ def main():
             realisation_basis = "No quantified attributable synergy realisation identified"
         else:
             target = target_rows.iloc[0]
-            announced_target = f"{target.currency} {target.target_value:g} {target.currency.split()[0] if ' ' in target.currency else ''}".strip()
+            announced_target = f"{target.currency} {target.target_value:g}"
             target_basis = f"{target.target_type}; {target.target_timing}; management target"
             reported_realisation = (
-                f"{target.currency} {target.realised_value:g}"
+                f"{target.currency} {target.realised_value:g} cumulative"
                 if pd.notna(target.realised_value) else None
             )
             realisation_basis = str(target.caveat)
