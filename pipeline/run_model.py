@@ -61,8 +61,8 @@ def calculate(row, scenario, overrides=None):
         # the PSL denominator over three years: one-third, two-thirds, then full.
         for year, phase_share in enumerate((1 / 3, 2 / 3, 1, 1, 1), start=1):
             cash_flow = (
-                values["baseline"] * values["overlap"] * phase_share
-                * values["achievable"] * values["margin"] * direction
+                values["baseline"] * values["overlap"] * values["achievable"]
+                * values["margin"] * direction
             )
             npv_5yr += cash_flow / ((1 + discount_rate) ** year)
     else:
