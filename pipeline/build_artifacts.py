@@ -12,6 +12,8 @@ from pptx.enum.chart import XL_CHART_TYPE
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
 
+from .run_model import HDFC_STRESS_INPUTS
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output"
 MODEL = ROOT / "model"
@@ -55,22 +57,38 @@ def build_workbook():
     calc = workbook.create_sheet("Scenario Calculations")
     calc.append([
         "Deal", "Lever", "Scenario", "Currency", "Gross run-rate",
-        "Net first-year", "Five-year NPV", "Classification", "Confidence", "Assumption IDs",
+        "Net first-year", "Five-year NPV after costs", "Classification", "Confidence", "Assumption IDs",
     ])
     columns = {name: get_column_letter(index + 1) for index, name in enumerate(inputs.columns)}
     for index, row in enumerate(inputs.itertuples(index=False), start=2):
-        for scenario in ("low", "base", "high"):
+        scenario_specs = [(name, None) for name in ("low", "base", "high")]
+        if row.deal_id == "HDFC":
+            for stress_name, lever_inputs in HDFC_STRESS_INPUTS.items():
+                if row.lever in lever_inputs:
+                    scenario_specs.append((stress_name, lever_inputs[row.lever]))
+        for scenario, stress_values in scenario_specs:
             target_row = calc.max_row + 1
-            fields = [
-                f"'Scenario Inputs'!{columns[name]}{index}"
-                for name in (
-                    "baseline_amount", f"overlap_{scenario}",
-                    f"addressable_{scenario}", f"achievable_{scenario}",
-                    f"ramp_{scenario}", f"one_off_cost_{scenario}",
-                    f"contribution_margin_{scenario}", "direction",
-                    "integration_program_years", "discount_rate",
-                )
-            ]
+            if stress_values:
+                fields = [
+                    f"'Scenario Inputs'!{columns['baseline_amount']}{index}",
+                    str(stress_values["overlap"]), str(stress_values["addressable"]),
+                    str(stress_values["achievable"]), str(stress_values["ramp"]),
+                    str(stress_values["one_off"]), str(stress_values["margin"]),
+                    f"'Scenario Inputs'!{columns['direction']}{index}",
+                    f"'Scenario Inputs'!{columns['integration_program_years']}{index}",
+                    f"'Scenario Inputs'!{columns['discount_rate']}{index}",
+                ]
+            else:
+                fields = [
+                    f"'Scenario Inputs'!{columns[name]}{index}"
+                    for name in (
+                        "baseline_amount", f"overlap_{scenario}",
+                        f"addressable_{scenario}", f"achievable_{scenario}",
+                        f"ramp_{scenario}", f"one_off_cost_{scenario}",
+                        f"contribution_margin_{scenario}", "direction",
+                        "integration_program_years", "discount_rate",
+                    )
+                ]
             gross = (
                 "*".join((fields[0], fields[1], fields[2], fields[3], fields[6]))
                 + f'*IF({fields[7]}="negative",-1,1)'
@@ -400,6 +418,18 @@ def build_deck():
             "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. PSL downside remains unquantified.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger investor deck. Low-confidence sensitivities.",
+    )
+    add_slide(
+        prs,
+        "HDFC: matched migration stress turns five-year NPV negative",
+        "Five-year NPV by lever (₹ crore); programme costs are included in the operating-cost lever",
+        [
+            "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; combined ~+₹121cr.",
+            "Matched stress: with the same 30% migration and 80% ramp, low funding spread/execution gives +₹288cr, high reserve drag –₹483cr and high programme cost –₹157cr; combined ~–₹352cr. A 20% / 65% matched case is ~–₹278cr.",
+            "The operating-cost lever is negative in low/base/high because the three-year programme cost exceeds the discounted savings.",
+            "These are analyst sensitivities, not realised merger savings. PSL downside remains unquantified and excluded.",
+        ],
+        "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger deck and post-merger results. Model outputs from scenario inputs.",
     )
     add_slide(
         prs,

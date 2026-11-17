@@ -8,8 +8,43 @@ INPUT = ROOT / "model" / "synergy_inputs.csv"
 OUT = ROOT / "dashboard" / "tableau_synergy_data.csv"
 SCENARIOS = ("low", "base", "high")
 
+# Matched migration assumptions: funding benefit and reserve drag use the
+# identical share moved and ramp. Funding uses the low spread/execution case;
+# reserve drag uses the high opportunity-cost spread; operating cost uses the
+# high programme-cost case. These are analyst stress sensitivities.
+HDFC_STRESS_INPUTS = {
+    "stress_30_80": {
+        "Market borrowing to bank deposit funding substitution": {
+            "overlap": 0.30, "addressable": 0.70, "achievable": 0.60,
+            "ramp": 0.80, "one_off": 0.0, "margin": 0.0025,
+        },
+        "CRR-SLR reserve opportunity-cost drag": {
+            "overlap": 0.30, "addressable": 0.22, "achievable": 1.0,
+            "ramp": 0.80, "one_off": 0.0, "margin": 0.008,
+        },
+        "Legacy standalone operating cost overlap": {
+            "overlap": 0.03, "addressable": 0.70, "achievable": 0.50,
+            "ramp": 0.80, "one_off": 300.0, "margin": 1.0,
+        },
+    },
+    "stress_20_65": {
+        "Market borrowing to bank deposit funding substitution": {
+            "overlap": 0.20, "addressable": 0.70, "achievable": 0.60,
+            "ramp": 0.65, "one_off": 0.0, "margin": 0.0025,
+        },
+        "CRR-SLR reserve opportunity-cost drag": {
+            "overlap": 0.20, "addressable": 0.22, "achievable": 1.0,
+            "ramp": 0.65, "one_off": 0.0, "margin": 0.008,
+        },
+        "Legacy standalone operating cost overlap": {
+            "overlap": 0.03, "addressable": 0.70, "achievable": 0.50,
+            "ramp": 0.80, "one_off": 300.0, "margin": 1.0,
+        },
+    },
+}
 
-def calculate(row, scenario):
+
+def calculate(row, scenario, overrides=None):
     names = {
         "baseline": "baseline_amount",
         "overlap": f"overlap_{scenario}",
@@ -23,6 +58,8 @@ def calculate(row, scenario):
         key: pd.to_numeric(pd.Series([row.get(column)]), errors="coerce").iloc[0]
         for key, column in names.items()
     }
+    if overrides:
+        values.update(overrides)
     if any(pd.isna(value) for value in values.values()):
         return None, None, None, "unverified"
     if values["baseline"] < 0 or values["one_off"] < 0:
@@ -52,6 +89,31 @@ def calculate(row, scenario):
     return gross, first_year_net, npv_5yr, "estimated"
 
 
+def build_stress_rows(record):
+    """Build matched-share/ramp HDFC stress rows for each lever and case."""
+    rows = []
+    for scenario, lever_inputs in HDFC_STRESS_INPUTS.items():
+        for lever, overrides in lever_inputs.items():
+            if record["deal_id"] != "HDFC" or record["lever"] != lever:
+                continue
+            gross, net, npv, status = calculate(record, "high", overrides)
+            rows.append({
+                "deal_id": record["deal_id"], "lever": lever,
+                "synergy_type": record["synergy_type"], "scenario": scenario,
+                "currency": record["currency"], "gross_run_rate": gross,
+                "net_first_year": net, "npv_5yr": npv,
+                "direction": record.get("direction", "positive"),
+                "source_or_assumption_id": record["source_or_assumption_id"],
+                "assumption_ids": record.get("assumption_ids", ""),
+                "classification": record.get("assumption_type", "analyst_assumption"),
+                "confidence": record.get("confidence", "low"),
+                "management_target": record.get("management_target", None),
+                "benchmark_status": "analyst_stress_case",
+                "evidence_status": status,
+            })
+    return rows
+
+
 def main():
     frame = pd.read_csv(INPUT)
     rows = []
@@ -60,14 +122,10 @@ def main():
         for scenario in SCENARIOS:
             gross, net, npv, status = calculate(record, scenario)
             rows.append({
-                "deal_id": row.deal_id,
-                "lever": row.lever,
-                "synergy_type": row.synergy_type,
-                "scenario": scenario,
-                "currency": row.currency,
-                "gross_run_rate": gross,
-                "net_first_year": net,
-                "npv_5yr": npv,
+                "deal_id": row.deal_id, "lever": row.lever,
+                "synergy_type": row.synergy_type, "scenario": scenario,
+                "currency": row.currency, "gross_run_rate": gross,
+                "net_first_year": net, "npv_5yr": npv,
                 "direction": getattr(row, "direction", "positive"),
                 "source_or_assumption_id": row.source_or_assumption_id,
                 "assumption_ids": getattr(row, "assumption_ids", ""),
@@ -77,8 +135,9 @@ def main():
                 "benchmark_status": getattr(row, "benchmark_status", "not_benchmarked"),
                 "evidence_status": status,
             })
+        rows.extend(build_stress_rows(record))
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(rows).to_csv(OUT, index=False)
+    pd.DataFrame(rows).round(6).to_csv(OUT, index=False)
     estimated = sum(row["evidence_status"] == "estimated" for row in rows)
     print(f"Wrote {len(rows)} scenarios: {estimated} estimated, {len(rows) - estimated} unverified.")
 

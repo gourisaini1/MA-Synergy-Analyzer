@@ -139,6 +139,31 @@ def _fetch_nse_day(day):
     return []
 
 
+def _price_panel(cached):
+    """Build a single-provider price panel for each ticker."""
+    cached = cached.copy()
+    cached["date"] = pd.to_datetime(cached["date"])
+    if "price_source" not in cached.columns:
+        cached["price_source"] = "Legacy cached price; provider not tagged"
+    source_priority = {
+        "Yahoo Finance auto-adjusted close": 0,
+        "NSE official bhavcopy close (unadjusted)": 1,
+        "Legacy cached price; provider not tagged": 2,
+    }
+    selected_sources = {}
+    for ticker, group in cached.groupby("ticker"):
+        sources = group["price_source"].dropna().astype(str).unique().tolist()
+        selected_sources[ticker] = min(
+            sources, key=lambda source: source_priority.get(source, 99)
+        )
+    cached = cached[
+        cached["price_source"].eq(cached["ticker"].map(selected_sources))
+    ].copy()
+    prices = cached.pivot(index="date", columns="ticker", values="price").sort_index()
+    prices.attrs["price_sources"] = selected_sources
+    return prices
+
+
 def load_prices():
     if CACHE.exists() and os.getenv("REFRESH_MARKET_DATA") != "1":
         cached = pd.read_csv(CACHE, parse_dates=["date"])
@@ -147,7 +172,7 @@ def load_prices():
         required = {"date", "ticker", "price"}
         if not required.issubset(cached.columns):
             raise ValueError(f"Market price cache must contain {sorted(required)}")
-        return cached.pivot(index="date", columns="ticker", values="price").sort_index()
+        return _price_panel(cached)
 
     tickers = sorted({
         ticker
@@ -234,7 +259,7 @@ def load_prices():
     required = {"date", "ticker", "price"}
     if not required.issubset(cached.columns):
         raise ValueError(f"Market price cache must contain {sorted(required)}")
-    return cached.pivot(index="date", columns="ticker", values="price").sort_index()
+    return _price_panel(cached)
 
 
 def event_rows(prices):
@@ -259,6 +284,7 @@ def event_rows(prices):
                     "security": security_label,
                     "ticker": ticker,
                     "status": "daily price series unavailable from current feed",
+                    "price_source": prices.attrs.get("price_sources", {}).get(ticker, "unavailable"),
                     "reference_reaction": reference,
                     "target_status": event["target_status"],
                 })
@@ -275,6 +301,7 @@ def event_rows(prices):
                     "security": security_label,
                     "ticker": ticker,
                     "status": "event date outside cached price range",
+                    "price_source": prices.attrs.get("price_sources", {}).get(ticker, "unavailable"),
                     "target_status": event["target_status"],
                 })
                 continue
@@ -287,6 +314,7 @@ def event_rows(prices):
                     "security": security_label,
                     "ticker": ticker,
                     "status": "insufficient estimation-window observations",
+                    "price_source": prices.attrs.get("price_sources", {}).get(ticker, "unavailable"),
                     "target_status": event["target_status"],
                 })
                 continue
@@ -335,6 +363,7 @@ def event_rows(prices):
                     "estimation_observations": len(estimation),
                     "residual_sigma_daily_pct": sigma2 ** 0.5 * 100,
                     "status": "calculated",
+                    "price_source": prices.attrs.get("price_sources", {}).get(ticker, "unavailable"),
                     "target_status": event["target_status"],
                     "caveat": "Single-event market-model estimate; not causal proof; concurrent news and leakage may affect returns.",
                 })
@@ -390,7 +419,7 @@ def main():
         return
     results = event_rows(prices)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(results).to_csv(OUT, index=False)
+    pd.DataFrame(results).round(6).to_csv(OUT, index=False)
     update_readme_event_table(results)
     print(f"Wrote {len(results)} event-study rows to {OUT}")
 

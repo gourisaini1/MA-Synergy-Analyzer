@@ -93,3 +93,24 @@ def test_kraft_year_one_deducts_only_one_third_of_programme_cost():
     assert abs(first_year - 200) < 1e-9
     assert npv > first_year
     assert status == "estimated"
+
+
+def test_hdfc_stress_cases_match_migration_share_and_ramp():
+    from pipeline.run_model import HDFC_STRESS_INPUTS, build_stress_rows
+
+    inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
+    hdfc = inputs[inputs.deal_id.eq("HDFC")]
+    results = {}
+    for case, lever_inputs in HDFC_STRESS_INPUTS.items():
+        funding = lever_inputs["Market borrowing to bank deposit funding substitution"]
+        reserve = lever_inputs["CRR-SLR reserve opportunity-cost drag"]
+        assert funding["overlap"] == reserve["overlap"]
+        assert funding["ramp"] == reserve["ramp"]
+        total = 0.0
+        for row in hdfc.itertuples(index=False):
+            record = row._asdict()
+            rows = build_stress_rows(record)
+            total += sum(item["npv_5yr"] for item in rows if item["scenario"] == case)
+        results[case] = total
+    assert round(results["stress_30_80"]) == -352
+    assert round(results["stress_20_65"]) == -278

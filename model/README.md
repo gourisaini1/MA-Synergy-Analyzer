@@ -22,3 +22,25 @@ First-year net = gross run-rate × year-one ramp − total integration programme
 Five-year NPV ramps synergy over the first four years, spreads programme costs over the specified programme period and discounts annual cash flows. The discount rate is a transparent analyst assumption.
 
 Blank values mean unverified, not zero. All inputs carry an assumption ID and confidence.
+
+
+## Input-column mapping by lever
+
+The CSV uses a common calculation schema, but some fields have lever-specific meanings:
+
+| Input field | Operating-cost overlap | Funding substitution | CRR/SLR reserve drag |
+|---|---|---|---|
+| `overlap_{scenario}` | Share of standalone expense assumed duplicated | Share of market borrowings migrated to deposits | Share of market borrowings migrated and exposed to reserve drag |
+| `addressable_{scenario}` | Share of duplicated expense that can be removed | Share of migrated funding eligible for substitution | Combined CRR/SLR reserve share (22% sensitivity) |
+| `achievable_{scenario}` | Execution-realisation factor | Execution-realisation factor | Applied at 100% in the current reserve sensitivity |
+| `contribution_margin_{scenario}` | Retained unit economics (1.0) | Funding spread advantage as a decimal (25/50/75 bps) | Reserve opportunity-cost spread as a decimal (40/61/80 bps) |
+
+These shared column names are a schema convenience, not interchangeable economic concepts. Read the lever-specific definitions before interpreting the values.
+
+## HDFC stress cases
+
+Two matched migration stresses are generated. In each case, funding substitution and CRR/SLR reserve drag use the same share of market borrowings migrated and the same ramp:
+- **30% / 80%:** low funding spread and execution assumptions, high reserve opportunity-cost spread, and high operating-cost programme cost.
+- **20% / 65%:** the same low funding spread/execution, high reserve spread and high operating-cost programme cost, with the lower matched migration share and ramp.
+
+The operating-cost lever uses the high overlap, addressability, execution and programme-cost assumptions in both stresses. These are analyst sensitivities, not management forecasts or observed outcomes. Five-year NPV includes programme costs.

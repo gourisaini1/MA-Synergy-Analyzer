@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: project-validation-${{ github.ref }}
   cancel-in-progress: true
@@ -22,18 +22,6 @@ jobs:
           python-version: "3.11"
       - run: pip install -r requirements.txt
       - run: python run.py
-      - name: Commit refreshed market cache and event-study results
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in data/market_prices.csv dashboard/event_study_results.csv README.md; do
-            if [ -f "$f" ]; then git add "$f"; fi
-          done
-          if ! git diff --cached --quiet; then
-            git commit -m "Refresh cached market data and event study [skip ci]"
-            git push
-          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

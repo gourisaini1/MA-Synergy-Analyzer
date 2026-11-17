@@ -13,7 +13,7 @@ def test_generated_workbook_has_excel_safe_sheet_names_and_npv():
     assert all(len(name) <= 31 for name in workbook.sheetnames)
     assert "Announced vs Est vs Realised" in workbook.sheetnames
     calculations = workbook["Scenario Calculations"]
-    assert "Five-year NPV" in [cell.value for cell in calculations[1]]
+    assert "Five-year NPV after costs" in [cell.value for cell in calculations[1]]
     assert any(
         isinstance(cell.value, str) and cell.value.startswith("=")
         for row in calculations.iter_rows(min_row=2)
