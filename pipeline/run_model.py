@@ -7,6 +7,11 @@ ROOT = Path(__file__).resolve().parents[1]
 INPUT = ROOT / "model" / "synergy_inputs.csv"
 OUT = ROOT / "dashboard" / "tableau_synergy_data.csv"
 SCENARIOS = ("low", "base", "high")
+HDFC_STRESS_INPUTS = {
+    "Market borrowing to bank deposit funding substitution": "low",
+    "CRR-SLR reserve opportunity-cost drag": "high",
+    "Legacy standalone operating cost overlap": "high",
+}
 
 
 def calculate(row, scenario):
@@ -68,6 +73,7 @@ def main():
                 "gross_run_rate": gross,
                 "net_first_year": net,
                 "npv_5yr": npv,
+                "after_costs_npv_5yr": npv,
                 "direction": getattr(row, "direction", "positive"),
                 "source_or_assumption_id": row.source_or_assumption_id,
                 "assumption_ids": getattr(row, "assumption_ids", ""),
@@ -75,6 +81,28 @@ def main():
                 "confidence": getattr(row, "confidence", "low"),
                 "management_target": getattr(row, "management_target", None),
                 "benchmark_status": getattr(row, "benchmark_status", "not_benchmarked"),
+                "evidence_status": status,
+            })
+        if row.deal_id == "HDFC" and row.lever in HDFC_STRESS_INPUTS:
+            stress_input = HDFC_STRESS_INPUTS[row.lever]
+            gross, net, npv, status = calculate(record, stress_input)
+            rows.append({
+                "deal_id": row.deal_id,
+                "lever": row.lever,
+                "synergy_type": row.synergy_type,
+                "scenario": "stress",
+                "currency": row.currency,
+                "gross_run_rate": gross,
+                "net_first_year": net,
+                "npv_5yr": npv,
+                "after_costs_npv_5yr": npv,
+                "direction": getattr(row, "direction", "positive"),
+                "source_or_assumption_id": row.source_or_assumption_id,
+                "assumption_ids": getattr(row, "assumption_ids", ""),
+                "classification": getattr(row, "assumption_type", "analyst_assumption"),
+                "confidence": getattr(row, "confidence", "low"),
+                "management_target": getattr(row, "management_target", None),
+                "benchmark_status": "analyst_stress_case",
                 "evidence_status": status,
             })
     OUT.parent.mkdir(parents=True, exist_ok=True)
