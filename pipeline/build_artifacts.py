@@ -448,6 +448,7 @@ def build_deck():
             "Management announced a $1.5bn annual cost-savings run-rate target by end-2017. Management later reported more than $1.7bn cumulative savings by end-2017.",
             "The model's $0.71bn–$2.04bn range is a sensitivity using a $23bn proxy cost pool and 7%/9%/11% overlap; it was calibrated after the target was public.",
             "SEC 10-Ks reported $829m, $887m and $339m of integration-program expense in 2015, 2016 and 2017 respectively; cumulative pre-tax programme costs reached $2.055bn, with approximately 60% expected to be cash.",
+            "The programme also involved cumulative capital expenditures of about $1.4bn by end-2017; these are separate from integration expenses and not annual amounts.",
             "FY18/FY19 goodwill and intangible impairments totalled $17.835bn. Impairments indicate value erosion but do not alone prove merger causality.",
         ],
         "Sources: SEC merger filing, FY2016 and FY2017 Forms 10-K, post-integration presentation and FY2019 Form 10-K. Annual run-rate and cumulative savings are different measures.",
