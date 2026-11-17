@@ -31,9 +31,9 @@ The CSV uses a common calculation schema, but some fields have lever-specific me
 | Input field | Operating-cost overlap | Funding substitution | CRR/SLR reserve drag | PSL/PSLC cost |
 |---|---|---|---|
 | `overlap_{scenario}` | Share of standalone expense assumed duplicated | Share of market borrowings migrated to deposits | Share of market borrowings migrated and exposed to reserve drag |
-| `addressable_{scenario}` | Share of duplicated expense that can be removed | Share of migrated funding eligible for substitution | Combined CRR/SLR reserve share (22% sensitivity) |
-| `achievable_{scenario}` | Execution-realisation factor | Execution-realisation factor | Applied at 100% in the current reserve sensitivity |
-| `contribution_margin_{scenario}` | Retained unit economics (1.0) | Funding spread advantage as a decimal (25/50/75 bps) | Reserve opportunity-cost spread as a decimal (40/61/80 bps) | PSLC premium as a decimal (General/Agriculture/SMF: 0.01%/0.48%/1.95%) |
+| `addressable_{scenario}` | Share of duplicated expense that can be removed | Share of migrated funding eligible for substitution | Combined CRR/SLR reserve share (22% sensitivity) | Legacy portfolio phase-in (1/3, 2/3, full) |
+| `achievable_{scenario}` | Execution-realisation factor | Execution-realisation factor | Applied at 100% in the current reserve sensitivity | Share of residual shortfall assumed to require PSLC purchase after organic lending (25%/50%/75%) |
+| `contribution_margin_{scenario}` | Retained unit economics (1.0) | Funding spread advantage as a decimal (25/50/75 bps) | Reserve opportunity-cost spread as a decimal (40/61/80 bps) | PSLC premium as a decimal (General/Agriculture/SMF: 0.01%/0.48%/1.95%) | PSLC premium as a decimal (General/Agriculture/SMF: 0.01%/0.48%/1.95%) |
 
 These shared column names are a schema convenience, not interchangeable economic concepts. Read the lever-specific definitions before interpreting the values.
 
