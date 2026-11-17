@@ -3,6 +3,15 @@
 ## Transaction context
 The full-service airline merger completed on 12 November 2024. The official release says the combined Air India Group had 300 aircraft, 312 routes and 8,300 weekly flights at completion. It also documents more than 6,000 Vistara staff inducted into a new organisation structure, harmonisation of operating procedures across four airlines, alignment of 140+ IT systems, consolidation of 4,000+ vendor contracts, migration of 270,000 bookings and induction of 4.5 million Club Vistara accounts into Maharaja Club.
 
+## Financial baseline and comparability
+
+Tata Sons' FY2024-25 annual report provides subsidiary-level summary figures for the pre-merger FY24 entities and the merged FY25 Air India entity (₹ crore):
+- Air India FY24 revenue: ₹51,364.89 crore; loss after tax: ₹6,697.15 crore.
+- Tata SIA/Vistara FY24 revenue: ₹15,191.27 crore; loss after tax: ₹581.14 crore.
+- Merged Air India FY25 revenue: ₹76,754.10 crore; loss after tax: ₹10,858.82 crore.
+
+The merger became effective on 12 November 2024. FY25 is therefore a transition year with a merged entity, while FY24 contains separate Air India and Vistara entities. These numbers establish scale and financial context, but they do not isolate synergy delivery. Revenue growth cannot be labelled revenue synergy, and the post-merger loss cannot be attributed solely to the merger. The source summary does not provide category-level combined vendor spend or an attributable procurement savings bridge.
+
 ## Post-merger technology and commercial context
 Air India's 2026 digital transformation article describes a USD 200m technology programme, modernisation of more than 140 IT/digital systems, a cloud-native technology estate and migration of 270,000+ reservations and 9.2m loyalty members. These are later company-reported transformation metrics; the USD 200m programme covers the broader technology rebuild and must not be treated as the cost of the Vistara merger or as synergy savings. The 9.2m loyalty-member figure is a later programme-wide population and is not directly comparable with the 4.5m Club Vistara accounts inducted at merger close.
 
@@ -32,6 +41,7 @@ Airline mergers are operationally safety-critical. Risks include schedule/crew/a
 2. Air India digital transformation article, 2026: https://www.airindia.com/in/en/newsroom/articles/Rebuilding-the-digital-core-How-technology-is-powering-Air-India-s-transformation.html
 3. Air India commercial transformation article, 2 Apr 2026: https://www.airindia.com/content/air-india/in/en/newsroom/articles/Rebuilding-the-commercial-engine-Air-India-s-transformation-for-profitable-growth.html
 4. Tata Group copy of merger completion release: https://www.tata.com/content/dam/tata/pdf/Air-India-Completes-Merger-With-Vistara.pdf
+5. Tata Sons FY2024-25 Annual Report, subsidiary summary of Air India and Tata SIA: https://www.tata.com/content/dam/tata/pdf/fy25/Tata-Sons-Annual-Report-FY25.pdf
 
 ## Interview-ready takeaway
 "The clearest public evidence is integration scale, not a disclosed rupee saving. I would diligence vendor-category spend, aircraft utilisation and loyalty/customer retention, then only recognise savings once contract rates and operating unit costs improve after integration costs."
