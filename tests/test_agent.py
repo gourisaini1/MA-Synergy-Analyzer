@@ -85,3 +85,15 @@ def test_prediction_matching_is_one_to_one_and_requires_valid_citation():
     assert len(match_predictions(gold, predictions)) == 1
     predictions[0]["citation_valid"] = False
     assert len(match_predictions(gold, predictions)) == 1
+
+
+def test_gold_benchmark_covers_all_four_core_deals_and_operating_evidence():
+    import pandas as pd
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    gold = pd.read_csv(root / "agent" / "gold_claims.csv")
+    assert {"HDFC", "KRAFT_HEINZ", "AIR_INDIA", "ZOMATO"}.issubset(set(gold.deal_id))
+    assert gold.gold_id.is_unique
+    assert gold[gold.deal_id.eq("AIR_INDIA")].claim_type.eq("integration_milestone").any()
+    assert gold[gold.deal_id.eq("ZOMATO")].claim_type.eq("financial_metric").any()
