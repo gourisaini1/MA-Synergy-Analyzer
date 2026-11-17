@@ -26,7 +26,7 @@ def test_estimates_are_separate_from_management_targets():
     assert "assumption_type" in assumptions.columns
     khc = inputs[inputs.deal_id.eq("KRAFT_HEINZ")].iloc[0]
     assert khc.management_target == 1500
-    assert khc.benchmark_status == "ex_post_sensitivity_not_benchmark"
+    assert khc.benchmark_status == "pre_2015_benchmark"
 
 
 def test_four_way_classification_is_preserved():
@@ -48,7 +48,15 @@ def test_hdfc_funding_benefit_and_regulatory_drag_are_separate():
     assert "CRR-SLR reserve opportunity-cost drag" in set(hdfc.lever)
     assert "Priority-sector lending compliance cost" in set(hdfc.lever)
     psl = hdfc[hdfc.lever.eq("Priority-sector lending compliance cost")].iloc[0]
-    assert pd.isna(psl.baseline_amount)
+    assert psl.baseline_amount == 136810
+    assert psl.overlap_base == 0.40
+    assert psl.addressable_low == 0.333333
+    assert psl.addressable_base == 0.666667
+    assert psl.addressable_high == 1
+    assert psl.contribution_margin_low == 0.0001
+    assert psl.contribution_margin_base == 0.0048
+    assert psl.contribution_margin_high == 0.0195
+    assert psl.stress_scenario == "high"
 
 
 def test_negative_synergy_is_signed_and_programme_cost_is_spread():
@@ -95,22 +103,62 @@ def test_kraft_year_one_deducts_only_one_third_of_programme_cost():
     assert status == "estimated"
 
 
-def test_hdfc_stress_cases_match_migration_share_and_ramp():
-    from pipeline.run_model import HDFC_STRESS_INPUTS, build_stress_rows
+def test_hdfc_stress_cases_use_input_columns_and_preserve_totals():
+    from pipeline.run_model import HDFC_MATCHED_LEVERS, HDFC_STRESS_CASES, build_stress_rows
 
     inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
     hdfc = inputs[inputs.deal_id.eq("HDFC")]
+    funding = hdfc[hdfc.lever.eq("Market borrowing to bank deposit funding substitution")].iloc[0]
+    reserve = hdfc[hdfc.lever.eq("CRR-SLR reserve opportunity-cost drag")].iloc[0]
+    operating = hdfc[hdfc.lever.eq("Legacy standalone operating cost overlap")].iloc[0]
+    assert funding.stress_scenario == "low"
+    assert reserve.stress_scenario == "high"
+    assert operating.stress_scenario == "high"
+
     results = {}
-    for case, lever_inputs in HDFC_STRESS_INPUTS.items():
-        funding = lever_inputs["Market borrowing to bank deposit funding substitution"]
-        reserve = lever_inputs["CRR-SLR reserve opportunity-cost drag"]
-        assert funding["overlap"] == reserve["overlap"]
-        assert funding["ramp"] == reserve["ramp"]
+    core_results = {}
+    for case, case_inputs in HDFC_STRESS_CASES.items():
+        assert case_inputs["matched_share"] in (0.20, 0.30)
+        assert case_inputs["ramp"] in (0.65, 0.80)
         total = 0.0
+        core_total = 0.0
         for row in hdfc.itertuples(index=False):
             record = row._asdict()
-            rows = build_stress_rows(record)
-            total += sum(item["npv_5yr"] for item in rows if item["scenario"] == case)
+            stress_rows = build_stress_rows(record)
+            for item in stress_rows:
+                if item["scenario"] == case:
+                    total += item["npv_5yr"]
+                    if item["lever"] != "Priority-sector lending compliance cost":
+                        core_total += item["npv_5yr"]
         results[case] = total
-    assert round(results["stress_30_80"]) == -352
-    assert round(results["stress_20_65"]) == -278
+        core_results[case] = core_total
+
+    assert HDFC_MATCHED_LEVERS == {
+        "Market borrowing to bank deposit funding substitution",
+        "CRR-SLR reserve opportunity-cost drag",
+    }
+    # Preserve the PR #3 stress-refactor regression values before PSL is added.
+    assert round(core_results["stress_30_80"]) == -352
+    assert round(core_results["stress_20_65"]) == -278
+    # The high PSL sensitivity is now included in the complete HDFC stress totals.
+    assert round(results["stress_30_80"]) == -2680
+    assert round(results["stress_20_65"]) == -2606
+
+
+def test_kraft_overlap_benchmark_is_committed_before_target_comparison():
+    benchmarks = pd.read_csv(ROOT / "research" / "pre2015_synergy_benchmarks.csv")
+    khc = pd.read_csv(ROOT / "model" / "synergy_inputs.csv").query("deal_id == 'KRAFT_HEINZ'").iloc[0]
+    assert len(benchmarks) == 3
+    assert khc.overlap_low == benchmarks["low_ratio"].min()
+    assert khc.overlap_base == benchmarks["base_ratio"].median()
+    assert khc.overlap_high == benchmarks["high_ratio"].max()
+    target_ratio = khc.management_target / khc.baseline_amount
+    assert target_ratio > khc.overlap_high
+
+
+def test_psl_npv_applies_rbi_three_year_phase_in():
+    inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
+    psl = inputs.query("deal_id == 'HDFC' and lever == 'Priority-sector lending compliance cost'").iloc[0].to_dict()
+    _, _, npv, status = calculate(psl, "base")
+    assert status == "estimated"
+    assert round(npv, 2) == -382.09

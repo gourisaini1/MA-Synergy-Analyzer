@@ -8,6 +8,7 @@ data/processed/*
 !data/processed/.gitkeep
 agent/output/*
 !agent/output/.gitkeep
+output/
 *.log
 dashboard/deal_evidence_backtest.csv
 dashboard/financial_due_diligence.csv

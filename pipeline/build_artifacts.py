@@ -12,7 +12,7 @@ from pptx.enum.chart import XL_CHART_TYPE
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
 
-from .run_model import HDFC_STRESS_INPUTS
+from .run_model import HDFC_MATCHED_LEVERS, HDFC_STRESS_CASES
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output"
@@ -62,42 +62,43 @@ def build_workbook():
     columns = {name: get_column_letter(index + 1) for index, name in enumerate(inputs.columns)}
     for index, row in enumerate(inputs.itertuples(index=False), start=2):
         scenario_specs = [(name, None) for name in ("low", "base", "high")]
-        if row.deal_id == "HDFC":
-            for stress_name, lever_inputs in HDFC_STRESS_INPUTS.items():
-                if row.lever in lever_inputs:
-                    scenario_specs.append((stress_name, lever_inputs[row.lever]))
+        if row.deal_id == "HDFC" and row.stress_scenario in ("low", "high"):
+            scenario_specs.extend(
+                (stress_name, case_inputs)
+                for stress_name, case_inputs in HDFC_STRESS_CASES.items()
+            )
         for scenario, stress_values in scenario_specs:
             target_row = calc.max_row + 1
-            if stress_values:
-                fields = [
-                    f"'Scenario Inputs'!{columns['baseline_amount']}{index}",
-                    str(stress_values["overlap"]), str(stress_values["addressable"]),
-                    str(stress_values["achievable"]), str(stress_values["ramp"]),
-                    str(stress_values["one_off"]), str(stress_values["margin"]),
-                    f"'Scenario Inputs'!{columns['direction']}{index}",
-                    f"'Scenario Inputs'!{columns['integration_program_years']}{index}",
-                    f"'Scenario Inputs'!{columns['discount_rate']}{index}",
-                ]
-            else:
-                fields = [
-                    f"'Scenario Inputs'!{columns[name]}{index}"
-                    for name in (
-                        "baseline_amount", f"overlap_{scenario}",
-                        f"addressable_{scenario}", f"achievable_{scenario}",
-                        f"ramp_{scenario}", f"one_off_cost_{scenario}",
-                        f"contribution_margin_{scenario}", "direction",
-                        "integration_program_years", "discount_rate",
-                    )
-                ]
+            source_scenario = row.stress_scenario if stress_values else scenario
+            fields = [
+                f"'Scenario Inputs'!{columns[name]}{index}"
+                for name in (
+                    "baseline_amount", f"overlap_{source_scenario}",
+                    f"addressable_{source_scenario}", f"achievable_{source_scenario}",
+                    f"ramp_{source_scenario}", f"one_off_cost_{source_scenario}",
+                    f"contribution_margin_{source_scenario}", "direction",
+                    "integration_program_years", "discount_rate",
+                )
+            ]
+            if stress_values and row.lever in HDFC_MATCHED_LEVERS:
+                fields[1] = str(stress_values["matched_share"])
+                fields[4] = str(stress_values["ramp"])
             gross = (
                 "*".join((fields[0], fields[1], fields[2], fields[3], fields[6]))
                 + f'*IF({fields[7]}="negative",-1,1)'
             )
-            npv_formula = "=" + "+".join(
-                f'(E{target_row}*MIN(1,{fields[4]}+{0.2 * (year - 1):.1f})-'
-                f'IF({year}<={fields[8]},{fields[5]}/{fields[8]},0))/(1+{fields[9]})^{year}'
-                for year in range(1, 6)
-            )
+            if row.deal_id == "HDFC" and row.lever == "Priority-sector lending compliance cost":
+                npv_formula = "=" + "+".join(
+                    f'({fields[0]}*{fields[1]}*{phase}*{fields[3]}*{fields[6]}*'
+                    f'IF({fields[7]}="negative",-1,1))/(1+{fields[9]})^{year}'
+                    for year, phase in enumerate((1/3, 2/3, 1, 1, 1), start=1)
+                )
+            else:
+                npv_formula = "=" + "+".join(
+                    f'(E{target_row}*MIN(1,{fields[4]}+{0.2 * (year - 1):.1f})-'
+                    f'IF({year}<={fields[8]},{fields[5]}/{fields[8]},0))/(1+{fields[9]})^{year}'
+                    for year in range(1, 6)
+                )
             calc.append([
                 row.deal_id, row.lever, scenario, row.currency,
                 f'=IF(COUNT({",".join(fields)})<7,"",{gross})',
@@ -207,7 +208,7 @@ def add_synergy_bridge(prs):
     title = slide.shapes.add_textbox(
         Inches(.65), Inches(.45), Inches(12), Inches(.75)
     ).text_frame.paragraphs[0]
-    title.text = "Kraft Heinz: $2.07bn overlap pool filters to $1.40bn achievable run-rate"
+    title.text = "Kraft Heinz: $313m benchmarked overlap pool filters to $211m achievable run-rate"
     title.font.size = Pt(23)
     title.font.bold = True
     title.font.color.rgb = RGBColor(255, 255, 255)
@@ -215,19 +216,19 @@ def add_synergy_bridge(prs):
     subtitle = slide.shapes.add_textbox(
         Inches(.7), Inches(1.28), Inches(12), Inches(.55)
     ).text_frame.paragraphs[0]
-    subtitle.text = "USD million | $23.0bn analyst cost-pool proxy × 9% overlap × 90% addressable × 75% achievable"
+    subtitle.text = "USD million | $23.0bn analyst cost-pool proxy × 1.36% pre-2015 median overlap × 90% addressable × 75% achievable"
     subtitle.font.size = Pt(14)
     subtitle.font.color.rgb = RGBColor(100, 190, 220)
 
     stages = [
-        ("Identified overlap", 2070, 0, 2070, "2,070"),
-        ("Not addressable", -207, 1863, 2070, "(207)"),
-        ("Execution haircut", -466, 1397, 1863, "(466)"),
-        ("Base-case run-rate", 1397, 0, 1397, "1,397"),
+        ("Identified overlap", 313, 0, 313, "313"),
+        ("Not addressable", -31, 282, 313, "(31)"),
+        ("Execution haircut", -70, 211, 282, "(70)"),
+        ("Base-case run-rate", 211, 0, 211, "211"),
     ]
     x_positions = [1.0, 3.65, 6.3, 8.95]
     bottom = 5.25
-    scale = 1.75 / 2070
+    scale = 1.75 / 313
     bar_width = 1.25
     for index, (label, value, lower, upper, display) in enumerate(stages):
         x = x_positions[index]
@@ -279,7 +280,7 @@ def add_synergy_bridge(prs):
     note = slide.shapes.add_textbox(
         Inches(.85), Inches(6.2), Inches(11.7), Inches(.55)
     ).text_frame.paragraphs[0]
-    note.text = "Announced target: $1,500m annual run-rate | Independent base: $1,397m | Reported: >$1,700m cumulative by end-2017 (different basis)"
+    note.text = "Announced target: $1,500m annual run-rate | Independent base: $211m | Reported: >$1,700m cumulative by end-2017 (different basis)"
     note.font.size = Pt(13)
     note.font.bold = True
     note.font.color.rgb = RGBColor(100, 190, 220)
@@ -400,7 +401,7 @@ def build_deck():
         "The deal provides a real announced-versus-estimated-versus-reported back-test",
         [
             "Management target: $1.5bn annual cost savings run-rate by end-2017.",
-            "Independent base case: $1.40bn gross annual run-rate; low/high range $0.71bn–$2.04bn.",
+            "Independent base case: $0.21bn gross annual run-rate; low/high range $0.04bn–$0.91bn using pre-2015 benchmark ratios.",
             "Reported delivery: >$1.7bn cumulative savings by end-2017, net of approx. $200m business investments.",
             "Important: cumulative realised savings and annual run-rate are different measurement bases.",
         ],
@@ -410,12 +411,12 @@ def build_deck():
     add_slide(
         prs,
         "HDFC's value case is funding substitution, with regulatory drag explicitly netted",
-        "Base-case annual run-rate: ₹142cr funding benefit + ₹12cr cost takeout − ₹68cr CRR/SLR carry = ~₹86cr",
+        "Base-case five-year NPV after the new PSL/PSLC lever: approximately –₹261cr",
         [
             "HDFC Ltd's FY23 funding mix: market borrowings 45%; deposits ₹1,52,111cr or 27% of borrowings. Implied market-borrowing pool ~₹2.54 lakh crore.",
             "Funding benefit uses 25/50/75 bps spread sensitivities and 10%/20%/30% substitution; all are analyst assumptions, not realised savings.",
             "CRR 4% and SLR 18% are modelled as a reserve opportunity-cost sensitivity; HDFC's merger deck said Day-0 CRR was organically met and SLR assets earned positive returns.",
-            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. PSL downside remains unquantified.",
+            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. Phased PSL/PSLC base sensitivity contributes ~–₹382cr five-year NPV; this is not a disclosed shortfall.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger investor deck. Low-confidence sensitivities.",
     )
@@ -424,10 +425,10 @@ def build_deck():
         "HDFC: matched migration stress turns five-year NPV negative",
         "Five-year NPV by lever (₹ crore); programme costs are included in the operating-cost lever",
         [
-            "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; combined ~+₹121cr.",
-            "Matched stress: with the same 30% migration and 80% ramp, low funding spread/execution gives +₹288cr, high reserve drag –₹483cr and high programme cost –₹157cr; combined ~–₹352cr. A 20% / 65% matched case is ~–₹278cr.",
+            "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; phased PSL/PSLC cost –₹382cr; combined ~–₹261cr.",
+            "Matched stress before PSL remains –₹352cr (30% / 80%) and –₹278cr (20% / 65%). Including high PSL/PSLC downside, totals become ~–₹2,680cr and ~–₹2,606cr respectively.",
             "The operating-cost lever is negative in low/base/high because the three-year programme cost exceeds the discounted savings.",
-            "These are analyst sensitivities, not realised merger savings. PSL downside remains unquantified and excluded.",
+            "These are analyst sensitivities, not realised merger savings. PSL assumes the high PSLC-SMF premium and 75% of the non-individual loan-book proxy is not met organically.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger deck and post-merger results. Model outputs from scenario inputs.",
     )
@@ -448,9 +449,9 @@ def build_deck():
         "The two headline cases separate upside, downside and delivery evidence",
         "HDFC: funding-led net synergy sensitivity | Kraft Heinz: announced target versus reported delivery",
         [
-            "HDFC: positive funding substitution is offset by CRR/SLR reserve carry; PSL compliance remains unverified.",
-            "Kraft Heinz: USD 1.5bn annual run-rate target; >USD 1.7bn cumulative reported savings by end-2017.",
-            "Kraft Heinz overlap range is an ex-post sensitivity, not an externally benchmarked prediction.",
+            "HDFC: funding substitution is offset by CRR/SLR reserve carry and a quantified-but-low-confidence PSL/PSLC downside sensitivity.",
+            "Kraft Heinz: USD 1.5bn annual run-rate target; >USD 1.7bn cumulative reported savings by end-2017. The target exceeds the pre-2015 benchmark overlap range.",
+            "Kraft Heinz overlap range uses three pre-March-2015 deals (0.38% / 1.36% / 4.91%); the $1.5bn target equals 6.52% of the $23bn cost-pool proxy and exceeds the benchmark high.",
             "Air India–Vistara and Microsoft–LinkedIn are moved to the appendix; Blinkit is retained only as a financial trend chart.",
         ],
         "Four-way status remains: announced, estimated, realised and unverified. See source register and evidence ledger.",
