@@ -22,3 +22,21 @@ First-year net = gross run-rate × year-one ramp − total integration programme
 Five-year NPV ramps synergy over the first four years, spreads programme costs over the specified programme period and discounts annual cash flows. The discount rate is a transparent analyst assumption.
 
 Blank values mean unverified, not zero. All inputs carry an assumption ID and confidence.
+
+
+## Input-column mapping by lever
+
+The CSV uses a common calculation schema, but some fields have lever-specific meanings:
+
+| Input field | Operating-cost overlap | Funding substitution | CRR/SLR reserve drag |
+|---|---|---|---|
+| `overlap_{scenario}` | Share of standalone expense assumed duplicated | Share of market borrowings migrated to deposits | Share of market borrowings migrated and exposed to reserve drag |
+| `addressable_{scenario}` | Share of duplicated expense that can be removed | Share of migrated funding eligible for substitution | Combined CRR/SLR reserve share (22% sensitivity) |
+| `achievable_{scenario}` | Execution-realisation factor | Execution-realisation factor | Applied at 100% in the current reserve sensitivity |
+| `contribution_margin_{scenario}` | Retained unit economics (1.0) | Funding spread advantage as a decimal (25/50/75 bps) | Reserve opportunity-cost spread as a decimal (40/61/80 bps) |
+
+These shared column names are a schema convenience, not interchangeable economic concepts. Read the lever-specific definitions before interpreting the values.
+
+## HDFC stress case
+
+The generated `stress` rows pair the low funding-substitution assumptions with the high reserve-drag assumptions and, for the legacy operating-cost lever, the high one-off programme-cost assumption. The stress case is a deliberately adverse analyst sensitivity, not a management forecast or observed outcome. The five-year NPV includes programme costs and should be read as the after-costs result.
