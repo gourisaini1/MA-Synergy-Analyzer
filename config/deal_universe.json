@@ -24,9 +24,9 @@
       "core_case": true,
       "currency": "INR crore",
       "key_synergy_lever": "Procurement scale, fleet/network optimisation, corporate overhead and systems rationalisation",
-      "evidence_quality": "High for integration milestones; low for financial attribution",
-      "unquantified_items": "Category-level vendor spend and rate cards; fleet utilisation; route contribution; one-off integration cost; service disruption costs",
-      "interpretation": "Do not infer savings from 4,000+ consolidated contracts or 140+ aligned systems."
+      "evidence_quality": "High for pre-merger entity revenue, post-merger revenue/loss and integration milestones; low for attributable financial synergy",
+      "unquantified_items": "Category-level vendor spend/rate cards; procurement overlap; fleet utilisation and route contribution; one-off integration cost; service disruption costs",
+      "interpretation": "FY24 Air India and Vistara financials and FY25 merged results establish scale, but the transition-year figures do not isolate merger synergies."
     },
     {
       "deal_id": "ZOMATO",
@@ -38,9 +38,9 @@
       "core_case": true,
       "currency": "INR crore",
       "key_synergy_lever": "Delivery-backend efficiency and customer cross-leverage between food delivery and quick commerce",
-      "evidence_quality": "High for acquired-segment financial trajectory; low for acquisition synergy attribution",
-      "unquantified_items": "Matched-city cost per delivery; cross-order cohorts; incremental contribution after incentives; standalone counterfactual; accounting-basis bridge",
-      "interpretation": "Blinkit EBITDA improvement and scale are not automatically Zomato integration synergies."
+      "evidence_quality": "High for consolidated operating cost disclosures and Blinkit segment trajectory; low for segment-level split and synergy attribution",
+      "unquantified_items": "Blinkit-only delivery and technology costs; matched-city cost per delivery; cross-order cohorts; incremental contribution after incentives; standalone counterfactual",
+      "interpretation": "FY24 cost pools are consolidated across food delivery and quick commerce and cannot be treated as standalone Blinkit addressable synergy pools."
     },
     {
       "deal_id": "MICROSOFT",
