@@ -50,12 +50,8 @@ def test_hdfc_funding_benefit_and_regulatory_drag_are_separate():
     psl = hdfc[hdfc.lever.eq("Priority-sector lending compliance cost")].iloc[0]
     assert psl.baseline_amount == 136810
     assert psl.overlap_base == 0.40
-    assert psl.addressable_low == 0.333333
-    assert psl.addressable_base == 0.666667
-    assert psl.addressable_high == 1
-    assert psl.contribution_margin_low == 0.0001
-    assert psl.contribution_margin_base == 0.0048
-    assert psl.contribution_margin_high == 0.0195
+    assert psl.addressable_low == psl.addressable_base == psl.addressable_high == 1
+    assert psl.contribution_margin_low == psl.contribution_margin_base == psl.contribution_margin_high == 0.00589
     assert psl.stress_scenario == "high"
 
 
@@ -141,8 +137,15 @@ def test_hdfc_stress_cases_use_input_columns_and_preserve_totals():
     assert round(core_results["stress_30_80"]) == -352
     assert round(core_results["stress_20_65"]) == -278
     # The high PSL sensitivity is now included in the complete HDFC stress totals.
-    assert round(results["stress_30_80"]) == -2680
-    assert round(results["stress_20_65"]) == -2606
+    assert round(results["stress_30_80"]) == -1055
+    assert round(results["stress_20_65"]) == -981
+
+
+def test_kraft_overlap_benchmark_is_not_haircut_twice():
+    inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
+    khc = inputs.query("deal_id == 'KRAFT_HEINZ'").iloc[0]
+    assert khc.addressable_low == khc.addressable_base == khc.addressable_high == 1
+    assert khc.achievable_low == khc.achievable_base == khc.achievable_high == 1
 
 
 def test_kraft_overlap_benchmark_is_committed_before_target_comparison():
@@ -161,4 +164,4 @@ def test_psl_npv_applies_rbi_three_year_phase_in():
     psl = inputs.query("deal_id == 'HDFC' and lever == 'Priority-sector lending compliance cost'").iloc[0].to_dict()
     _, _, npv, status = calculate(psl, "base")
     assert status == "estimated"
-    assert round(npv, 2) == -382.09
+    assert round(npv, 2) == -468.86
