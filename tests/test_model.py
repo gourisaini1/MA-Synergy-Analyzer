@@ -95,22 +95,34 @@ def test_kraft_year_one_deducts_only_one_third_of_programme_cost():
     assert status == "estimated"
 
 
-def test_hdfc_stress_cases_match_migration_share_and_ramp():
-    from pipeline.run_model import HDFC_STRESS_INPUTS, build_stress_rows
+def test_hdfc_stress_cases_use_input_columns_and_preserve_totals():
+    from pipeline.run_model import HDFC_MATCHED_LEVERS, HDFC_STRESS_CASES, build_stress_rows
 
     inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
     hdfc = inputs[inputs.deal_id.eq("HDFC")]
+    funding = hdfc[hdfc.lever.eq("Market borrowing to bank deposit funding substitution")].iloc[0]
+    reserve = hdfc[hdfc.lever.eq("CRR-SLR reserve opportunity-cost drag")].iloc[0]
+    operating = hdfc[hdfc.lever.eq("Legacy standalone operating cost overlap")].iloc[0]
+    assert funding.stress_scenario == "low"
+    assert reserve.stress_scenario == "high"
+    assert operating.stress_scenario == "high"
+
     results = {}
-    for case, lever_inputs in HDFC_STRESS_INPUTS.items():
-        funding = lever_inputs["Market borrowing to bank deposit funding substitution"]
-        reserve = lever_inputs["CRR-SLR reserve opportunity-cost drag"]
-        assert funding["overlap"] == reserve["overlap"]
-        assert funding["ramp"] == reserve["ramp"]
+    for case, case_inputs in HDFC_STRESS_CASES.items():
+        assert case_inputs["matched_share"] in (0.20, 0.30)
+        assert case_inputs["ramp"] in (0.65, 0.80)
         total = 0.0
         for row in hdfc.itertuples(index=False):
             record = row._asdict()
-            rows = build_stress_rows(record)
-            total += sum(item["npv_5yr"] for item in rows if item["scenario"] == case)
+            stress_rows = build_stress_rows(record)
+            for item in stress_rows:
+                if item["scenario"] == case:
+                    total += item["npv_5yr"]
         results[case] = total
+
+    assert HDFC_MATCHED_LEVERS == {
+        "Market borrowing to bank deposit funding substitution",
+        "CRR-SLR reserve opportunity-cost drag",
+    }
     assert round(results["stress_30_80"]) == -352
     assert round(results["stress_20_65"]) == -278
