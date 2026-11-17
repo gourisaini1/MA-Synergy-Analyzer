@@ -56,7 +56,7 @@ def test_event_study_rejects_incomplete_event_windows():
         frame[ticker] = 100 * (1 + pd.Series(
             rng.normal(0.0002, 0.01, len(dates)), index=dates
         )).cumprod()
-    frame = frame.drop(pd.Timestamp("2022-04-05"))
+    frame = frame.drop(pd.Timestamp("2022-04-11"))
     rows = event_rows(frame)
     hdfc_bank = [r for r in rows if r["deal"] == "HDFC" and r["security"] == "HDFC Bank (acquirer)"]
     short = [r for r in hdfc_bank if r.get("status") == "incomplete event window"]
