@@ -1,17 +1,34 @@
 # AI-Assisted M&A Synergy & Due Diligence Analyzer
 
-**Conclusion:** HDFC's merger economics are funding-led: cheaper bank deposits can replace HDFC Ltd's market borrowings, offset by CRR/SLR reserve carry and PSL obligations. Kraft Heinz shows the other essential lesson: cost synergies were delivered, but major subsequent asset impairments meant synergy delivery did not guarantee value creation.
+An evidence-led model of merger synergies, integration costs and post-close financial outcomes, with HDFC Bank–HDFC Ltd and Kraft Heinz as the two quantitative cases.
 
 ![Outside-in synergy scenarios](docs/synergy_estimate.svg)
 
+- **HDFC:** the base-case five-year after-cost NPV is approximately **+₹121cr**; the adverse stress case is approximately **–₹560cr**, driven by high reserve drag and operating-cost programme costs. These are analyst sensitivities, not realised savings.
+- **Kraft Heinz:** management reported more than **USD 1.7bn cumulative savings** by end-2017 against a USD 1.5bn annual run-rate target, but later impairment charges show that synergy delivery is not the same as value creation.
+- **HDFC actuals:** post-merger cost of funds remained around **4.8–4.9%** through FY24/Q1 FY25, CASA fell from **42%** in Jun-23 to **36%** in Jun-24, and the credit-deposit ratio declined from about **110%** at merger to **96%** by Mar-25. These outcomes are consistent with balance-sheet repositioning, but do not isolate the merger's causal funding benefit.
+
+## How to run
+
+```bash
+pip install -r requirements.txt
+python run.py
+pytest -q
+```
+
 ## Headline cases
 
-| Deal | Independent scenario | Announced / reported evidence | Key conclusion |
-|---|---:|---|---|
-| **HDFC Ltd–HDFC Bank** | Funding benefit ₹27–411cr; reserve drag ₹22–134cr; small standalone cost overlap ₹4–25cr. Net steady-state scenario approx. **₹8–302cr**, base **₹86cr** before programme costs and unquantified PSL impact. | HDFC Ltd reported 45% of borrowings from market borrowings; deposits were ₹1,52,111cr or 27% of borrowings. | Funding substitution is the main upside. CRR/SLR and PSL are explicit offsets; PSL remains unquantified. |
-| **Kraft Heinz** | USD 0.71–2.04bn gross annual run-rate; base USD 1.40bn. Five-year NPV: USD 715m / 2,983m / 5,632m (low/base/high), after spreading programme costs over three years and discounting at 10%. | USD 1.5bn annual run-rate target; management reported >USD 1.7bn cumulative savings by end-2017. | Savings were delivered, but FY18 and FY19 impairment charges totalled USD 17.835bn. Value creation is not the same as cost synergy delivery. |
+| Deal / lever | Low | Base | High | Interpretation |
+|---|---:|---:|---:|---|
+| HDFC funding substitution — 5-year NPV after costs (₹cr) | +80 | +475 | +1,482 | Funding-spread and migration sensitivities |
+| HDFC CRR/SLR reserve drag — 5-year NPV (₹cr) | –67 | –228 | –483 | Reserve opportunity-cost sensitivity |
+| HDFC legacy operating-cost lever — 5-year NPV after programme costs (₹cr) | –72 | –127 | –157 | Negative in every scenario because programme costs exceed savings |
+| Kraft Heinz gross annual run-rate (USD bn) | 0.71 | 1.40 | 2.04 | Ex-post sensitivity; not an out-of-sample estimate |
 
-**Important estimate caveat:** Kraft Heinz's 7%/9%/11% overlap range is an ex-post sensitivity chosen after the target and reported savings were public. It is not an externally benchmarked, blind estimate. HDFC's funding spreads and reserve opportunity-cost ranges are analyst sensitivities, not reported realised savings. All estimates are separate from management claims.
+**HDFC combined base case:** approximately **+₹121cr** five-year after-cost NPV across the three quantified levers.  
+**HDFC adverse stress:** approximately **–₹560cr** five-year after-cost NPV, pairing low funding benefit, high reserve drag and high operating-cost programme costs. This is not the earlier rough –₹103cr estimate: that figure does not reconcile to the current five-year cash-flow model and should not be repeated without a separately defined calculation basis. PSL remains unquantified and is excluded from both totals.
+
+**Important estimate caveat:** HDFC's funding spreads and reserve opportunity-cost ranges are analyst sensitivities, not reported realised savings. Kraft Heinz's 7%/9%/11% overlap range is an ex-post sensitivity chosen after the target and reported savings were public; it is not an externally benchmarked blind estimate.
 
 ## Core conclusion
 
@@ -87,6 +104,17 @@ Air India–Vistara remains a qualitative PMI appendix because public data does 
 - research/financial_due_diligence.csv: HDFC funding mix, standalone cost base, regulatory requirements, Kraft Heinz impairments and segment financial metrics.
 - research/integration_risk_register.csv: integration risks and mitigations.
 - model/assumptions_register.csv and model/synergy_inputs.csv: analyst assumptions separated from management disclosures.
+
+## Limitations & next steps
+
+- HDFC post-merger actuals are observational. Balance-sheet mix, deposit pricing, interest-rate cycles, growth calibration and the merger all changed; the available disclosures do not isolate a causal synergy effect.
+- The HDFC PSL shortfall and PSLC purchase cost remain unquantified.
+- The HDFC funding and CRR/SLR calculations use simplified migration and spread sensitivities; a liability-level NDTL, reserve and maturity schedule is required for a bank-grade estimate.
+- Kraft Heinz's overlap range is ex-post calibrated. A blind estimate requires pre-2015 comparable food/consumer merger benchmarks and pre-close category cost bases.
+- Event-study CARs are single-event market-model estimates, not causal proof; data-provider adjustment conventions are selected consistently within each ticker.
+- Air India–Vistara, Zomato–Blinkit and Microsoft–LinkedIn are qualitative appendix cases, not fully modelled synergy valuations.
+- Tableau Public is not published and the Alteryx workflow has not been executed in Designer; the repository only includes Tableau-ready data/specification and the Alteryx workflow file.
+- The evidence-extraction agent has run, but the current run produced no claims because the OpenAI API account had no remaining credits. Precision and recall are therefore undefined.
 
 ## Project structure
 
