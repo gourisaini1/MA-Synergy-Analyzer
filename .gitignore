@@ -9,3 +9,5 @@ data/processed/*
 agent/output/*
 !agent/output/.gitkeep
 *.log
+dashboard/deal_evidence_backtest.csv
+dashboard/financial_due_diligence.csv
