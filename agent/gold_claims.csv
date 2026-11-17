@@ -45,3 +45,18 @@ HDFC-G21,HDFC,HDFC-09,financial_metric,"HDFC Bank rose 10.01 percent close-to-cl
 HDFC-G22,HDFC,HDFC-09,financial_metric,"HDFC Ltd rose 9.29 percent close-to-close on the 4 April 2022 merger announcement",SEBI adjudication order
 KHC-G21,KRAFT_HEINZ,KHC-07,financial_metric,"Kraft Foods Group closed at USD 61.33 on 24 March 2015 before the merger announcement",SEC S-4 Market Prices section
 KHC-G22,KRAFT_HEINZ,KHC-07,financial_metric,"Kraft Foods Group closed at USD 89.40 on 9 April 2015 after the merger announcement",SEC S-4 Market Prices section
+AIR-G01,AIR_INDIA,AIR-01,integration_milestone,"More than 6,000 Vistara staff were inducted into a new organisation structure",Air India merger completion press release
+AIR-G02,AIR_INDIA,AIR-01,integration_milestone,"More than 140 IT systems were aligned",Air India merger completion press release
+AIR-G03,AIR_INDIA,AIR-01,integration_milestone,"More than 4,000 vendor contracts were consolidated",Air India merger completion press release
+AIR-G04,AIR_INDIA,AIR-01,integration_milestone,"270,000 customer bookings were migrated",Air India merger completion press release
+AIR-G05,AIR_INDIA,AIR-01,integration_milestone,"4.5 million Club Vistara frequent flyer accounts were inducted into Maharaja Club",Air India merger completion press release
+AIR-G06,AIR_INDIA,AIR-01,financial_metric,"The post-merger Air India Group operated a combined fleet of 300 aircraft across 312 routes and 8,300 weekly flights",Air India merger completion press release
+ZOM-G01,ZOMATO,ZOM-02,financial_metric,"FY25 quick commerce NOV was INR 22,371 crore",Company overview financial highlights by business p.3
+ZOM-G02,ZOMATO,ZOM-02,financial_metric,"FY25 quick commerce adjusted revenue was INR 5,206 crore",Company overview financial highlights by business p.3
+ZOM-G03,ZOMATO,ZOM-02,financial_metric,"FY25 quick commerce adjusted EBITDA was a loss of INR 292 crore",Company overview financial highlights by business p.3
+ZOM-G04,ZOMATO,ZOM-02,financial_metric,"FY25 quick commerce orders were 424 million",Quick commerce key metrics p.6
+ZOM-G05,ZOMATO,ZOM-02,financial_metric,"Average monthly quick commerce transacting customers were 10.2 million in FY25",Quick commerce key metrics p.6
+ZOM-G06,ZOMATO,ZOM-02,financial_metric,"The quick commerce network had 1,301 stores as of March 2025",Quick commerce key metrics p.6
+ZOM-G07,ZOMATO,ZOM-02,financial_metric,"FY25 food delivery orders were 853 million",Food delivery key metrics p.4
+ZOM-G08,ZOMATO,ZOM-02,financial_metric,"Average monthly food delivery transacting customers were 20.6 million in FY25",Food delivery key metrics p.4
+ZOM-G09,ZOMATO,ZOM-02,financial_metric,"FY25 quick commerce contribution was INR 953 crore and contribution margin was 4.3 percent of NOV",Quick commerce financial metrics p.23
