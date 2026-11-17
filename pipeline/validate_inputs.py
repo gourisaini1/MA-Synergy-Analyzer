@@ -58,6 +58,23 @@ def main():
     require(costs.reported_cost_value.dropna().ge(0).all(),
             "Reported integration costs must be non-negative.")
 
+    zomato_sens = pd.read_csv(ROOT / "dashboard" / "zomato_operational_sensitivities.csv")
+    air_hurdles = pd.read_csv(ROOT / "dashboard" / "air_india_procurement_hurdles.csv")
+    require(set(zomato_sens.deal_id) == {"ZOMATO"} and len(zomato_sens) == 6,
+            "Blinkit operational sensitivity output must contain six Zomato scenarios.")
+    require(set(air_hurdles.deal_id) == {"AIR_INDIA"} and len(air_hurdles) == 27,
+            "Air India procurement hurdle output must contain 27 reverse sensitivities.")
+    require(set(zomato_sens.source_id).issubset(set(sources.source_id))
+            and set(air_hurdles.source_id).issubset(set(sources.source_id)),
+            "Operational sensitivities reference missing source IDs.")
+    require(zomato_sens.sensitivity_type.eq("illustrative_not_forecast").all(),
+            "Blinkit unit economics must remain labelled as illustrative, not forecasts.")
+    require(air_hurdles.sensitivity_type.eq("reverse_hurdle_not_forecast").all(),
+            "Air India procurement hurdles must remain reverse hurdles, not forecasts.")
+    require(zomato_sens.annual_sensitivity.ge(0).all()
+            and air_hurdles.required_addressable_vendor_spend.gt(0).all(),
+            "Operational sensitivity outputs must be non-negative and positive where required.")
+
     targets = pd.read_csv(ROOT / "research" / "announced_synergy_targets.csv")
     require(targets.deal_id.is_unique, "Announced synergy target deal IDs must be unique.")
     require(targets[["deal_id", "source_id", "target_type", "target_value", "caveat"]].notna().all().all(),
