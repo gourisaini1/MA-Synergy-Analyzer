@@ -61,21 +61,34 @@ def build_workbook():
     ])
     columns = {name: get_column_letter(index + 1) for index, name in enumerate(inputs.columns)}
     for index, row in enumerate(inputs.itertuples(index=False), start=2):
-        scenario_specs = [(name, name) for name in ("low", "base", "high")]
-        if row.deal_id == "HDFC" and row.lever in HDFC_STRESS_INPUTS:
-            scenario_specs.append(("stress", HDFC_STRESS_INPUTS[row.lever]))
-        for scenario, input_scenario in scenario_specs:
+        scenario_specs = [(name, None) for name in ("low", "base", "high")]
+        if row.deal_id == "HDFC":
+            for stress_name, lever_inputs in HDFC_STRESS_INPUTS.items():
+                if row.lever in lever_inputs:
+                    scenario_specs.append((stress_name, lever_inputs[row.lever]))
+        for scenario, stress_values in scenario_specs:
             target_row = calc.max_row + 1
-            fields = [
-                f"'Scenario Inputs'!{columns[name]}{index}"
-                for name in (
-                    "baseline_amount", f"overlap_{input_scenario}",
-                    f"addressable_{input_scenario}", f"achievable_{input_scenario}",
-                    f"ramp_{input_scenario}", f"one_off_cost_{input_scenario}",
-                    f"contribution_margin_{input_scenario}", "direction",
-                    "integration_program_years", "discount_rate",
-                )
-            ]
+            if stress_values:
+                fields = [
+                    f"'Scenario Inputs'!{columns['baseline_amount']}{index}",
+                    str(stress_values["overlap"]), str(stress_values["addressable"]),
+                    str(stress_values["achievable"]), str(stress_values["ramp"]),
+                    str(stress_values["one_off"]), str(stress_values["margin"]),
+                    f"'Scenario Inputs'!{columns['direction']}{index}",
+                    f"'Scenario Inputs'!{columns['integration_program_years']}{index}",
+                    f"'Scenario Inputs'!{columns['discount_rate']}{index}",
+                ]
+            else:
+                fields = [
+                    f"'Scenario Inputs'!{columns[name]}{index}"
+                    for name in (
+                        "baseline_amount", f"overlap_{scenario}",
+                        f"addressable_{scenario}", f"achievable_{scenario}",
+                        f"ramp_{scenario}", f"one_off_cost_{scenario}",
+                        f"contribution_margin_{scenario}", "direction",
+                        "integration_program_years", "discount_rate",
+                    )
+                ]
             gross = (
                 "*".join((fields[0], fields[1], fields[2], fields[3], fields[6]))
                 + f'*IF({fields[7]}="negative",-1,1)'
@@ -408,11 +421,11 @@ def build_deck():
     )
     add_slide(
         prs,
-        "HDFC: after-cost NPV turns negative under an adverse funding and reserve case",
+        "HDFC: matched migration stress turns five-year NPV negative",
         "Five-year NPV by lever (₹ crore); programme costs are included in the operating-cost lever",
         [
             "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; combined ~+₹121cr.",
-            "Adverse stress: low funding case +₹80cr; high reserve-drag case –₹483cr; high-cost operating lever –₹157cr; combined ~–₹560cr.",
+            "Matched stress: with the same 30% migration and 80% ramp, low funding spread/execution gives +₹288cr, high reserve drag –₹483cr and high programme cost –₹157cr; combined ~–₹352cr. A 20% / 65% matched case is ~–₹278cr.",
             "The operating-cost lever is negative in low/base/high because the three-year programme cost exceeds the discounted savings.",
             "These are analyst sensitivities, not realised merger savings. PSL downside remains unquantified and excluded.",
         ],
