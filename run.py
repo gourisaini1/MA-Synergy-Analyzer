@@ -13,6 +13,7 @@ STEPS = [
     [sys.executable, "-m", "pipeline.sec_companyfacts"],
     [sys.executable, "-m", "pipeline.financial_analysis"],
     [sys.executable, "-m", "pipeline.build_backtest"],
+    [sys.executable, "-m", "pipeline.build_deal_comparability"],
     [sys.executable, "-m", "pipeline.event_study"],
     [sys.executable, "-m", "pipeline.build_artifacts"],
     [sys.executable, "-m", "pytest", "-q"],
