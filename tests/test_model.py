@@ -154,3 +154,11 @@ def test_kraft_overlap_benchmark_is_committed_before_target_comparison():
     assert khc.overlap_high == benchmarks["base_ratio"].max()
     target_ratio = khc.management_target / khc.baseline_amount
     assert target_ratio > khc.overlap_high
+
+
+def test_psl_npv_applies_rbi_three_year_phase_in():
+    inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
+    psl = inputs.query("deal_id == 'HDFC' and lever == 'Priority-sector lending compliance cost'").iloc[0].to_dict()
+    _, _, npv, status = calculate(psl, "base")
+    assert status == "estimated"
+    assert round(npv, 2) == -382.09
