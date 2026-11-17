@@ -129,6 +129,13 @@ def build_workbook():
         evidence_sheet.append(list(row))
     style_header(evidence_sheet)
 
+    integration_costs = pd.read_csv(RESEARCH / "integration_cost_tracker.csv").fillna("")
+    cost_sheet = workbook.create_sheet("Integration Cost Tracker")
+    cost_sheet.append(list(integration_costs.columns))
+    for row in integration_costs.itertuples(index=False, name=None):
+        cost_sheet.append(list(row))
+    style_header(cost_sheet)
+
     financial = pd.read_csv(RESEARCH / "financial_due_diligence.csv").fillna("")
     financial_sheet = workbook.create_sheet("Financial Diligence")
     financial_sheet.append(list(financial.columns))
