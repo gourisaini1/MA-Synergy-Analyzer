@@ -139,6 +139,30 @@ def _fetch_nse_day(day):
     return []
 
 
+def _price_panel(cached):
+    """Build a single-provider price panel for each ticker."""
+    cached = cached.copy()
+    if "price_source" not in cached.columns:
+        cached["price_source"] = "Legacy cached price; provider not tagged"
+    source_priority = {
+        "Yahoo Finance auto-adjusted close": 0,
+        "NSE official bhavcopy close (unadjusted)": 1,
+        "Legacy cached price; provider not tagged": 2,
+    }
+    selected_sources = {}
+    for ticker, group in cached.groupby("ticker"):
+        sources = group["price_source"].dropna().astype(str).unique().tolist()
+        selected_sources[ticker] = min(
+            sources, key=lambda source: source_priority.get(source, 99)
+        )
+    cached = cached[
+        cached["price_source"].eq(cached["ticker"].map(selected_sources))
+    ].copy()
+    prices = cached.pivot(index="date", columns="ticker", values="price").sort_index()
+    prices.attrs["price_sources"] = selected_sources
+    return prices
+
+
 def load_prices():
     if CACHE.exists() and os.getenv("REFRESH_MARKET_DATA") != "1":
         cached = pd.read_csv(CACHE, parse_dates=["date"])
@@ -147,7 +171,7 @@ def load_prices():
         required = {"date", "ticker", "price"}
         if not required.issubset(cached.columns):
             raise ValueError(f"Market price cache must contain {sorted(required)}")
-        return cached.pivot(index="date", columns="ticker", values="price").sort_index()
+        return _price_panel(cached)
 
     tickers = sorted({
         ticker
@@ -234,31 +258,7 @@ def load_prices():
     required = {"date", "ticker", "price"}
     if not required.issubset(cached.columns):
         raise ValueError(f"Market price cache must contain {sorted(required)}")
-    if "price_source" not in cached.columns:
-        cached["price_source"] = "Legacy cached price; provider not tagged"
-
-    # Select exactly one provider/adjustment convention per ticker. This avoids
-    # calculating returns across Yahoo dividend-adjusted closes and NSE raw closes.
-    source_priority = {
-        "Yahoo Finance auto-adjusted close": 0,
-        "NSE official bhavcopy close (unadjusted)": 1,
-        "Legacy cached price; provider not tagged": 2,
-    }
-    selected_sources = {}
-    for ticker, group in cached.groupby("ticker"):
-        sources = group["price_source"].dropna().astype(str).unique().tolist()
-        selected_sources[ticker] = min(
-            sources, key=lambda source: source_priority.get(source, 99)
-        )
-    cached = cached[
-        cached.apply(
-            lambda row: row["price_source"] == selected_sources.get(row["ticker"]),
-            axis=1,
-        )
-    ].copy()
-    prices = cached.pivot(index="date", columns="ticker", values="price").sort_index()
-    prices.attrs["price_sources"] = selected_sources
-    return prices
+    return _price_panel(cached)
 
 
 def event_rows(prices):
