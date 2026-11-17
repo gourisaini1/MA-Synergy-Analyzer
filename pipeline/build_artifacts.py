@@ -403,6 +403,18 @@ def build_deck():
     )
     add_slide(
         prs,
+        "HDFC: after-cost NPV turns negative under an adverse funding and reserve case",
+        "Five-year NPV by lever (₹ crore); programme costs are included in the operating-cost lever",
+        [
+            "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; combined ~+₹121cr.",
+            "Adverse stress: low funding case +₹80cr; high reserve-drag case –₹483cr; high-cost operating lever –₹157cr; combined ~–₹560cr.",
+            "The operating-cost lever is negative in low/base/high because the three-year programme cost exceeds the discounted savings.",
+            "These are analyst sensitivities, not realised merger savings. PSL downside remains unquantified and excluded.",
+        ],
+        "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger deck and post-merger results. Model outputs from scenario inputs.",
+    )
+    add_slide(
+        prs,
         "Kraft Heinz's later impairments show why synergy delivery is not value creation",
         "FY18 impairments were USD 15.936bn; FY19 added another USD 1.899bn",
         [
