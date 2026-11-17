@@ -172,3 +172,7 @@ def test_psl_npv_applies_rbi_three_year_phase_in():
     _, _, npv, status = calculate(psl, "base")
     assert status == "estimated"
     assert round(npv, 2) == -468.86
+
+def test_zomato_is_excluded_from_generated_headline_event_study():
+    from pipeline.event_study import EVENTS
+    assert {event["deal"] for event in EVENTS} == {"HDFC", "KRAFT_HEINZ"}
