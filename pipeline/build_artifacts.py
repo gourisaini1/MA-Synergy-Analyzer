@@ -87,11 +87,18 @@ def build_workbook():
                 "*".join((fields[0], fields[1], fields[2], fields[3], fields[6]))
                 + f'*IF({fields[7]}="negative",-1,1)'
             )
-            npv_formula = "=" + "+".join(
-                f'(E{target_row}*MIN(1,{fields[4]}+{0.2 * (year - 1):.1f})-'
-                f'IF({year}<={fields[8]},{fields[5]}/{fields[8]},0))/(1+{fields[9]})^{year}'
-                for year in range(1, 6)
-            )
+            if row.deal_id == "HDFC" and row.lever == "Priority-sector lending compliance cost":
+                npv_formula = "=" + "+".join(
+                    f'({fields[0]}*{fields[1]}*{phase}*{fields[3]}*{fields[6]}*'
+                    f'IF({fields[7]}="negative",-1,1))/(1+{fields[9]})^{year}'
+                    for year, phase in enumerate((1/3, 2/3, 1, 1, 1), start=1)
+                )
+            else:
+                npv_formula = "=" + "+".join(
+                    f'(E{target_row}*MIN(1,{fields[4]}+{0.2 * (year - 1):.1f})-'
+                    f'IF({year}<={fields[8]},{fields[5]}/{fields[8]},0))/(1+{fields[9]})^{year}'
+                    for year in range(1, 6)
+                )
             calc.append([
                 row.deal_id, row.lever, scenario, row.currency,
                 f'=IF(COUNT({",".join(fields)})<7,"",{gross})',
