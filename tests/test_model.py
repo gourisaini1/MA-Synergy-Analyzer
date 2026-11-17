@@ -139,6 +139,13 @@ def test_hdfc_stress_cases_use_input_columns_and_preserve_totals():
     # The high PSL sensitivity is now included in the complete HDFC stress totals.
     assert round(results["stress_30_80"]) == -1055
     assert round(results["stress_20_65"]) == -981
+    psl_stress = next(
+        item for row in hdfc.itertuples(index=False)
+        for item in build_stress_rows(row._asdict())
+        if item["lever"] == "Priority-sector lending compliance cost"
+        and item["scenario"] == "stress_20_65"
+    )
+    assert "A-HDFC-18" in psl_stress["assumption_ids"]
 
 
 def test_kraft_overlap_benchmark_is_not_haircut_twice():
