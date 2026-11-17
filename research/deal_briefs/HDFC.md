@@ -53,5 +53,20 @@ SEBI's adjudication order records that on the 4 April 2022 merger announcement, 
 4. SEBI adjudication order, 29 July 2025: https://www.sebi.gov.in/web/?file=https%3A%2F%2Fwww.sebi.gov.in%2Fsebi_data%2Fattachdocs%2Fjul-2025%2F1753789804303_1.pdf
 5. HDFC Bank FY25 annual report: https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/annual-reports/2024-25/HDFC_Bank_Annual_Report_2024_25-310202.pdf
 
+
+## Estimated vs actual: post-merger funding and balance-sheet evidence
+
+| Metric | Model / pre-close expectation | Reported post-close observation | What it says (and does not say) |
+|---|---|---|---|
+| Funding substitution | Base-case gross annual funding benefit ~₹142cr, based on 20% migration of the market-borrowing proxy and a 50 bps spread sensitivity | Bank-wide cost of funds (including shareholders' funds) was 4.0% in Jun-23, 4.8% in Sep-23 and 4.9% in Dec-23, Mar-24 and Jun-24 | The bank-wide funding cost did not fall immediately; this is not a like-for-like matched-tenor test of migrated HDFC Ltd liabilities |
+| Deposit franchise | Model assumes a portion of legacy market borrowings can be refinanced with deposits | CASA ratio moved from 42% in Jun-23 to 38% in Sep/Dec-23 and 36% in Jun-24 | Deposit mix weakened after merger; this is a headwind to low-cost funding, but not a standalone merger effect |
+| Funding mix repair | Expected reduction in reliance on higher-cost borrowings over time | Annual report says high-cost borrowings were 14% at Mar-25 | Directionally consistent with funding-mix repositioning; the disclosure does not isolate the amount attributable to HDFC Ltd refinancing |
+| Loan/deposit balance | No explicit loan-growth benefit is assumed in the synergy model | Credit-deposit ratio was about 110% at merger and 96% at Mar-25 | The bank consciously calibrated loan growth while deposits grew faster; this improves funding headroom but is not itself a synergy saving |
+| Margin | Model's spread benefit is a 25/50/75 bps assumption on migrated balances, not a forecast of reported NIM | NIM on assets was 3.4% in Mar-24 and Dec-24, and 3.5% in Mar-25; FY25 reported NIM was 3.48% | NIM remained broadly stable; bank-wide NIM cannot validate the modelled spread on the migrated liability subset |
+
+**Conclusion:** the actual record is mixed, not a clean confirmation of the ₹142cr funding-benefit estimate. The reduction in high-cost borrowings and credit-deposit ratio is directionally consistent with balance-sheet repair, while the increase in bank-wide cost of funds and decline in CASA after merger show why the model's assumed spread must be tested against liability-level matched-tenor data. These observations are not a causal estimate of merger synergy.
+
+Sources: HDFC Bank Q1 FY25 investor presentation (HDFC-10), Q4 FY25 key parameters (HDFC-11), and FY25 annual report (HDFC-01).
+
 ## Interview-ready takeaway
 "The value case is funding, not simply cost takeout: HDFC Ltd had a substantial market-borrowing book that could be refinanced through the bank's deposit franchise. I model that benefit against CRR/SLR reserve carry and keep PSL compliance as an explicit downside pending shortfall data. The small corporate-overlap estimate is deliberately secondary."
