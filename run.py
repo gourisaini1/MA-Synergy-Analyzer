@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 STEPS = [
+    [sys.executable, "-m", "pipeline.build_operational_sensitivities"],
     [sys.executable, "-m", "pipeline.validate_inputs"],
     [sys.executable, "-m", "pipeline.build_source_register"],
     [sys.executable, "-m", "pipeline.run_model"],
@@ -14,7 +15,6 @@ STEPS = [
     [sys.executable, "-m", "pipeline.financial_analysis"],
     [sys.executable, "-m", "pipeline.build_backtest"],
     [sys.executable, "-m", "pipeline.build_deal_comparability"],
-    [sys.executable, "-m", "pipeline.build_operational_sensitivities"],
     [sys.executable, "-m", "pipeline.event_study"],
     [sys.executable, "-m", "pipeline.build_artifacts"],
     [sys.executable, "-m", "pytest", "-q"],
