@@ -386,60 +386,72 @@ def add_native_chart_slides(prs):
 
 
 def build_deck():
+    """Build a concise five-slide deck covering every core transaction."""
     prs = Presentation()
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
 
     add_slide(
         prs,
-        "Kraft Heinz reported >$1.7bn cumulative savings against a $1.5bn annual run-rate target",
-        "The deal provides a real announced-versus-estimated-versus-reported back-test",
+        "Four M&A cases. Different synergy evidence. One consistent diligence framework.",
+        "Keep management targets, independent scenarios, reported delivery and unverified outcomes separate",
         [
-            "Management target: $1.5bn annual cost savings run-rate by end-2017.",
-            "Independent base case: $1.40bn gross annual run-rate; low/high range $0.71bn–$2.04bn.",
-            "Reported delivery: >$1.7bn cumulative savings by end-2017, net of approx. $200m business investments.",
-            "Important: cumulative realised savings and annual run-rate are different measurement bases.",
+            "HDFC–HDFC Bank: partial outside-in estimate; base net recurring scenario ~₹86cr before unquantified PSL and programme costs.",
+            "Air India–Vistara: financial scale and integration milestones are observable; attributable procurement or network savings are not disclosed.",
+            "Zomato–Blinkit: consolidated cost pools and Blinkit segment trajectory are observable; standalone integration savings are not isolated.",
+            "Kraft Heinz: $1.5bn annual run-rate target and >$1.7bn cumulative reported savings; independent $1.40bn base is an ex-post sensitivity, not a blind prediction.",
+            "Microsoft–LinkedIn remains an additional reference case outside the four-deal core.",
         ],
-        "Sources: SEC merger filing, SEC 10-Q and post-integration investor presentation. Independent estimate is an analyst scenario.",
-    )
-    add_synergy_bridge(prs)
-    add_slide(
-        prs,
-        "HDFC's value case is funding substitution, with regulatory drag explicitly netted",
-        "Base-case annual run-rate: ₹142cr funding benefit + ₹12cr cost takeout − ₹68cr CRR/SLR carry = ~₹86cr",
-        [
-            "HDFC Ltd's FY23 funding mix: market borrowings 45%; deposits ₹1,52,111cr or 27% of borrowings. Implied market-borrowing pool ~₹2.54 lakh crore.",
-            "Funding benefit uses 25/50/75 bps spread sensitivities and 10%/20%/30% substitution; all are analyst assumptions, not realised savings.",
-            "CRR 4% and SLR 18% are modelled as a reserve opportunity-cost sensitivity; HDFC's merger deck said Day-0 CRR was organically met and SLR assets earned positive returns.",
-            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. PSL downside remains unquantified.",
-        ],
-        "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger investor deck. Low-confidence sensitivities.",
+        "Sources: deal briefs, source register and four-deal comparability scorecard. Values remain in deal currency.",
     )
     add_slide(
         prs,
-        "Kraft Heinz's later impairments show why synergy delivery is not value creation",
-        "FY18 impairments were USD 15.936bn; FY19 added another USD 1.899bn",
+        "HDFC: funding substitution is the value driver; reserve carry and PSL are the offsets",
+        "Illustrative base annual run-rate: +₹142cr funding benefit +₹12cr cost overlap −₹68cr reserve drag = ~₹86cr net",
         [
-            "FY18: USD 7.008bn goodwill and USD 8.928bn intangible-asset impairment charges.",
-            "FY19: a further USD 1.197bn goodwill and USD 702m intangible-asset impairment charges.",
-            "FY19 net sales fell to USD 24.977bn from USD 26.268bn in FY18.",
-            "The charges are accounting evidence of reduced expected value, not a clean causal estimate of merger NPV.",
+            "HDFC Ltd reported 45% of borrowings from market borrowings; deposits were ₹1,52,111cr or 27% of borrowings.",
+            "The implied market-borrowing pool is ~₹2.54 lakh crore; 25/50/75 bps spread and 10%/20%/30% migration are analyst sensitivities.",
+            "CRR/SLR reserve opportunity cost is modelled as a drag; HDFC's merger deck described Day-0 CRR as organically met and SLR assets as earning positive returns.",
+            "The small cost-overlap pool uses HDFC Ltd standalone non-finance expenses, not the merged bank's full expense base. PSL shortfall/PSLC cost remains unquantified.",
         ],
-        "Source: Kraft Heinz FY2019 Form 10-K. Cost synergies were reported; total shareholder value creation is a separate test.",
+        "Sources: HDFC Ltd FY23 annual report and Q4 earnings call; HDFC Bank merger investor deck. Low-confidence analyst scenario, not reported savings.",
     )
     add_slide(
         prs,
-        "The two headline cases separate upside, downside and delivery evidence",
-        "HDFC: funding-led net synergy sensitivity | Kraft Heinz: announced target versus reported delivery",
+        "Air India–Vistara: integration scale is proven; financial synergy is not yet measurable",
+        "FY24 standalone revenue: Air India ₹51,365cr + Vistara ₹15,191cr | FY25 merged revenue ₹76,754cr",
         [
-            "HDFC: positive funding substitution is offset by CRR/SLR reserve carry; PSL compliance remains unverified.",
-            "Kraft Heinz: USD 1.5bn annual run-rate target; >USD 1.7bn cumulative reported savings by end-2017.",
-            "Kraft Heinz overlap range is an ex-post sensitivity, not an externally benchmarked prediction.",
-            "Air India–Vistara and Microsoft–LinkedIn are moved to the appendix; Blinkit is retained only as a financial trend chart.",
+            "The merger completed on 12 November 2024. Tata Sons' FY25 annual report shows FY25 merged-entity loss after tax of ₹10,859cr.",
+            "At completion, Air India reported 4,000+ vendor contracts consolidated, 140+ IT systems aligned, 270,000 bookings migrated and 4.5m loyalty accounts inducted.",
+            "These are integration outputs, not savings. FY24 standalone and FY25 merged financial periods are not like-for-like.",
+            "A defensible estimate needs category-level vendor spend/rate cards, route contribution, fleet utilisation, integration cash costs and service-quality controls.",
         ],
-        "Four-way status remains: announced, estimated, realised and unverified. See source register and evidence ledger.",
+        "Sources: Tata Sons FY25 Annual Report; Air India merger completion release. No quantified synergy target or attributable realised saving identified.",
     )
-    add_native_chart_slides(prs)
+    add_slide(
+        prs,
+        "Zomato–Blinkit: do not mistake acquired-business growth for integration synergy",
+        "FY24 consolidated operating-cost pools are available; Blinkit-only cost split and causal integration benefits are not",
+        [
+            "FY24 consolidated delivery and related charges were ₹3,915cr; advertising/sales promotion ₹1,432cr; IT support ₹485cr; outsourced support ₹330cr; other expenses ₹1,179cr.",
+            "These expense lines span food delivery and quick commerce. FY24 includes a full year of Blinkit consolidation versus a partial FY23 period.",
+            "Blinkit adjusted EBITDA improved from -₹562cr in FY23 to -₹292cr in FY25; this segment trajectory is not a causal estimate of acquisition synergy.",
+            "The next diligence step is matched-city delivery cost, cross-order customer cohorts, incremental contribution after incentives and a standalone counterfactual.",
+        ],
+        "Sources: Zomato FY24 Annual Report; Eternal FY25 Annual Report; BSE acquisition Q&A. Synergy estimate remains unquantified.",
+    )
+    add_slide(
+        prs,
+        "Kraft Heinz: reported cost savings did not guarantee value creation",
+        "Announced: $1.5bn annual run-rate | Independent base: $1.40bn gross (ex-post sensitivity) | Reported: >$1.7bn cumulative",
+        [
+            "Management announced a $1.5bn annual cost-savings run-rate target by end-2017. Management later reported more than $1.7bn cumulative savings by end-2017.",
+            "The model's $0.71bn–$2.04bn range is a sensitivity using a $23bn proxy cost pool and 7%/9%/11% overlap; it was calibrated after the target was public.",
+            "The SEC 2016 Form 10-K reported $829m integration-program expense in 2015 and $887m in 2016; these accounting expenses include cash and non-cash components.",
+            "FY18/FY19 goodwill and intangible impairments totalled $17.835bn. Impairments indicate value erosion but do not alone prove merger causality.",
+        ],
+        "Sources: SEC merger filing, FY2016 Form 10-K, post-integration presentation and FY2019 Form 10-K. Annual run-rate and cumulative savings are different measures.",
+    )
     OUT.mkdir(exist_ok=True)
     prs.save(OUT / "MA_Executive_Deck.pptx")
 
