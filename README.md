@@ -66,7 +66,12 @@ The unified run validates provenance, builds the directional low/base/high model
 
 - output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence, Blinkit unit-economics sensitivities and Air India procurement reverse hurdles.
 - output/MA_Executive_Deck.pptx: five-slide executive story covering the four core deals and summary.
-- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.\n- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.\n- dashboard/zomato_operational_sensitivities.csv: FY25 Blinkit order-based cost/order and cross-platform customer activation sensitivities; explicitly illustrative, not synergy forecasts.\n- dashboard/air_india_procurement_hurdles.csv: reverse procurement spend required for ₹100cr/₹250cr/₹500cr annual savings hurdles; no spend pool is imputed.\n- docs/operational_sensitivity_methodology.md: formulas, assumptions and diligence data requirements.\n- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 expense series totals $2.055bn pre-tax, with approximately $1.4bn cumulative programme capex reported separately by end-2017.
+- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.
+- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.
+- dashboard/zomato_operational_sensitivities.csv: FY25 Blinkit order-based cost/order and cross-platform customer activation sensitivities; explicitly illustrative, not synergy forecasts.
+- dashboard/air_india_procurement_hurdles.csv: reverse procurement spend required for ₹100cr/₹250cr/₹500cr annual savings hurdles; no spend pool is imputed.
+- docs/operational_sensitivity_methodology.md: formulas, assumptions and diligence data requirements.
+- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 expense series totals $2.055bn pre-tax, with approximately $1.4bn cumulative programme capex reported separately by end-2017.
 - dashboard/financial_due_diligence.csv: financial metrics, before/after changes and caveats.
 - dashboard/event_study_results.csv: event-window CAR and t-statistics after manual market-data refresh.
 - agent/output/: committed only after the manual extraction workflow has produced real output.
