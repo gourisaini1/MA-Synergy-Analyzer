@@ -20,6 +20,26 @@ def score(left, right):
     return len(first & second) / max(1, len(first | second))
 
 
+def match_predictions(gold, predictions, threshold=0.35):
+    """Greedy one-to-one matching; a prediction can match at most one gold row."""
+    remaining = set(range(len(gold)))
+    matches = []
+    for prediction in predictions:
+        candidates = [
+            (score(prediction.get("claim", ""), gold.iloc[index].gold_claim), index)
+            for index in remaining
+            if prediction.get("deal_id") == gold.iloc[index].deal_id
+            and prediction.get("source_id") == gold.iloc[index].source_id
+            and prediction.get("claim_type") == gold.iloc[index].claim_type
+        ]
+        if candidates:
+            similarity, index = max(candidates)
+            if similarity >= threshold and prediction.get("citation_valid") is True:
+                matches.append((prediction, index, similarity))
+                remaining.remove(index)
+    return matches
+
+
 def load_predictions():
     if not PRED.exists():
         return []
@@ -42,23 +62,9 @@ def main():
         print("No extracted claims: precision/recall are undefined; no metrics file written.")
         return
 
-    remaining = set(range(len(gold)))
-    true_positive = 0
-    for prediction in predictions:
-        candidates = [
-            (score(prediction.get("claim", ""), gold.iloc[index].gold_claim), index)
-            for index in remaining
-            if prediction.get("deal_id") == gold.iloc[index].deal_id
-            and prediction.get("source_id") == gold.iloc[index].source_id
-            and prediction.get("claim_type") == gold.iloc[index].claim_type
-        ]
-        if candidates:
-            similarity, index = max(candidates)
-            if similarity >= 0.35 and prediction.get("citation_valid") is True:
-                true_positive += 1
-                remaining.remove(index)
-
-    precision = true_positive / len(predictions)
+    matches = match_predictions(gold, predictions)
+    true_positive = len(matches)
+        precision = true_positive / len(predictions)
     recall = true_positive / len(gold) if len(gold) else None
     OUT.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame([{
@@ -67,7 +73,7 @@ def main():
         "true_positive": true_positive,
         "precision": precision,
         "recall": recall,
-        "matching_rule": "same deal/source/type, token Jaccard >=0.35, citation_valid=true",
+        "matching_rule": "one-to-one matching by deal/source/type, token Jaccard >=0.35, citation_valid=true",
     }]).to_csv(OUT, index=False)
     update_readme_metrics(len(gold), len(predictions), true_positive, precision, recall)
     print(f"Extraction precision={precision:.3f}; recall={recall:.3f}")
