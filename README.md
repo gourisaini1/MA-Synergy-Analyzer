@@ -132,3 +132,9 @@ Microsoft–LinkedIn remains a financial trajectory reference case; LinkedIn gro
 - dashboard/: Tableau-ready outputs and specifications.
 - alteryx/: source-register cleaning workflow.
 - tests/: model, agent and event-study tests.
+
+
+## Tableau and live-agent implementation guides
+
+- `dashboard/tableau_public_build_guide.md` specifies the five-dashboard Tableau workbook, data-grain rules, calculated fields, QA checks and publish steps.
+- `agent/live_run_checklist.md` documents the credentialed extraction workflow, output review and benchmark acceptance gates. A live run still requires the repository `OPENAI_API_KEY` secret and a manual Actions launch.
