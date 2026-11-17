@@ -56,11 +56,21 @@ def calculate(row, scenario, overrides=None):
     first_year_net = gross * values["ramp"] - annual_program_cost
 
     npv_5yr = 0.0
-    for year in range(1, 6):
-        year_ramp = min(1.0, values["ramp"] + 0.20 * (year - 1))
-        program_cost = annual_program_cost if year <= program_years else 0.0
-        net_cash_flow = gross * year_ramp - program_cost
-        npv_5yr += net_cash_flow / ((1 + discount_rate) ** year)
+    if row.get("deal_id") == "HDFC" and row.get("lever") == "Priority-sector lending compliance cost":
+        # RBI's merger forbearance phases the inherited HDFC Ltd portfolio into
+        # the PSL denominator over three years: one-third, two-thirds, then full.
+        for year, phase_share in enumerate((1 / 3, 2 / 3, 1, 1, 1), start=1):
+            cash_flow = (
+                values["baseline"] * values["overlap"] * phase_share
+                * values["achievable"] * values["margin"] * direction
+            )
+            npv_5yr += cash_flow / ((1 + discount_rate) ** year)
+    else:
+        for year in range(1, 6):
+            year_ramp = min(1.0, values["ramp"] + 0.20 * (year - 1))
+            program_cost = annual_program_cost if year <= program_years else 0.0
+            net_cash_flow = gross * year_ramp - program_cost
+            npv_5yr += net_cash_flow / ((1 + discount_rate) ** year)
     return gross, first_year_net, npv_5yr, "estimated"
 
 
