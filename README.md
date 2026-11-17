@@ -39,11 +39,12 @@ The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of
 The gold set contains 46 manually curated claims across HDFC and Kraft Heinz. The agent is manual-only, filters filing pages by keyword, uses structured JSON-schema outputs and checks every excerpt against the exact cited PDF page.
 
 | Metric | Result |
-|---|---|
+|---|---:|
 | Gold claims | 46 |
-| Model-extracted claims | Not run in this repository revision |
-| Precision | Not reported |
-| Recall | Not reported |
+| Model-extracted claims | 0 |
+| True positives | 0 |
+| Precision | undefined |
+| Recall | undefined |
 
 Precision and recall remain undefined until the manual extraction workflow has run with the repository OPENAI_API_KEY secret. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return. The evaluator does not write 0.000/0.000 for an empty file.
 
