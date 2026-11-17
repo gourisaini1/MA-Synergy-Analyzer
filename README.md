@@ -64,12 +64,27 @@ The unified run validates provenance, builds the directional low/base/high model
 
 ## Outputs
 
-- output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence.
-- output/MA_Executive_Deck.pptx: answer-led deck with native PowerPoint scenario, Blinkit EBITDA and HDFC cost-to-income charts, plus Air India/Microsoft appendix slides.
-- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.\n- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.\n- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 expense series totals $2.055bn pre-tax, with approximately $1.4bn cumulative programme capex reported separately by end-2017.
+- output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence, Blinkit unit-economics sensitivities and Air India procurement reverse hurdles.
+- output/MA_Executive_Deck.pptx: five-slide executive story covering the four core deals and summary.
+- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.\n- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.\n- dashboard/zomato_operational_sensitivities.csv: FY25 Blinkit order-based cost/order and cross-platform customer activation sensitivities; explicitly illustrative, not synergy forecasts.\n- dashboard/air_india_procurement_hurdles.csv: reverse procurement spend required for ₹100cr/₹250cr/₹500cr annual savings hurdles; no spend pool is imputed.\n- docs/operational_sensitivity_methodology.md: formulas, assumptions and diligence data requirements.\n- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 expense series totals $2.055bn pre-tax, with approximately $1.4bn cumulative programme capex reported separately by end-2017.
 - dashboard/financial_due_diligence.csv: financial metrics, before/after changes and caveats.
 - dashboard/event_study_results.csv: event-window CAR and t-statistics after manual market-data refresh.
 - agent/output/: committed only after the manual extraction workflow has produced real output.
+
+## Next-phase operational sensitivities
+
+The two previously unquantified core deals now have decision-useful, assumption-transparent driver models. These outputs are **not** promoted into the independent synergy estimate or reported realisation fields.
+
+### Zomato–Blinkit
+Eternal's FY25 annual report reports 424 million Blinkit orders and 20.6 million average monthly food-delivery transacting customers. The new order-level sensitivity shows annual savings of ₹1.06cr / ₹7.95cr / ₹38.16cr for low/base/high illustrative assumptions on saving per eligible Blinkit order, eligible share and capture. A separate cross-platform activation sensitivity shows ₹0.15cr / ₹3.71cr / ₹27.81cr using a net-eligible audience haircut, conversion, incremental monthly order frequency and contribution per order. These are assumption-driven what-if outputs, not estimates of realised merger synergies. They exclude integration costs and require matched-city cost data and deduplicated customer cohorts before any attribution.
+
+### Air India–Vistara
+Air India reported 4,000+ vendor contracts consolidated at merger completion, but did not disclose the spend pool. The reverse procurement hurdle calculates the addressable spend required to deliver ₹100cr / ₹250cr / ₹500cr of annual savings under different contract-rate reductions and capture rates. For example, ₹100cr at a 1% rate reduction and 75% capture requires ₹13,333cr of eligible vendor spend. This is a diligence hurdle, not a claim that the spend exists or that the saving is achievable.
+
+The formulas, assumptions and data requests are documented in `docs/operational_sensitivity_methodology.md`. The two output CSVs are added to the workbook and Tableau specification.
+
+### Filing-agent evaluation
+The manually curated gold benchmark now contains 61 claims across all four core cases: HDFC, Kraft Heinz, Air India and Zomato/Blinkit. The keyword filter now includes airline integration and quick-commerce operating metrics. The actual LLM precision/recall run remains dependent on the repository API secret.
 
 ## Tableau and Alteryx
 
