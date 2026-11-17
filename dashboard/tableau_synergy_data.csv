@@ -14,12 +14,14 @@ HDFC,CRR-SLR reserve opportunity-cost drag,cost,base,INR crore,-68.044231,-44.22
 HDFC,CRR-SLR reserve opportunity-cost drag,cost,high,INR crore,-133.857504,-107.086003,-483.087527,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_sensitivity,estimated
 HDFC,CRR-SLR reserve opportunity-cost drag,cost,stress_30_80,INR crore,-133.857504,-107.086003,-483.087527,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_stress_case,estimated
 HDFC,CRR-SLR reserve opportunity-cost drag,cost,stress_20_65,INR crore,-89.238336,-58.004918,-298.826884,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_stress_case,estimated
-HDFC,Priority-sector lending compliance cost,cost,low,INR crore,,,,negative,A-HDFC-18,,analyst_assumption,low,,unverified,unverified
-HDFC,Priority-sector lending compliance cost,cost,base,INR crore,,,,negative,A-HDFC-18,,analyst_assumption,low,,unverified,unverified
-HDFC,Priority-sector lending compliance cost,cost,high,INR crore,,,,negative,A-HDFC-18,,analyst_assumption,low,,unverified,unverified
-KRAFT_HEINZ,SG&A and procurement overlap,cost,low,USD million,708.4,-216.64,714.939253,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500.0,ex_post_sensitivity_not_benchmark,estimated
-KRAFT_HEINZ,SG&A and procurement overlap,cost,base,USD million,1397.25,205.016667,2982.62923,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500.0,ex_post_sensitivity_not_benchmark,estimated
-KRAFT_HEINZ,SG&A and procurement overlap,cost,high,USD million,2042.975,934.38,5632.236207,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500.0,ex_post_sensitivity_not_benchmark,estimated
+HDFC,Priority-sector lending compliance cost,cost,low,INR crore,-0.456033,-0.456033,-3.980137,negative,A-HDFC-18,A-HDFC-18;A-HDFC-19;A-HDFC-20;A-HDFC-21;A-HDFC-22;A-HDFC-23,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Priority-sector lending compliance cost,cost,base,INR crore,-87.558444,-87.558444,-382.093134,negative,A-HDFC-18,A-HDFC-18;A-HDFC-19;A-HDFC-20;A-HDFC-21;A-HDFC-22;A-HDFC-23,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Priority-sector lending compliance cost,cost,high,INR crore,-800.3385,-800.3385,-2328.380035,negative,A-HDFC-18,A-HDFC-18;A-HDFC-19;A-HDFC-20;A-HDFC-21;A-HDFC-22;A-HDFC-23,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Priority-sector lending compliance cost,cost,stress_30_80,INR crore,-800.3385,-800.3385,-2328.380035,negative,A-HDFC-18,A-HDFC-18;A-HDFC-19;A-HDFC-20;A-HDFC-21;A-HDFC-22;A-HDFC-23,analyst_assumption,low,,analyst_stress_case,estimated
+HDFC,Priority-sector lending compliance cost,cost,stress_20_65,INR crore,-800.3385,-800.3385,-2328.380035,negative,A-HDFC-18,A-HDFC-19;A-HDFC-20;A-HDFC-21;A-HDFC-22;A-HDFC-23,analyst_assumption,low,,analyst_stress_case,estimated
+KRAFT_HEINZ,SG&A and procurement overlap,cost,low,USD million,38.83044,-484.467824,-1136.079603,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06;A-KHC-07,analyst_assumption,low,1500.0,pre_2015_benchmark,estimated
+KRAFT_HEINZ,SG&A and procurement overlap,cost,base,USD million,211.031325,-506.714538,-886.651381,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06;A-KHC-07,analyst_assumption,low,1500.0,pre_2015_benchmark,estimated
+KRAFT_HEINZ,SG&A and procurement overlap,cost,high,USD million,912.466925,29.97354,1552.268076,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06;A-KHC-07,analyst_assumption,low,1500.0,pre_2015_benchmark,estimated
 AIR_INDIA,Vendor procurement,cost,low,INR crore,,,,positive,A-AIR-01,,analyst_assumption,low,,unverified,unverified
 AIR_INDIA,Vendor procurement,cost,base,INR crore,,,,positive,A-AIR-01,,analyst_assumption,low,,unverified,unverified
 AIR_INDIA,Vendor procurement,cost,high,INR crore,,,,positive,A-AIR-01,,analyst_assumption,low,,unverified,unverified
