@@ -30,3 +30,19 @@ def test_nse_bhavcopy_parser_extracts_listed_target_and_acquirer_prices():
     rows = _parse_nse_bhavcopy(payload, pd.Timestamp("2022-04-04"))
     assert {row["ticker"] for row in rows} == {"HDFC.NS", "HDFCBANK.NS", "ZOMATO.NS"}
     assert all(row["price_source"].startswith("NSE official") for row in rows)
+
+
+def test_price_panel_does_not_mix_adjusted_and_unadjusted_sources():
+    from pipeline.event_study import _price_panel
+
+    cached = pd.DataFrame([
+        {"date": "2022-04-01", "ticker": "HDFCBANK.NS", "price": 100.0,
+         "price_source": "Yahoo Finance auto-adjusted close"},
+        {"date": "2022-04-01", "ticker": "HDFCBANK.NS", "price": 101.0,
+         "price_source": "NSE official bhavcopy close (unadjusted)"},
+        {"date": "2022-04-04", "ticker": "HDFCBANK.NS", "price": 102.0,
+         "price_source": "Yahoo Finance auto-adjusted close"},
+    ])
+    prices = _price_panel(cached)
+    assert prices.loc[pd.Timestamp("2022-04-01"), "HDFCBANK.NS"] == 100.0
+    assert prices.attrs["price_sources"]["HDFCBANK.NS"] == "Yahoo Finance auto-adjusted close"
