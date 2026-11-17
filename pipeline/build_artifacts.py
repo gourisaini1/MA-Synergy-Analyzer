@@ -428,7 +428,7 @@ def build_deck():
             "Base case: funding substitution +₹475cr; CRR/SLR reserve drag –₹228cr; legacy operating-cost lever –₹127cr; phased PSL/PSLC cost –₹382cr; combined ~–₹261cr.",
             "Matched stress before PSL remains –₹352cr (30% / 80%) and –₹278cr (20% / 65%). Including high PSL/PSLC downside, totals become ~–₹2,680cr and ~–₹2,606cr respectively.",
             "The operating-cost lever is negative in low/base/high because the three-year programme cost exceeds the discounted savings.",
-            "These are analyst sensitivities, not realised merger savings. PSL assumes the high PSLC-SMF premium and 75% of the conservative shortfall proxy is not met organically.",
+            "These are analyst sensitivities, not realised merger savings. PSL assumes the high PSLC-SMF premium and 75% of the non-individual loan-book proxy is not met organically.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger deck and post-merger results. Model outputs from scenario inputs.",
     )
