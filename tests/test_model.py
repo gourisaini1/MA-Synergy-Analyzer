@@ -149,9 +149,9 @@ def test_kraft_overlap_benchmark_is_committed_before_target_comparison():
     benchmarks = pd.read_csv(ROOT / "research" / "pre2015_synergy_benchmarks.csv")
     khc = pd.read_csv(ROOT / "model" / "synergy_inputs.csv").query("deal_id == 'KRAFT_HEINZ'").iloc[0]
     assert len(benchmarks) == 3
-    assert khc.overlap_low == benchmarks["base_ratio"].min()
+    assert khc.overlap_low == benchmarks["low_ratio"].min()
     assert khc.overlap_base == benchmarks["base_ratio"].median()
-    assert khc.overlap_high == benchmarks["base_ratio"].max()
+    assert khc.overlap_high == benchmarks["high_ratio"].max()
     target_ratio = khc.management_target / khc.baseline_amount
     assert target_ratio > khc.overlap_high
 
