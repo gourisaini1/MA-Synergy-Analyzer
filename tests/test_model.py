@@ -148,7 +148,7 @@ def test_kraft_overlap_benchmark_is_not_haircut_twice():
     assert khc.achievable_low == khc.achievable_base == khc.achievable_high == 1
 
 
-def test_kraft_overlap_benchmark_is_committed_before_target_comparison():
+def test_kraft_overlap_benchmark_exceeds_precedent_range():
     benchmarks = pd.read_csv(ROOT / "research" / "pre2015_synergy_benchmarks.csv")
     khc = pd.read_csv(ROOT / "model" / "synergy_inputs.csv").query("deal_id == 'KRAFT_HEINZ'").iloc[0]
     assert len(benchmarks) == 3
