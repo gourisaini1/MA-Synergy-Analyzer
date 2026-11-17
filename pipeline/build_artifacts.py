@@ -41,7 +41,7 @@ def build_workbook():
         ["Analyst estimates are scenario assumptions, not management guidance or realised synergy."],
         ["Cost run-rate = baseline cost × overlap × addressable × achievable."],
         ["First-year net allocates total multi-year integration cost over programme years; five-year NPV discounts ramped cash flows."],
-        ["Kraft Heinz overlap range is an ex-post sensitivity, not an external benchmark or blind prediction."],
+        ["Kraft Heinz is a target-equivalent comparison: announced-synergy benchmark ratios are applied directly, without a second addressability or achievability haircut."],
         ["Blank values mean unverified; they are never silently converted to zero."],
     ]
     for row in notes:
@@ -208,7 +208,7 @@ def add_synergy_bridge(prs):
     title = slide.shapes.add_textbox(
         Inches(.65), Inches(.45), Inches(12), Inches(.75)
     ).text_frame.paragraphs[0]
-    title.text = "Kraft Heinz: $313m benchmarked overlap pool filters to $211m achievable run-rate"
+    title.text = "Kraft Heinz: announced-target benchmark ratios imply $313m base target-equivalent run-rate"
     title.font.size = Pt(23)
     title.font.bold = True
     title.font.color.rgb = RGBColor(255, 255, 255)
@@ -216,15 +216,12 @@ def add_synergy_bridge(prs):
     subtitle = slide.shapes.add_textbox(
         Inches(.7), Inches(1.28), Inches(12), Inches(.55)
     ).text_frame.paragraphs[0]
-    subtitle.text = "USD million | $23.0bn analyst cost-pool proxy × 1.36% pre-2015 median overlap × 90% addressable × 75% achievable"
+    subtitle.text = "USD million | $23.0bn analyst cost-pool proxy × 1.36% pre-2015 median announced-synergy ratio; no second execution haircut"
     subtitle.font.size = Pt(14)
     subtitle.font.color.rgb = RGBColor(100, 190, 220)
 
     stages = [
-        ("Identified overlap", 313, 0, 313, "313"),
-        ("Not addressable", -31, 282, 313, "(31)"),
-        ("Execution haircut", -70, 211, 282, "(70)"),
-        ("Base-case run-rate", 211, 0, 211, "211"),
+        ("Base target-equivalent", 313, 0, 313, "313"),
     ]
     x_positions = [1.0, 3.65, 6.3, 8.95]
     bottom = 5.25
@@ -280,7 +277,7 @@ def add_synergy_bridge(prs):
     note = slide.shapes.add_textbox(
         Inches(.85), Inches(6.2), Inches(11.7), Inches(.55)
     ).text_frame.paragraphs[0]
-    note.text = "Announced target: $1,500m annual run-rate | Independent base: $211m | Reported: >$1,700m cumulative by end-2017 (different basis)"
+    note.text = "Announced target: $1,500m annual run-rate | Base target-equivalent: $313m | Reported: >$1,700m cumulative by end-2017 (different basis)"
     note.font.size = Pt(13)
     note.font.bold = True
     note.font.color.rgb = RGBColor(100, 190, 220)
@@ -309,7 +306,7 @@ def add_native_chart_slides(prs):
 
     for deal, label, x in [
         ("HDFC", "HDFC net recurring scenario (INR crore)", .6),
-        ("KRAFT_HEINZ", "Kraft Heinz gross run-rate (USD million)", 6.8),
+        ("KRAFT_HEINZ", "Kraft Heinz target-equivalent run-rate (USD million)", 6.8),
     ]:
         subset = scenario_data[
             (scenario_data.deal_id == deal)
