@@ -4,7 +4,7 @@ An evidence-led model of merger synergies, integration costs and post-close fina
 
 ![Outside-in synergy scenarios](docs/synergy_estimate.svg)
 
-- **HDFC:** the base-case five-year after-cost NPV is approximately **+₹121cr**; the adverse stress case is approximately **–₹560cr**, driven by high reserve drag and operating-cost programme costs. These are analyst sensitivities, not realised savings.
+- **HDFC:** the base-case five-year after-cost NPV is approximately **+₹121cr**; the matched adverse stress cases are approximately **–₹278cr to –₹352cr**, driven by high reserve drag and operating-cost programme costs. These are analyst sensitivities, not realised savings.
 - **Kraft Heinz:** management reported more than **USD 1.7bn cumulative savings** by end-2017 against a USD 1.5bn annual run-rate target, but later impairment charges show that synergy delivery is not the same as value creation.
 - **HDFC actuals:** post-merger cost of funds remained around **4.8–4.9%** through FY24/Q1 FY25, CASA fell from **42%** in Jun-23 to **36%** in Jun-24, and the credit-deposit ratio declined from about **110%** at merger to **96%** by Mar-25. These outcomes are consistent with balance-sheet repositioning, but do not isolate the merger's causal funding benefit.
 
@@ -13,7 +13,6 @@ An evidence-led model of merger synergies, integration costs and post-close fina
 ```bash
 pip install -r requirements.txt
 python run.py
-pytest -q
 ```
 
 ## Headline cases
@@ -26,7 +25,7 @@ pytest -q
 | Kraft Heinz gross annual run-rate (USD bn) | 0.71 | 1.40 | 2.04 | Ex-post sensitivity; not an out-of-sample estimate |
 
 **HDFC combined base case:** approximately **+₹121cr** five-year after-cost NPV across the three quantified levers.  
-**HDFC adverse stress:** approximately **–₹560cr** five-year after-cost NPV, pairing low funding benefit, high reserve drag and high operating-cost programme costs. This is not the earlier rough –₹103cr estimate: that figure does not reconcile to the current five-year cash-flow model and should not be repeated without a separately defined calculation basis. PSL remains unquantified and is excluded from both totals.
+**HDFC matched adverse stress:** approximately **–₹352cr** at 30% migration / 80% ramp and **–₹278cr** at 20% / 65%. Funding benefit and reserve drag use the same migration share and ramp in each case; funding uses the low spread and execution assumptions, reserve drag uses the high opportunity-cost spread, and the operating-cost lever uses the high programme-cost assumption. PSL remains unquantified and is excluded from both totals.
 
 **Important estimate caveat:** HDFC's funding spreads and reserve opportunity-cost ranges are analyst sensitivities, not reported realised savings. Kraft Heinz's 7%/9%/11% overlap range is an ex-post sensitivity chosen after the target and reported savings were public; it is not an externally benchmarked blind estimate.
 
