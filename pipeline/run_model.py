@@ -8,41 +8,16 @@ INPUT = ROOT / "model" / "synergy_inputs.csv"
 OUT = ROOT / "dashboard" / "tableau_synergy_data.csv"
 SCENARIOS = ("low", "base", "high")
 
-# Matched migration assumptions: funding benefit and reserve drag use the
-# identical share moved and ramp. Funding uses the low spread/execution case;
-# reserve drag uses the high opportunity-cost spread; operating cost uses the
-# high programme-cost case. These are analyst stress sensitivities.
-HDFC_STRESS_INPUTS = {
-    "stress_30_80": {
-        "Market borrowing to bank deposit funding substitution": {
-            "overlap": 0.30, "addressable": 0.70, "achievable": 0.60,
-            "ramp": 0.80, "one_off": 0.0, "margin": 0.0025,
-        },
-        "CRR-SLR reserve opportunity-cost drag": {
-            "overlap": 0.30, "addressable": 0.22, "achievable": 1.0,
-            "ramp": 0.80, "one_off": 0.0, "margin": 0.008,
-        },
-        "Legacy standalone operating cost overlap": {
-            "overlap": 0.03, "addressable": 0.70, "achievable": 0.50,
-            "ramp": 0.80, "one_off": 300.0, "margin": 1.0,
-        },
-    },
-    "stress_20_65": {
-        "Market borrowing to bank deposit funding substitution": {
-            "overlap": 0.20, "addressable": 0.70, "achievable": 0.60,
-            "ramp": 0.65, "one_off": 0.0, "margin": 0.0025,
-        },
-        "CRR-SLR reserve opportunity-cost drag": {
-            "overlap": 0.20, "addressable": 0.22, "achievable": 1.0,
-            "ramp": 0.65, "one_off": 0.0, "margin": 0.008,
-        },
-        "Legacy standalone operating cost overlap": {
-            "overlap": 0.03, "addressable": 0.70, "achievable": 0.50,
-            "ramp": 0.80, "one_off": 300.0, "margin": 1.0,
-        },
-    },
+# Only the matched migration share and ramp are stress-case overrides.
+# All other lever parameters are selected from the low/high columns in the input CSV.
+HDFC_STRESS_CASES = {
+    "stress_30_80": {"matched_share": 0.30, "ramp": 0.80},
+    "stress_20_65": {"matched_share": 0.20, "ramp": 0.65},
 }
-
+HDFC_MATCHED_LEVERS = {
+    "Market borrowing to bank deposit funding substitution",
+    "CRR-SLR reserve opportunity-cost drag",
+}
 
 def calculate(row, scenario, overrides=None):
     names = {
@@ -90,29 +65,35 @@ def calculate(row, scenario, overrides=None):
 
 
 def build_stress_rows(record):
-    """Build matched-share/ramp HDFC stress rows for each lever and case."""
+    """Build matched-share/ramp HDFC stress rows from CSV low/high inputs."""
     rows = []
-    for scenario, lever_inputs in HDFC_STRESS_INPUTS.items():
-        for lever, overrides in lever_inputs.items():
-            if record["deal_id"] != "HDFC" or record["lever"] != lever:
-                continue
-            gross, net, npv, status = calculate(record, "high", overrides)
-            rows.append({
-                "deal_id": record["deal_id"], "lever": lever,
-                "synergy_type": record["synergy_type"], "scenario": scenario,
-                "currency": record["currency"], "gross_run_rate": gross,
-                "net_first_year": net, "npv_5yr": npv,
-                "direction": record.get("direction", "positive"),
-                "source_or_assumption_id": record["source_or_assumption_id"],
-                "assumption_ids": record.get("assumption_ids", ""),
-                "classification": record.get("assumption_type", "analyst_assumption"),
-                "confidence": record.get("confidence", "low"),
-                "management_target": record.get("management_target", None),
-                "benchmark_status": "analyst_stress_case",
-                "evidence_status": status,
-            })
-    return rows
+    source_scenario = record.get("stress_scenario")
+    if record.get("deal_id") != "HDFC" or source_scenario not in SCENARIOS:
+        return rows
 
+    for case_name, case_inputs in HDFC_STRESS_CASES.items():
+        overrides = {}
+        if record["lever"] in HDFC_MATCHED_LEVERS:
+            overrides = {
+                "overlap": case_inputs["matched_share"],
+                "ramp": case_inputs["ramp"],
+            }
+        gross, net, npv, status = calculate(record, source_scenario, overrides)
+        rows.append({
+            "deal_id": record["deal_id"], "lever": record["lever"],
+            "synergy_type": record["synergy_type"], "scenario": case_name,
+            "currency": record["currency"], "gross_run_rate": gross,
+            "net_first_year": net, "npv_5yr": npv,
+            "direction": record.get("direction", "positive"),
+            "source_or_assumption_id": record["source_or_assumption_id"],
+            "assumption_ids": record.get("assumption_ids", ""),
+            "classification": record.get("assumption_type", "analyst_assumption"),
+            "confidence": record.get("confidence", "low"),
+            "management_target": record.get("management_target", None),
+            "benchmark_status": "analyst_stress_case",
+            "evidence_status": status,
+        })
+    return rows
 
 def main():
     frame = pd.read_csv(INPUT)
