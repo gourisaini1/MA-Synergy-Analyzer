@@ -34,7 +34,7 @@ def build_workbook():
     readme.title = "Read Me"
     notes = [
         ["AI-Assisted M&A Synergy Analyzer"],
-        ["Headline cases: HDFC funding economics and Kraft Heinz synergy/value back-test; other deals are appendix cases."],
+        ["Four core deals: HDFC–HDFC Bank, Air India–Vistara, Zomato–Blinkit and Kraft Heinz; Microsoft–LinkedIn is an additional reference case."],
         ["Four classifications remain separate: announced, estimated, realised and unverified."],
         ["Analyst estimates are scenario assumptions, not management guidance or realised synergy."],
         ["Cost run-rate = baseline cost × overlap × addressable × achievable."],
@@ -436,7 +436,8 @@ def build_deck():
             "The merger completed on 12 November 2024. Tata Sons' FY25 annual report shows FY25 merged-entity loss after tax of ₹10,859cr.",
             "At completion, Air India reported 4,000+ vendor contracts consolidated, 140+ IT systems aligned, 270,000 bookings migrated and 4.5m loyalty accounts inducted.",
             "These are integration outputs, not savings. FY24 standalone and FY25 merged financial periods are not like-for-like.",
-            "A defensible estimate needs category-level vendor spend/rate cards, route contribution, fleet utilisation, integration cash costs and service-quality controls.",
+            "Reverse hurdle: ₹100cr annual savings at 1% contract-rate reduction and 75% capture requires ₹13,333cr of eligible vendor spend. This is a procurement diligence hurdle, not an estimate.",
+            "A defensible estimate still needs category-level vendor spend/rate cards, route contribution, fleet utilisation, integration cash costs and service-quality controls.",
         ],
         "Sources: Tata Sons FY25 Annual Report; Air India merger completion release. No quantified synergy target or attributable realised saving identified.",
     )
@@ -447,7 +448,10 @@ def build_deck():
         [
             "FY24 consolidated delivery and related charges were ₹3,915cr; advertising/sales promotion ₹1,432cr; IT support ₹485cr; outsourced support ₹330cr; other expenses ₹1,179cr.",
             "These expense lines span food delivery and quick commerce. FY24 includes a full year of Blinkit consolidation versus a partial FY23 period.",
+            "FY25 Blinkit processed 424m orders and had 10.2m average monthly transacting customers; food delivery had 20.6m average monthly transacting customers.",
+            "Illustrative unit sensitivities: ₹0.50/₹1/₹2 saving per eligible Blinkit order yields ₹1.06cr/₹7.95cr/₹38.16cr annual sensitivity under stated eligibility/capture assumptions; not a forecast.",
             "Blinkit adjusted EBITDA improved from -₹562cr in FY23 to -₹292cr in FY25; this segment trajectory is not a causal estimate of acquisition synergy.",
+            "A separate customer activation sensitivity yields ₹0.15cr/₹3.71cr/₹27.81cr under illustrative assumptions; it requires deduplicated customer cohorts and contribution after incentives.",
             "The next diligence step is matched-city delivery cost, cross-order customer cohorts, incremental contribution after incentives and a standalone counterfactual.",
         ],
         "Sources: Zomato FY24 Annual Report; Eternal FY25 Annual Report; BSE acquisition Q&A. Synergy estimate remains unquantified.",
