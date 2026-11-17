@@ -37,6 +37,10 @@ The CSV uses a common calculation schema, but some fields have lever-specific me
 
 These shared column names are a schema convenience, not interchangeable economic concepts. Read the lever-specific definitions before interpreting the values.
 
-## HDFC stress case
+## HDFC stress cases
 
-The generated `stress` rows pair the low funding-substitution assumptions with the high reserve-drag assumptions and, for the legacy operating-cost lever, the high one-off programme-cost assumption. The stress case is a deliberately adverse analyst sensitivity, not a management forecast or observed outcome. The five-year NPV includes programme costs and should be read as the after-costs result.
+Two matched migration stresses are generated. In each case, funding substitution and CRR/SLR reserve drag use the same share of market borrowings migrated and the same ramp:
+- **30% / 80%:** low funding spread and execution assumptions, high reserve opportunity-cost spread, and high operating-cost programme cost.
+- **20% / 65%:** the same low funding spread/execution, high reserve spread and high operating-cost programme cost, with the lower matched migration share and ramp.
+
+The operating-cost lever uses the high overlap, addressability, execution and programme-cost assumptions in both stresses. These are analyst sensitivities, not management forecasts or observed outcomes. Five-year NPV includes programme costs.
