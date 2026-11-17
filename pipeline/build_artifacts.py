@@ -402,7 +402,7 @@ def build_deck():
             "Reported delivery: >$1.7bn cumulative savings by end-2017, net of approx. $200m business investments.",
             "Important: cumulative realised savings and annual run-rate are different measurement bases.",
         ],
-        "Sources: SEC merger filing, SEC 10-Q and post-integration investor presentation. Independent estimate is an analyst scenario.",
+        "Sources: SEC merger filing, SEC 10-Q and post-integration investor presentation. Benchmark-equivalent figures are an analyst comparison, not a realised-savings forecast.",
     )
     add_synergy_bridge(prs)
     add_slide(
