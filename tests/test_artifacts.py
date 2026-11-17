@@ -14,6 +14,8 @@ def test_generated_workbook_has_excel_safe_sheet_names_and_npv():
     assert "Announced vs Est vs Realised" in workbook.sheetnames
     assert "Four-Deal Comparability" in workbook.sheetnames
     assert "Integration Cost Tracker" in workbook.sheetnames
+    assert "Blinkit Unit Economics" in workbook.sheetnames
+    assert "Air India Procurement Hurdles" in workbook.sheetnames
     calculations = workbook["Scenario Calculations"]
     assert "Five-year NPV" in [cell.value for cell in calculations[1]]
     assert any(
