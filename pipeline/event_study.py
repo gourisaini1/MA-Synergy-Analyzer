@@ -29,6 +29,15 @@ EVENTS = [
         "target_status": "Heinz was privately held acquirer; Kraft Foods Group was the listed target",
     },
     {
+        "deal": "ZOMATO",
+        "announcement_date": "2022-06-24",
+        "event_date": "2022-06-27",
+        "event": "Zomato board approval of Blinkit acquisition (next session)",
+        "securities": {"Zomato (acquirer)": ["ETERNAL.NS", "ZOMATO.NS", "ETERNAL.BO", "ZOMATO.BO"]},
+        "benchmark": "^NSEI",
+        "target_status": "Blinkit was privately held target; no listed target return",
+    },
+    {
         "deal": "HDFC",
         "announcement_date": "2022-04-04",
         "event_date": "2022-04-04",
@@ -381,6 +390,10 @@ def update_readme_event_table(results):
     ]
     groups = {}
     for row in results:
+        # Keep Zomato CARs in the event-study output CSV for appendix research,
+        # but limit the README headline table to the two core deal cases.
+        if row.get("deal") == "ZOMATO":
+            continue
         groups.setdefault((row.get("deal", ""), row.get("security", "")), []).append(row)
     for (deal, security), rows in sorted(groups.items()):
         values = {}
