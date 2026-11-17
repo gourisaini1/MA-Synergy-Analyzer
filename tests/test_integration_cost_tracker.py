@@ -16,5 +16,5 @@ def test_integration_cost_tracker_preserves_undisclosed_costs():
         assert rows.status.eq("not_disclosed").all()
 
     khc = costs[costs.deal_id.eq("KRAFT_HEINZ")]
-    assert khc.reported_cost_value.sum() == 1716
-    assert set(khc.reported_cost_value) == {829, 887}
+    assert khc.reported_cost_value.sum() == 2055
+    assert set(khc.reported_cost_value) == {339, 829, 887}
