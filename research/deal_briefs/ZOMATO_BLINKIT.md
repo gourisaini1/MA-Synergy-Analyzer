@@ -15,6 +15,19 @@ Zomato's 2022 acquisition Q&A described quick commerce as strategically compleme
 
 FY23 group summary figures reflect consolidation only from 10 August 2022. Some FY23 quick-commerce operating data is full-year unaudited MIS supplied by Blinkit. Do not compare the FY26 reported adjusted revenue directly with FY25.
 
+## Consolidated operating-cost baseline: useful, but not a standalone synergy pool
+
+Zomato's FY2023-24 annual report provides the following consolidated operating-cost lines (₹ crore):
+- Delivery and related charges: ₹3,915. This includes delivery-partner payouts and support across food delivery and quick commerce.
+- Advertising and sales promotion: ₹1,432, including platform-funded subsidies, marketing, customer appeasement and refunds.
+- IT support, server and communication: ₹485.
+- Outsourced support: ₹330, including quick-commerce store off-roll manpower and call-centre support.
+- Other expenses: ₹1,179, including quick-commerce warehouse management/logistics, rentals, legal/professional and G&A.
+
+These are consolidated company cost pools, not Blinkit-only baselines. FY24 includes a full year of Blinkit consolidation versus only the period from 10 August 2022 in FY23. The report attributes cost growth partly to higher volumes and expansion of quick-commerce stores and warehouses. Consequently, these lines are included as diligence baselines and candidate workstreams, but are not multiplied by an arbitrary overlap percentage to manufacture a synergy estimate.
+
+The acquisition Q&A described customer cross-leverage and delivery-backend integration as plans to experiment with. Subsequent reporting described the business as retaining Blinkit as an independent brand and limiting integration; this is a reason to test the actual degree of integration rather than assume a shared fleet saving. No cohort-level incremental contribution or matched-city cost-per-delivery data is present in the reviewed public sources, so the independent synergy estimate remains unquantified.
+
 ## Synergy hypotheses
 | Lever | Mechanism | Measure | Evidence status |
 |---|---|---|---|
@@ -41,6 +54,7 @@ FY23 group summary figures reflect consolidation only from 10 August 2022. Some 
 2. Eternal FY2024-25 Annual Report: https://b.zmtcdn.com/investor-relations/Eternal_Annual_Report_2024-25.pdf
 3. Zomato shareholder Q&A on proposed Blinkit acquisition, BSE filing: https://www.bseindia.com/xml-data/corpfiling/AttachHis/cf889f7a-1c88-4989-9f0e-90ddd90bdf0c.pdf
 4. Zomato acquisition integration Q&A, BSE filing: https://www.bseindia.com/xml-data/corpfiling/AttachHis/219c2db1-7d42-4489-be03-eca0c33561f0.pdf
+5. Zomato FY2023-24 Annual Report: https://b.zmtcdn.com/investor-relations/Zomato_Annual_Report_2023-24.pdf
 
 ## Interview-ready takeaway
 "Blinkit's FY26 NOV reached INR 48,567 crore and its adjusted EBITDA loss narrowed to INR 277 crore, with break-even achieved in Q3. But FY26 reported revenue is distorted by the inventory-ownership accounting shift, and segment profitability is not automatically a Zomato integration synergy. I would isolate delivery-backend savings and cross-platform contribution using matched city and customer cohorts."

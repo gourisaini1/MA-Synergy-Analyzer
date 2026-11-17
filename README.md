@@ -36,14 +36,15 @@ The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of
 
 ## Evidence extraction evaluation
 
-The gold set contains 46 manually curated claims across HDFC and Kraft Heinz. The agent is manual-only, filters filing pages by keyword, uses structured JSON-schema outputs and checks every excerpt against the exact cited PDF page.
+The gold set contains manually curated claims across HDFC and Kraft Heinz (the exact row count is read from agent/gold_claims.csv). The agent is manual-only, filters filing pages by keyword, uses structured JSON-schema outputs and checks every excerpt against the exact cited PDF page. Evaluation uses one-to-one matching within the same deal, source and claim type; a prediction is a true positive only when token Jaccard similarity is at least 0.35 and its source-page excerpt passes exact-quote verification. This is a lightweight benchmark, not a substitute for expert review of claim correctness.
 
 | Metric | Result |
 |---|---|
-| Gold claims | 46 |
-| Model-extracted claims | Not run in this repository revision |
-| Precision | Not reported |
-| Recall | Not reported |
+| Gold claims | See current count in agent/gold_claims.csv |
+| Model-extracted claims | Not run (API key required) |
+| True positives | Not available |
+| Precision | Undefined until a credentialed run |
+| Recall | Undefined until a credentialed run |
 
 Precision and recall remain undefined until the manual extraction workflow has run with the repository OPENAI_API_KEY secret. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return. The evaluator does not write 0.000/0.000 for an empty file.
 
@@ -54,35 +55,70 @@ Precision and recall remain undefined until the manual extraction workflow has r
     pip install -r requirements.txt
     python run.py
 
-The unified run validates sources and assumptions, builds the directional low/base/high model, downloads SEC Companyfacts, creates financial diligence tables, refreshes the event study when market data is available, generates the workbook and PowerPoint deck, and runs pytest. If the market-data provider is unavailable and no cache exists, the event study skips safely so pytest still runs.
+The unified run validates provenance, builds the directional low/base/high model, attempts SEC Companyfacts retrieval, creates financial diligence tables, refreshes the event study when market data is available, generates the workbook and PowerPoint deck, and runs pytest. Event-study CARs are only emitted when the exact event-session return and every observation in the requested window are available; missing or partial windows are marked unavailable rather than shifted or silently shortened. If a provider is unavailable and no cache exists, the event study skips safely so the remaining build and tests can run.
 
 ## Manual refresh workflows
 
-- **Manual evidence extraction:** add OPENAI_API_KEY in GitHub repository secrets, then run Actions → Manual evidence extraction. It commits page chunks, verified claims and precision/recall output.
+- **Manual evidence extraction:** add OPENAI_API_KEY in GitHub repository secrets, then run Actions → Manual evidence extraction. It commits page chunks, verified claims and precision/recall output. This credentialed run has not been performed as part of this code change; no fabricated metrics are included.
 - **Refresh multi-deal event study:** run Actions → Refresh multi-deal event study. It downloads and commits data/market_prices.csv plus dashboard/event_study_results.csv. The workflow includes Kraft Foods Group/KRFT, HDFC Bank/HDFC Ltd and Zomato; Heinz and Blinkit are private targets.
 
 ## Outputs
 
-- output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence.
-- output/MA_Executive_Deck.pptx: answer-led deck with native PowerPoint scenario, Blinkit EBITDA and HDFC cost-to-income charts, plus Air India/Microsoft appendix slides.
+- output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence, Blinkit unit-economics sensitivities and Air India procurement reverse hurdles.
+- output/MA_Executive_Deck.pptx: five-slide executive story covering the four core deals and summary.
 - dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.
+- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.
+- dashboard/zomato_operational_sensitivities.csv: FY25 Blinkit order-based cost/order and cross-platform customer activation sensitivities; explicitly illustrative, not synergy forecasts.
+- dashboard/air_india_procurement_hurdles.csv: reverse procurement spend required for ₹100cr/₹250cr/₹500cr annual savings hurdles; no spend pool is imputed.
+- docs/operational_sensitivity_methodology.md: formulas, assumptions and diligence data requirements.
+- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 expense series totals $2.055bn pre-tax, with approximately $1.4bn cumulative programme capex reported separately by end-2017.
 - dashboard/financial_due_diligence.csv: financial metrics, before/after changes and caveats.
 - dashboard/event_study_results.csv: event-window CAR and t-statistics after manual market-data refresh.
 - agent/output/: committed only after the manual extraction workflow has produced real output.
+
+## Next-phase operational sensitivities
+
+The two previously unquantified core deals now have decision-useful, assumption-transparent driver models. These outputs are **not** promoted into the independent synergy estimate or reported realisation fields.
+
+### Zomato–Blinkit
+Eternal's FY25 annual report reports 424 million Blinkit orders and 20.6 million average monthly food-delivery transacting customers. The new order-level sensitivity shows annual savings of ₹1.06cr / ₹7.95cr / ₹38.16cr for low/base/high illustrative assumptions on saving per eligible Blinkit order, eligible share and capture. A separate cross-platform activation sensitivity shows ₹0.15cr / ₹3.71cr / ₹27.81cr using a net-eligible audience haircut, conversion, incremental monthly order frequency and contribution per order. These are assumption-driven what-if outputs, not estimates of realised merger synergies. They exclude integration costs and require matched-city cost data and deduplicated customer cohorts before any attribution.
+
+### Air India–Vistara
+Air India reported 4,000+ vendor contracts consolidated at merger completion, but did not disclose the spend pool. The reverse procurement hurdle calculates the addressable spend required to deliver ₹100cr / ₹250cr / ₹500cr of annual savings under different contract-rate reductions and capture rates. For example, ₹100cr at a 1% rate reduction and 75% capture requires ₹13,333cr of eligible vendor spend. This is a diligence hurdle, not a claim that the spend exists or that the saving is achievable.
+
+The formulas, assumptions and data requests are documented in `docs/operational_sensitivity_methodology.md`. The two output CSVs are added to the workbook and Tableau specification.
+
+### Filing-agent evaluation
+The manually curated gold benchmark now contains 61 claims across all four core cases: HDFC, Kraft Heinz, Air India and Zomato/Blinkit. The keyword filter now includes airline integration and quick-commerce operating metrics. The actual LLM precision/recall run remains dependent on the repository API secret.
 
 ## Tableau and Alteryx
 
 The repository contains Tableau-ready data sources and a dashboard specification in dashboard/tableau_spec.md. A Tableau Public workbook has **not** been published from this environment; publishing requires an authenticated Tableau Public session. The Alteryx source-cleaning workflow is in alteryx/source_register_cleaning.yxmd; it has not been executed or screenshot-verified in Alteryx Designer.
 
-## Secondary deal cases
+## Four-deal core coverage and comparability
 
-Air India–Vistara remains a qualitative PMI appendix because public data does not support a harmonised financial synergy back-test. Microsoft–LinkedIn remains a financial trajectory appendix; LinkedIn growth is not proof of cross-sell attribution. Zomato–Blinkit provides Blinkit's standalone financial trajectory and the acquisition event-study acquirer series; Blinkit itself was privately held.
+The project now explicitly treats **HDFC–HDFC Bank, Air India–Vistara, Zomato–Blinkit and Kraft Heinz** as its four core cases. Microsoft–LinkedIn remains an additional reference case, not a substitute for one of the four.
+
+`dashboard/deal_comparability.csv` is generated by `pipeline.build_deal_comparability` and included in the Excel workbook. It puts the four deals on one evidence bridge: independent low/base/high scenario (where supportable), management-announced target, management-reported realisation, measurement basis, evidence quality and the missing inputs needed to close diligence gaps. Missing target and realisation values remain blank—not zero.
+
+| Core deal | Current model status | What can be defended today | What is still required |
+|---|---|---|---|
+| HDFC–HDFC Bank | Partial estimate | Funding-substitution scenario net of modelled CRR/SLR drag and small cost overlap | PSL shortfall/PSLC economics and matched funding data; the current scenario is not a realised result |
+| Air India–Vistara | Not quantified | Merger integration milestones: 4,000+ contracts consolidated and 140+ IT systems aligned | Vendor category spend/rate cards, fleet and route unit economics, integration costs and service-quality counterfactuals |
+| Zomato–Blinkit | Not quantified | Blinkit segment financial trajectory and management's stated cross-leverage / delivery-backend hypotheses | Matched-city delivery costs, cross-order cohorts, incremental contribution after incentives and a standalone counterfactual |
+| Kraft Heinz | Modelled, ex-post calibrated | $1.5bn annual run-rate target and >$1.7bn cumulative savings reported by end-2017 | Pre-close category-level cost pool and recurring run-rate bridge; current overlap range is not a blind forecast |
+
+The four deals are therefore comparable in **evidence structure**, not yet in the precision of their financial estimates. Air India integration milestones are not savings; Blinkit segment growth is not acquisition synergy; Kraft Heinz cumulative savings are not directly comparable to an annual run-rate target.
+
+## Additional deal case
+
+Microsoft–LinkedIn remains a financial trajectory reference case; LinkedIn growth is not proof of cross-sell attribution. It is retained outside the four-deal core.
 
 ## Evidence and caveats
 
 - data/source_register.csv: source-of-truth register.
 - research/evidence_ledger.csv: hand-built evidence claims and attribution caveats.
-- agent/gold_claims.csv: 42-claim evaluation set.
+- agent/gold_claims.csv: manually curated evaluation set (use the CSV row count as the source of truth).
 - research/financial_due_diligence.csv: HDFC funding mix, standalone cost base, regulatory requirements, Kraft Heinz impairments and segment financial metrics.
 - research/integration_risk_register.csv: integration risks and mitigations.
 - model/assumptions_register.csv and model/synergy_inputs.csv: analyst assumptions separated from management disclosures.
@@ -96,3 +132,9 @@ Air India–Vistara remains a qualitative PMI appendix because public data does 
 - dashboard/: Tableau-ready outputs and specifications.
 - alteryx/: source-register cleaning workflow.
 - tests/: model, agent and event-study tests.
+
+
+## Tableau and live-agent implementation guides
+
+- `dashboard/tableau_public_build_guide.md` specifies the five-dashboard Tableau workbook, data-grain rules, calculated fields, QA checks and publish steps.
+- `agent/live_run_checklist.md` documents the credentialed extraction workflow, output review and benchmark acceptance gates. A live run still requires the repository `OPENAI_API_KEY` secret and a manual Actions launch.

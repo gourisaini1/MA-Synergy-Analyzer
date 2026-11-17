@@ -1,9 +1,9 @@
 # Tableau Public dashboard specification
 
 ## Executive overview
-Lead with the two core cases: HDFC's funding-led net synergy bridge and Kraft Heinz's announced-versus-estimated-versus-realised back-test. Keep announced, estimated, realised and unverified classifications distinct. Never aggregate values across currencies.
+Lead with a four-deal coverage and evidence-status scorecard using deal_comparability.csv. The four core cases are HDFC–HDFC Bank, Air India–Vistara, Zomato–Blinkit and Kraft Heinz; Microsoft–LinkedIn is an additional reference case. Keep announced, estimated, realised and unverified classifications distinct. Never aggregate values across currencies. Show blank/unknown fields as not disclosed or not quantified, never as zero.
 
-## HDFC funding bridge
+## Air India–Vistara financial context\nUse financial_due_diligence.csv and deal_evidence_backtest.csv:\n- FY24 Air India revenue ₹51,364.89cr and Vistara revenue ₹15,191.27cr.\n- FY25 merged Air India revenue ₹76,754.10cr and loss after tax ₹10,858.82cr.\n- Show 4,000+ vendor contracts consolidated and 140+ IT systems aligned as integration milestones, not financial savings.\n- Explicitly flag FY24 standalone and FY25 merged periods as non-like-for-like; no attributable financial synergy target or realised savings is identified.\n\n## Zomato–Blinkit operating-cost context\nUse financial_due_diligence.csv and deal_evidence_backtest.csv:\n- FY24 consolidated delivery and related charges ₹3,915cr, advertising/sales promotion ₹1,432cr, IT support ₹485cr, outsourced support ₹330cr and other expenses ₹1,179cr.\n- These are consolidated food-delivery plus quick-commerce expense lines; do not present them as Blinkit-only cost pools.\n- Show Blinkit adjusted EBITDA and NOV trajectory separately from integration synergies.\n- Keep numeric synergy unquantified until cohort, city and segment-level cost evidence is available.\n\n## HDFC funding bridge
 Use tableau_synergy_data.csv:
 - Funding substitution benefit from market borrowings refinanced through bank deposits.
 - CRR/SLR reserve opportunity-cost drag as a negative synergy.
@@ -31,8 +31,26 @@ Use event_study_results.csv and market_prices.csv:
 - Market model estimation window: -120 to -20 trading sessions; event windows: [-1,+1], [-2,+2], [-5,+5].
 Show CAR, t-statistic, estimation observations and data availability status. Where daily data is unavailable, show the sourced raw price reference separately and never label it CAR.
 
-## Evidence back-test and risk heatmap
+## Integration cost tracker\nUse research/integration_cost_tracker.csv. Display programme budget (where disclosed), annual reported accounting expense, currency, period, workstream, owner and status. Do not equate accounting expense with cash paid. For Air India, HDFC and Zomato, undisclosed integration costs remain blank; milestones must not be converted into cost or saving estimates.\n\n## Evidence back-test and risk heatmap
 Use deal_evidence_backtest.csv and research/integration_risk_register.csv. Include classification, source ID, synergy relevance, attribution caveat, likelihood, impact, leading indicator, mitigation and owner.
 
 ## Tableau Public
 The repository contains Tableau-ready datasets and this specification. A public workbook has not been published from this environment because an authenticated Tableau Public session is not available.
+
+
+## Operational driver sensitivities (new)
+
+### Blinkit unit economics
+Use `zomato_operational_sensitivities.csv`:
+- Separate delivery-backend cost/order sensitivities from cross-platform customer activation.
+- Display FY25 reported denominator separately from the analyst assumptions.
+- Show annual sensitivity in INR crore, scenario label, source ID and caveat.
+- Label every row **illustrative—not forecast**. Never call these realised or independently estimated acquisition synergies.
+- Do not sum the two levers without reviewing overlap/double-counting. The delivery scenario uses Blinkit orders; cross-sell uses food-delivery monthly customers.
+
+### Air India procurement reverse hurdles
+Use `air_india_procurement_hurdles.csv`:
+- Display the annual savings hurdle against required addressable spend at each contract-rate reduction and capture rate.
+- Make clear that ₹100cr/₹250cr/₹500cr are analyst hurdles, not management targets.
+- Use 4,000+ consolidated contracts only as context, not as the spend denominator.
+- Show source AIR-01 and the procurement data required to turn the hurdle into an estimate.

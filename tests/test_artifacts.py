@@ -12,6 +12,10 @@ def test_generated_workbook_has_excel_safe_sheet_names_and_npv():
     workbook = load_workbook(workbook_path, data_only=False)
     assert all(len(name) <= 31 for name in workbook.sheetnames)
     assert "Announced vs Est vs Realised" in workbook.sheetnames
+    assert "Four-Deal Comparability" in workbook.sheetnames
+    assert "Integration Cost Tracker" in workbook.sheetnames
+    assert "Blinkit Unit Economics" in workbook.sheetnames
+    assert "Air India Procurement Hurdles" in workbook.sheetnames
     calculations = workbook["Scenario Calculations"]
     assert "Five-year NPV" in [cell.value for cell in calculations[1]]
     assert any(
@@ -21,14 +25,15 @@ def test_generated_workbook_has_excel_safe_sheet_names_and_npv():
     )
 
 
-def test_generated_deck_contains_native_charts_and_appendix():
+def test_generated_deck_is_five_slides_and_covers_all_core_deals():
     deck_path = ROOT / "output" / "MA_Executive_Deck.pptx"
     deck = Presentation(deck_path)
-    charts = [
-        shape
+    assert len(deck.slides) == 5
+    slide_text = "\n".join(
+        shape.text
         for slide in deck.slides
         for shape in slide.shapes
-        if getattr(shape, "has_chart", False)
-    ]
-    assert len(charts) >= 3
-    assert len(deck.slides) >= 10
+        if getattr(shape, "has_text_frame", False)
+    )
+    for deal in ("HDFC", "Air India", "Zomato", "Kraft Heinz"):
+        assert deal in slide_text

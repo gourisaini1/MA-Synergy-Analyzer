@@ -13,7 +13,10 @@ RELEVANCE = re.compile(
     r"synerg|saving|integration|merger|acquisition|funding|borrowings|"
     r"deposit|cost.to.income|net interest margin|nim|crr|slr|priority sector|"
     r"goodwill|impairment|restructur|procurement|cross.sell|margin|"
-    r"operating expense|ebitda|cost of product|annual cost",
+    r"operating expense|ebitda|cost of product|annual cost|vendor contract|"
+    r"customer booking|loyalty|monthly transacting|quick commerce|order volume|"
+    r"store count|contribution margin|contribution|customer base|delivery fleet|"
+    r"aircraft|routes|weekly flights|procurement spend",
     re.IGNORECASE,
 )
 
