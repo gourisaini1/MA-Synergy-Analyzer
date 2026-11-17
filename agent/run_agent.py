@@ -16,7 +16,8 @@ USER_AGENT = os.getenv(
     "SEC_USER_AGENT",
     "MA-Synergy-Analyzer research contact@users.noreply.github.com",
 )
-MAX_CHUNKS_PER_SOURCE = int(os.getenv("AGENT_MAX_CHUNKS_PER_SOURCE", "20"))
+MAX_CHUNKS_PER_SOURCE = int(os.getenv("AGENT_MAX_CHUNKS_PER_SOURCE", "2"))
+MAX_TOTAL_CHUNKS = int(os.getenv("AGENT_MAX_TOTAL_CHUNKS", "50"))
 
 
 class VisibleTextParser(HTMLParser):
@@ -67,8 +68,11 @@ def main():
     claims = []
     chunks_log = []
     failures = []
+    total_chunks = 0
 
     for source in register.itertuples(index=False):
+        if total_chunks >= MAX_TOTAL_CHUNKS:
+            break
         try:
             response = requests.get(
                 source.url,
@@ -87,8 +91,10 @@ def main():
 
         selected_pages = relevant_pages(pages)
         page_text = dict(pages)
-        chunks = chunk_pages(selected_pages)[:MAX_CHUNKS_PER_SOURCE]
+        remaining = MAX_TOTAL_CHUNKS - total_chunks
+        chunks = chunk_pages(selected_pages)[:min(MAX_CHUNKS_PER_SOURCE, remaining)]
         for chunk in chunks:
+            total_chunks += 1
             chunks_log.append({
                 "source_id": source.source_id,
                 "page": chunk.page_number,
