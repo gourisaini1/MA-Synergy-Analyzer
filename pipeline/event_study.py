@@ -40,15 +40,7 @@ EVENTS = [
         "benchmark": "^NSEI",
         "target_status": "Both acquirer and target publicly traded",
     },
-    {
-        "deal": "ZOMATO",
-        "announcement_date": "2022-06-24",
-        "event_date": "2022-06-27",
-        "event": "Zomato board approval of Blinkit acquisition (next session)",
-        "securities": {"Zomato (acquirer)": ["ETERNAL.NS", "ZOMATO.NS", "ETERNAL.BO", "ZOMATO.BO"]},
-        "benchmark": "^NSEI",
-        "target_status": "Blinkit was privately held target; no listed target return",
-    },
+
 ]
 
 NSE_HEADERS = {
