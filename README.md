@@ -83,7 +83,7 @@ Air India–Vistara remains a qualitative PMI appendix because public data does 
 
 - data/source_register.csv: source-of-truth register.
 - research/evidence_ledger.csv: hand-built evidence claims and attribution caveats.
-- agent/gold_claims.csv: 42-claim evaluation set.
+- agent/gold_claims.csv: 46-claim evaluation set.
 - research/financial_due_diligence.csv: HDFC funding mix, standalone cost base, regulatory requirements, Kraft Heinz impairments and segment financial metrics.
 - research/integration_risk_register.csv: integration risks and mitigations.
 - model/assumptions_register.csv and model/synergy_inputs.csv: analyst assumptions separated from management disclosures.
