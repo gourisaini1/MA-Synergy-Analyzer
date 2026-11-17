@@ -12,6 +12,8 @@ from pptx.enum.chart import XL_CHART_TYPE
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
 
+from .run_model import HDFC_STRESS_INPUTS
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output"
 MODEL = ROOT / "model"
@@ -55,19 +57,22 @@ def build_workbook():
     calc = workbook.create_sheet("Scenario Calculations")
     calc.append([
         "Deal", "Lever", "Scenario", "Currency", "Gross run-rate",
-        "Net first-year", "Five-year NPV", "Classification", "Confidence", "Assumption IDs",
+        "Net first-year", "Five-year NPV after costs", "Classification", "Confidence", "Assumption IDs",
     ])
     columns = {name: get_column_letter(index + 1) for index, name in enumerate(inputs.columns)}
     for index, row in enumerate(inputs.itertuples(index=False), start=2):
-        for scenario in ("low", "base", "high"):
+        scenario_specs = [(name, name) for name in ("low", "base", "high")]
+        if row.deal_id == "HDFC" and row.lever in HDFC_STRESS_INPUTS:
+            scenario_specs.append(("stress", HDFC_STRESS_INPUTS[row.lever]))
+        for scenario, input_scenario in scenario_specs:
             target_row = calc.max_row + 1
             fields = [
                 f"'Scenario Inputs'!{columns[name]}{index}"
                 for name in (
-                    "baseline_amount", f"overlap_{scenario}",
-                    f"addressable_{scenario}", f"achievable_{scenario}",
-                    f"ramp_{scenario}", f"one_off_cost_{scenario}",
-                    f"contribution_margin_{scenario}", "direction",
+                    "baseline_amount", f"overlap_{input_scenario}",
+                    f"addressable_{input_scenario}", f"achievable_{input_scenario}",
+                    f"ramp_{input_scenario}", f"one_off_cost_{input_scenario}",
+                    f"contribution_margin_{input_scenario}", "direction",
                     "integration_program_years", "discount_rate",
                 )
             ]
