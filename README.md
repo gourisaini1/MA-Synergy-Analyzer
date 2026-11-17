@@ -66,7 +66,7 @@ The unified run validates provenance, builds the directional low/base/high model
 
 - output/MA_Synergy_Model.xlsx: editable scenario inputs, directional calculations, five-year NPV, announced-vs-estimated-vs-realised bridge, evidence and financial diligence.
 - output/MA_Executive_Deck.pptx: answer-led deck with native PowerPoint scenario, Blinkit EBITDA and HDFC cost-to-income charts, plus Air India/Microsoft appendix slides.
-- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.\n- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.\n- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 series totals $2.055bn pre-tax.
+- dashboard/tableau_synergy_data.csv: scenario estimates, signed negative synergies, confidence and assumption provenance.\n- dashboard/deal_comparability.csv: four-deal evidence bridge with explicit partial/unquantified statuses.\n- research/integration_cost_tracker.csv: workstream-level integration cost register; KHC reported programme expenses are separated from undisclosed costs in the other deals; the 2015–17 expense series totals $2.055bn pre-tax, with approximately $1.4bn cumulative programme capex reported separately by end-2017.
 - dashboard/financial_due_diligence.csv: financial metrics, before/after changes and caveats.
 - dashboard/event_study_results.csv: event-window CAR and t-statistics after manual market-data refresh.
 - agent/output/: committed only after the manual extraction workflow has produced real output.
