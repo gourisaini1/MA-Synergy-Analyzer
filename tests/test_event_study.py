@@ -61,4 +61,4 @@ def test_event_study_rejects_incomplete_event_windows():
     hdfc_bank = [r for r in rows if r["deal"] == "HDFC" and r["security"] == "HDFC Bank (acquirer)"]
     short = [r for r in hdfc_bank if r.get("status") == "incomplete event window"]
     assert short
-    assert all(r["observations_available"] < r["observations_required"] for r in short)
+    assert any("2022-04-11" in r.get("missing_dates", "") for r in short)
