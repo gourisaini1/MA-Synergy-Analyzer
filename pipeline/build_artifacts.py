@@ -280,7 +280,7 @@ def add_synergy_bridge(prs):
     note = slide.shapes.add_textbox(
         Inches(.85), Inches(6.2), Inches(11.7), Inches(.55)
     ).text_frame.paragraphs[0]
-    note.text = "Announced target: $1,500m annual run-rate | Independent base: $1,397m | Reported: >$1,700m cumulative by end-2017 (different basis)"
+    note.text = "Announced target: $1,500m annual run-rate | Independent base: $211m | Reported: >$1,700m cumulative by end-2017 (different basis)"
     note.font.size = Pt(13)
     note.font.bold = True
     note.font.color.rgb = RGBColor(100, 190, 220)
@@ -401,7 +401,7 @@ def build_deck():
         "The deal provides a real announced-versus-estimated-versus-reported back-test",
         [
             "Management target: $1.5bn annual cost savings run-rate by end-2017.",
-            "Independent base case: $1.40bn gross annual run-rate; low/high range $0.71bn–$2.04bn.",
+            "Independent base case: $0.21bn gross annual run-rate; low/high range $0.04bn–$0.91bn using pre-2015 benchmark ratios.",
             "Reported delivery: >$1.7bn cumulative savings by end-2017, net of approx. $200m business investments.",
             "Important: cumulative realised savings and annual run-rate are different measurement bases.",
         ],
@@ -416,7 +416,7 @@ def build_deck():
             "HDFC Ltd's FY23 funding mix: market borrowings 45%; deposits ₹1,52,111cr or 27% of borrowings. Implied market-borrowing pool ~₹2.54 lakh crore.",
             "Funding benefit uses 25/50/75 bps spread sensitivities and 10%/20%/30% substitution; all are analyst assumptions, not realised savings.",
             "CRR 4% and SLR 18% are modelled as a reserve opportunity-cost sensitivity; HDFC's merger deck said Day-0 CRR was organically met and SLR assets earned positive returns.",
-            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. PSL downside remains unquantified.",
+            "Small operating overlap is based on HDFC Ltd standalone non-finance costs (~₹2,420cr), not the merged bank's expense base. Phased PSL/PSLC base sensitivity contributes ~–₹382cr five-year NPV; this is not a disclosed shortfall.",
         ],
         "Sources: HDFC Ltd FY23 annual report and earnings transcript; HDFC Bank merger investor deck. Low-confidence sensitivities.",
     )
