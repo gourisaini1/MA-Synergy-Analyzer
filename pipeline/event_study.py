@@ -238,6 +238,7 @@ def load_prices():
 
 
 def event_rows(prices):
+    """Calculate CARs only when the exact event session and complete window exist."""
     rows = []
     for event in EVENTS:
         event_date = pd.Timestamp(event["event_date"])
@@ -264,21 +265,33 @@ def event_rows(prices):
                 })
                 continue
 
-            close = prices[[ticker, benchmark]].dropna()
+            close = prices[[ticker, benchmark]].copy()
+            close.index = pd.to_datetime(close.index).tz_localize(None)
+            close = close.sort_index().dropna()
             returns = close.pct_change().dropna()
             returns.index = pd.to_datetime(returns.index).tz_localize(None)
-            event_positions = [i for i, date in enumerate(returns.index) if date >= event_date]
-            if not event_positions:
+            if event_date not in returns.index:
                 rows.append({
                     "deal": event["deal"],
                     "event": event["event"],
                     "security": security_label,
                     "ticker": ticker,
-                    "status": "event date outside cached price range",
+                    "status": "exact event-session return unavailable",
+                    "event_date_required": event_date.date().isoformat(),
                     "target_status": event["target_status"],
                 })
                 continue
-            event_pos = event_positions[0]
+            event_pos = returns.index.get_loc(event_date)
+            if not isinstance(event_pos, int):
+                rows.append({
+                    "deal": event["deal"],
+                    "event": event["event"],
+                    "security": security_label,
+                    "ticker": ticker,
+                    "status": "duplicate event-session observations",
+                    "target_status": event["target_status"],
+                })
+                continue
             estimation = returns.iloc[max(0, event_pos - 120):max(0, event_pos - 20)]
             if len(estimation) < 60:
                 rows.append({
@@ -307,7 +320,21 @@ def event_rows(prices):
             for window, low, high in [("[-1,+1]", -1, 1), ("[-2,+2]", -2, 2), ("[-5,+5]", -5, 5)]:
                 sample = returns[returns.event_day.between(low, high)]
                 n = len(sample)
-                if n == 0:
+                if n != high - low + 1:
+                    rows.append({
+                        "deal": event["deal"],
+                        "announcement_date": event["announcement_date"],
+                        "event_date_used": event_date.date().isoformat(),
+                        "event": event["event"],
+                        "security": security_label,
+                        "ticker": ticker,
+                        "benchmark": benchmark,
+                        "window": window,
+                        "status": "incomplete event window",
+                        "observations_available": n,
+                        "observations_required": high - low + 1,
+                        "target_status": event["target_status"],
+                    })
                     continue
                 car = float(sample.abnormal.sum())
                 market_sum_deviation = float(
@@ -389,6 +416,8 @@ def main():
         print(f"Event study skipped safely: {error}")
         return
     results = event_rows(prices)
+    if not results:
+        raise RuntimeError("Event-study produced no rows; refusing to overwrite prior results.")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(results).to_csv(OUT, index=False)
     update_readme_event_table(results)
