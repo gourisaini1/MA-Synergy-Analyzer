@@ -36,14 +36,15 @@ The 4 April 2022 HDFC merger announcement produced close-to-close raw returns of
 
 ## Evidence extraction evaluation
 
-The gold set contains 46 manually curated claims across HDFC and Kraft Heinz. The agent is manual-only, filters filing pages by keyword, uses structured JSON-schema outputs and checks every excerpt against the exact cited PDF page.
+The gold set contains manually curated claims across HDFC and Kraft Heinz (the exact row count is read from agent/gold_claims.csv). The agent is manual-only, filters filing pages by keyword, uses structured JSON-schema outputs and checks every excerpt against the exact cited PDF page. Evaluation uses one-to-one matching within the same deal, source and claim type; a prediction is a true positive only when token Jaccard similarity is at least 0.35 and its source-page excerpt passes exact-quote verification. This is a lightweight benchmark, not a substitute for expert review of claim correctness.
 
 | Metric | Result |
 |---|---|
-| Gold claims | 46 |
-| Model-extracted claims | Not run in this repository revision |
-| Precision | Not reported |
-| Recall | Not reported |
+| Gold claims | See current count in agent/gold_claims.csv |
+| Model-extracted claims | Not run (API key required) |
+| True positives | Not available |
+| Precision | Undefined until a credentialed run |
+| Recall | Undefined until a credentialed run |
 
 Precision and recall remain undefined until the manual extraction workflow has run with the repository OPENAI_API_KEY secret. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return. The evaluator does not write 0.000/0.000 for an empty file.
 
@@ -54,11 +55,11 @@ Precision and recall remain undefined until the manual extraction workflow has r
     pip install -r requirements.txt
     python run.py
 
-The unified run validates sources and assumptions, builds the directional low/base/high model, downloads SEC Companyfacts, creates financial diligence tables, refreshes the event study when market data is available, generates the workbook and PowerPoint deck, and runs pytest. If the market-data provider is unavailable and no cache exists, the event study skips safely so pytest still runs.
+The unified run validates provenance, builds the directional low/base/high model, attempts SEC Companyfacts retrieval, creates financial diligence tables, refreshes the event study when market data is available, generates the workbook and PowerPoint deck, and runs pytest. Event-study CARs are only emitted when the exact event-session return and every observation in the requested window are available; missing or partial windows are marked unavailable rather than shifted or silently shortened. If a provider is unavailable and no cache exists, the event study skips safely so the remaining build and tests can run.
 
 ## Manual refresh workflows
 
-- **Manual evidence extraction:** add OPENAI_API_KEY in GitHub repository secrets, then run Actions → Manual evidence extraction. It commits page chunks, verified claims and precision/recall output.
+- **Manual evidence extraction:** add OPENAI_API_KEY in GitHub repository secrets, then run Actions → Manual evidence extraction. It commits page chunks, verified claims and precision/recall output. This credentialed run has not been performed as part of this code change; no fabricated metrics are included.
 - **Refresh multi-deal event study:** run Actions → Refresh multi-deal event study. It downloads and commits data/market_prices.csv plus dashboard/event_study_results.csv. The workflow includes Kraft Foods Group/KRFT, HDFC Bank/HDFC Ltd and Zomato; Heinz and Blinkit are private targets.
 
 ## Outputs
@@ -82,7 +83,7 @@ Air India–Vistara remains a qualitative PMI appendix because public data does 
 
 - data/source_register.csv: source-of-truth register.
 - research/evidence_ledger.csv: hand-built evidence claims and attribution caveats.
-- agent/gold_claims.csv: 42-claim evaluation set.
+- agent/gold_claims.csv: manually curated evaluation set (use the CSV row count as the source of truth).
 - research/financial_due_diligence.csv: HDFC funding mix, standalone cost base, regulatory requirements, Kraft Heinz impairments and segment financial metrics.
 - research/integration_risk_register.csv: integration risks and mitigations.
 - model/assumptions_register.csv and model/synergy_inputs.csv: analyst assumptions separated from management disclosures.
