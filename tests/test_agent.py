@@ -56,3 +56,32 @@ def test_empty_prediction_file_does_not_emit_zero_metrics(tmp_path, monkeypatch,
 
     assert not metrics.exists()
     assert "undefined" in capsys.readouterr().out
+
+
+def test_prediction_matching_is_one_to_one_and_requires_valid_citation():
+    import pandas as pd
+    from agent.evaluate_extraction import match_predictions
+
+    gold = pd.DataFrame([{
+        "deal_id": "HDFC",
+        "source_id": "SRC-1",
+        "claim_type": "financial_metric",
+        "gold_claim": "Net interest margin was reported at 3.48 percent",
+    }])
+    predictions = [
+        {
+            "deal_id": "HDFC", "source_id": "SRC-1",
+            "claim_type": "financial_metric",
+            "claim": "Net interest margin was reported at 3.48 percent",
+            "citation_valid": True,
+        },
+        {
+            "deal_id": "HDFC", "source_id": "SRC-1",
+            "claim_type": "financial_metric",
+            "claim": "Net interest margin was reported at 3.48 percent",
+            "citation_valid": True,
+        },
+    ]
+    assert len(match_predictions(gold, predictions)) == 1
+    predictions[0]["citation_valid"] = False
+    assert len(match_predictions(gold, predictions)) == 1
