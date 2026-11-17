@@ -36,3 +36,21 @@ Use deal_evidence_backtest.csv and research/integration_risk_register.csv. Inclu
 
 ## Tableau Public
 The repository contains Tableau-ready datasets and this specification. A public workbook has not been published from this environment because an authenticated Tableau Public session is not available.
+
+
+## Operational driver sensitivities (new)
+
+### Blinkit unit economics
+Use `zomato_operational_sensitivities.csv`:
+- Separate delivery-backend cost/order sensitivities from cross-platform customer activation.
+- Display FY25 reported denominator separately from the analyst assumptions.
+- Show annual sensitivity in INR crore, scenario label, source ID and caveat.
+- Label every row **illustrative—not forecast**. Never call these realised or independently estimated acquisition synergies.
+- Do not sum the two levers without reviewing overlap/double-counting. The delivery scenario uses Blinkit orders; cross-sell uses food-delivery monthly customers.
+
+### Air India procurement reverse hurdles
+Use `air_india_procurement_hurdles.csv`:
+- Display the annual savings hurdle against required addressable spend at each contract-rate reduction and capture rate.
+- Make clear that ₹100cr/₹250cr/₹500cr are analyst hurdles, not management targets.
+- Use 4,000+ consolidated contracts only as context, not as the spend denominator.
+- Show source AIR-01 and the procurement data required to turn the hurdle into an estimate.
