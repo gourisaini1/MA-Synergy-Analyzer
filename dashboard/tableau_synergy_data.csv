@@ -2,18 +2,24 @@ deal_id,lever,synergy_type,scenario,currency,gross_run_rate,net_first_year,npv_5
 HDFC,Legacy standalone operating cost overlap,cost,low,INR crore,3.629805,-31.518431,-71.957825,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,not_benchmarked,estimated
 HDFC,Legacy standalone operating cost overlap,cost,base,INR crore,11.615376,-59.116672,-126.894443,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,not_benchmarked,estimated
 HDFC,Legacy standalone operating cost overlap,cost,high,INR crore,25.408635,-79.673092,-156.986234,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,not_benchmarked,estimated
-HDFC,Market borrowing to bank deposit funding substitution,funding,low,INR crore,26.619390,13.309695,80.208906,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_sensitivity,estimated
-HDFC,Market borrowing to bank deposit funding substitution,funding,base,INR crore,141.970080,92.280552,475.406406,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_sensitivity,estimated
-HDFC,Market borrowing to bank deposit funding substitution,funding,high,INR crore,410.699160,328.559328,1482.200367,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Legacy standalone operating cost overlap,cost,stress_30_80,INR crore,25.408635,-79.673092,-156.986234,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,analyst_stress_case,estimated
+HDFC,Legacy standalone operating cost overlap,cost,stress_20_65,INR crore,25.408635,-79.673092,-156.986234,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,analyst_stress_case,estimated
+HDFC,Market borrowing to bank deposit funding substitution,funding,low,INR crore,26.61939,13.309695,80.208906,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Market borrowing to bank deposit funding substitution,funding,base,INR crore,141.97008,92.280552,475.406406,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Market borrowing to bank deposit funding substitution,funding,high,INR crore,410.69916,328.559328,1482.200367,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,Market borrowing to bank deposit funding substitution,funding,stress_30_80,INR crore,79.85817,63.886536,288.205627,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_stress_case,estimated
+HDFC,Market borrowing to bank deposit funding substitution,funding,stress_20_65,INR crore,53.23878,34.605207,178.277402,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_stress_case,estimated
 HDFC,CRR-SLR reserve opportunity-cost drag,cost,low,INR crore,-22.309584,-11.154792,-67.222702,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_sensitivity,estimated
-HDFC,CRR-SLR reserve opportunity-cost drag,cost,base,INR crore,-68.044231,-44.228750,-227.855499,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,CRR-SLR reserve opportunity-cost drag,cost,base,INR crore,-68.044231,-44.22875,-227.855499,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_sensitivity,estimated
 HDFC,CRR-SLR reserve opportunity-cost drag,cost,high,INR crore,-133.857504,-107.086003,-483.087527,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_sensitivity,estimated
+HDFC,CRR-SLR reserve opportunity-cost drag,cost,stress_30_80,INR crore,-133.857504,-107.086003,-483.087527,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_stress_case,estimated
+HDFC,CRR-SLR reserve opportunity-cost drag,cost,stress_20_65,INR crore,-89.238336,-58.004918,-298.826884,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_stress_case,estimated
 HDFC,Priority-sector lending compliance cost,cost,low,INR crore,,,,negative,A-HDFC-18,,analyst_assumption,low,,unverified,unverified
 HDFC,Priority-sector lending compliance cost,cost,base,INR crore,,,,negative,A-HDFC-18,,analyst_assumption,low,,unverified,unverified
 HDFC,Priority-sector lending compliance cost,cost,high,INR crore,,,,negative,A-HDFC-18,,analyst_assumption,low,,unverified,unverified
-KRAFT_HEINZ,SG&A and procurement overlap,cost,low,USD million,708.400000,-216.640000,714.939253,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500,ex_post_sensitivity_not_benchmark,estimated
-KRAFT_HEINZ,SG&A and procurement overlap,cost,base,USD million,1397.250000,205.016667,2982.629230,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500,ex_post_sensitivity_not_benchmark,estimated
-KRAFT_HEINZ,SG&A and procurement overlap,cost,high,USD million,2042.975000,934.380000,5632.236207,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500,ex_post_sensitivity_not_benchmark,estimated
+KRAFT_HEINZ,SG&A and procurement overlap,cost,low,USD million,708.4,-216.64,714.939253,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500.0,ex_post_sensitivity_not_benchmark,estimated
+KRAFT_HEINZ,SG&A and procurement overlap,cost,base,USD million,1397.25,205.016667,2982.62923,positive,A-KHC-01,A-KHC-01;A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500.0,ex_post_sensitivity_not_benchmark,estimated
+KRAFT_HEINZ,SG&A and procurement overlap,cost,high,USD million,2042.975,934.38,5632.236207,positive,A-KHC-01,A-KHC-02;A-KHC-03;A-KHC-04;A-KHC-05;A-KHC-06,analyst_assumption,low,1500.0,ex_post_sensitivity_not_benchmark,estimated
 AIR_INDIA,Vendor procurement,cost,low,INR crore,,,,positive,A-AIR-01,,analyst_assumption,low,,unverified,unverified
 AIR_INDIA,Vendor procurement,cost,base,INR crore,,,,positive,A-AIR-01,,analyst_assumption,low,,unverified,unverified
 AIR_INDIA,Vendor procurement,cost,high,INR crore,,,,positive,A-AIR-01,,analyst_assumption,low,,unverified,unverified
@@ -23,9 +29,3 @@ ZOMATO,Delivery back-end efficiency,cost,high,INR crore,,,,positive,A-ZOM-01,,an
 MICROSOFT,Enterprise product attach,revenue,low,USD million,,,,positive,A-MS-01,,analyst_assumption,low,,unverified,unverified
 MICROSOFT,Enterprise product attach,revenue,base,USD million,,,,positive,A-MS-01,,analyst_assumption,low,,unverified,unverified
 MICROSOFT,Enterprise product attach,revenue,high,USD million,,,,positive,A-MS-01,,analyst_assumption,low,,unverified,unverified
-HDFC,Market borrowing to bank deposit funding substitution,funding,stress_30_80,INR crore,79.858170,63.886536,288.205627,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_stress_case,estimated
-HDFC,CRR-SLR reserve opportunity-cost drag,cost,stress_30_80,INR crore,-133.857504,-107.086003,-483.087527,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_stress_case,estimated
-HDFC,Legacy standalone operating cost overlap,cost,stress_30_80,INR crore,25.408635,-79.673092,-156.986234,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,analyst_stress_case,estimated
-HDFC,Market borrowing to bank deposit funding substitution,funding,stress_20_65,INR crore,53.238780,34.605207,178.277402,positive,A-HDFC-11,A-HDFC-11;A-HDFC-12;A-HDFC-13;A-HDFC-14,analyst_assumption,low,,analyst_stress_case,estimated
-HDFC,CRR-SLR reserve opportunity-cost drag,cost,stress_20_65,INR crore,-89.238336,-58.004918,-298.826884,negative,A-HDFC-15,A-HDFC-15;A-HDFC-16;A-HDFC-17,analyst_assumption,low,,analyst_stress_case,estimated
-HDFC,Legacy standalone operating cost overlap,cost,stress_20_65,INR crore,25.408635,-79.673092,-156.986234,positive,A-HDFC-07,A-HDFC-07;A-HDFC-08;A-HDFC-09;A-HDFC-10,analyst_assumption,low,,analyst_stress_case,estimated
