@@ -4,7 +4,7 @@ An evidence-led model of merger synergies, integration costs and post-close fina
 
 ![Outside-in synergy scenarios](docs/synergy_estimate.svg)
 
-- **HDFC:** including the new phased PSL/PSLC downside, the base-case five-year after-cost NPV is approximately **–₹261cr**. Matched adverse stress cases including high PSL downside are approximately **–₹2,606cr to –₹2,680cr**. These are analyst sensitivities, not realised savings.
+- **HDFC:** including the blended-price phased PSL/PSLC sensitivity, the base-case five-year after-cost NPV is approximately **–₹348cr**. Matched adverse stress cases including high PSL downside are approximately **–₹981cr to –₹1,055cr**. These are analyst sensitivities, not realised savings.
 - **Kraft Heinz:** management reported more than **USD 1.7bn cumulative savings** by end-2017 against a USD 1.5bn annual run-rate target, but later impairment charges show that synergy delivery is not the same as value creation.
 - **HDFC actuals:** post-merger cost of funds remained around **4.8–4.9%** through FY24/Q1 FY25, CASA fell from **42%** in Jun-23 to **36%** in Jun-24, and the credit-deposit ratio declined from about **110%** at merger to **96%** by Mar-25. These outcomes are consistent with balance-sheet repositioning, but do not isolate the merger's causal funding benefit.
 
@@ -22,13 +22,13 @@ python run.py
 | HDFC funding substitution — 5-year NPV after costs (₹cr) | +80 | +475 | +1,482 | Funding-spread and migration sensitivities |
 | HDFC CRR/SLR reserve drag — 5-year NPV (₹cr) | –67 | –228 | –483 | Reserve opportunity-cost sensitivity |
 | HDFC legacy operating-cost lever — 5-year NPV after programme costs (₹cr) | –72 | –127 | –157 | Negative in every scenario because programme costs exceed savings |
-| HDFC PSL/PSLC compliance cost — 5-year NPV (₹cr) | –4 | –382 | –2,328 | Conservative non-individual loan proxy; phase-in and certificate-price sensitivities |
-| Kraft Heinz gross annual run-rate (USD bn) | 0.04 | 0.21 | 0.91 | Pre-2015 benchmark range; target exceeds benchmark high |
+| HDFC PSL/PSLC compliance cost — 5-year NPV (₹cr) | –234 | –469 | –703 | Blended 0.589% certificate price; 25%/50%/75% purchase share |
+| Kraft Heinz target-equivalent annual run-rate (USD bn) | 0.09 | 0.31 | 1.13 | $23bn cost-pool proxy × pre-2015 announced-synergy ratios |
 
-**HDFC combined base case:** approximately **–₹261cr** five-year after-cost NPV across the four quantified levers. The PSL base sensitivity contributes approximately **–₹382cr** of that total.  
-**HDFC matched adverse stress including high PSL:** approximately **–₹2,680cr** at 30% migration / 80% ramp and **–₹2,606cr** at 20% / 65%. The pre-PSL core stress checks remain **–₹352cr** and **–₹278cr**, respectively. Funding benefit and reserve drag use the same migration share and ramp; the PSL stress uses the high PSLC price and 75% residual shortfall purchase assumption.
+**HDFC combined base case:** approximately **–₹348cr** five-year after-cost NPV across the four quantified levers. The PSL base sensitivity contributes approximately **–₹469cr** of that total.  
+**HDFC matched adverse stress including high PSL:** approximately **–₹1,055cr** at 30% migration / 80% ramp and **–₹981cr** at 20% / 65%. The pre-PSL core stress checks remain **–₹352cr** and **–₹278cr**, respectively. Funding benefit and reserve drag use the same migration share and ramp; PSL uses a 0.589% blended certificate price and 75% residual shortfall purchase assumption.
 
-**Important estimate caveat:** HDFC's funding spreads, reserve opportunity-cost and PSL/PSLC purchase assumptions are analyst sensitivities, not reported realised savings or a disclosed HDFC shortfall. The PSL proxy excludes all individual loans and uses broad non-individual balances; loan-level eligibility and actual PSLC category mix are unavailable. Kraft Heinz's overlap range is now calibrated to three pre-March-2015 deals; the $1.5bn target equals **6.52%** of the model's $23bn cost-pool proxy, above the benchmark high of **4.91%**.
+**Important estimate caveat:** HDFC's funding spreads, reserve opportunity-cost and PSL/PSLC purchase assumptions are analyst sensitivities, not reported realised savings or a disclosed HDFC shortfall. The PSL proxy excludes all individual loans and applies the 40% target only to non-individual balances; this implicitly assumes inherited home loans meet exactly 40% PSL eligibility on their own. It treats new priority-sector lending as costless and does not model the alternative of depositing shortfalls in RIDF or similar funds at below-market rates. The blended certificate weights are a simplifying allocation because weaker-sections and micro-enterprise sub-targets overlap the broad categories. Kraft Heinz's overlap range is now calibrated to three pre-March-2015 deals; the $1.5bn target equals **6.52%** of the model's $23bn cost-pool proxy, above the benchmark high of **4.91%**.
 
 ## Core conclusion
 
@@ -38,7 +38,7 @@ For HDFC, the model does not apply a generic cost-overlap percentage to the merg
 
 ## Kraft Heinz pre-2015 benchmark
 
-The benchmark table was committed before changing the Kraft Heinz overlap inputs. It contains three pre-March-2015 food/consumer transactions with disclosed annual cost-synergy targets: Kraft–Cadbury (2010), Kellogg–Pringles (2012) and AB InBev–Anheuser-Busch (2008). Target-to-combined-cost-base ratios are **0.38%**, **1.36%** and **4.91%**; the median is **1.36%**. The Kraft Heinz $1.5bn annual target is **6.52%** of the $23bn model cost-pool proxy and therefore sits **above**, not within, the observed benchmark range. The Pringles cost base is an EBITDA-derived proxy, and the three transactions differ in category and accounting presentation; this is a directional benchmark, not a statistical population.
+The benchmark table was committed 11 seconds before changing the Kraft Heinz overlap inputs. This sequencing indicates the ratios were not tuned to model outputs, but is not a fully blind test because the $1.5bn Kraft Heinz target was public throughout. It contains three pre-March-2015 food/consumer transactions with disclosed annual cost-synergy targets: Kraft–Cadbury (2010), Kellogg–Pringles (2012) and AB InBev–Anheuser-Busch (2008). Target-to-combined-cost-base ratios are **0.38%**, **1.36%** and **4.91%**; the median is **1.36%**. Dividing by the combined cost base deliberately scale-normalises buyer and target; it makes bolt-on deals such as Kellogg–Pringles look small because Pringles was much smaller than Kellogg. These are announced-target ratios, so the Kraft Heinz comparison does not apply additional addressability or achievability haircuts. The Kraft Heinz $1.5bn annual target is **6.52%** of the $23bn model cost-pool proxy, above every precedent including the 4.91% AB InBev–Anheuser-Busch transaction (also involving 3G). The model's low/base/high target-equivalent figures are the $23bn proxy multiplied directly by the 0.38%/1.36%/4.91% benchmark ratios; they are not a forecast of achieved savings. The Pringles cost base is an EBITDA-derived proxy, and the three transactions differ in category and accounting presentation; this is a directional benchmark, not a statistical population.
 
 ## Event-study sanity check
 
@@ -82,7 +82,7 @@ The unified run validates sources and assumptions, builds the directional low/ba
 ## Manual refresh workflows
 
 - **Manual evidence extraction:** add OPENAI_API_KEY in GitHub repository secrets, then run Actions → Manual evidence extraction. It commits page chunks, verified claims and precision/recall output.
-- **Refresh multi-deal event study:** run Actions → Refresh multi-deal event study. It downloads and commits data/market_prices.csv plus dashboard/event_study_results.csv. The workflow includes Kraft Foods Group/KRFT and HDFC Bank/HDFC Ltd; Heinz is private at announcement. Zomato–Blinkit is retained as a qualitative appendix case.
+- **Refresh multi-deal event study:** run Actions → Refresh multi-deal event study. It downloads and commits data/market_prices.csv plus dashboard/event_study_results.csv. The workflow includes Kraft Foods Group/KRFT and HDFC Bank/HDFC Ltd; Heinz is private at announcement. Zomato–Blinkit is retained as a qualitative appendix case; it is excluded from the generated headline event-study table.
 
 ## Outputs
 
