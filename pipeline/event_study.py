@@ -292,6 +292,11 @@ def event_rows(prices):
                     "target_status": event["target_status"],
                 })
                 continue
+            # Keep the raw trading calendar so missing-price sessions are not
+            # silently dropped before event-window completeness is assessed.
+            calendar_returns = prices[[ticker, benchmark]].copy()
+            calendar_returns.index = pd.to_datetime(calendar_returns.index).tz_localize(None)
+            calendar_returns = calendar_returns.sort_index().pct_change()
             estimation = returns.iloc[max(0, event_pos - 120):max(0, event_pos - 20)]
             if len(estimation) < 60:
                 rows.append({
@@ -320,7 +325,12 @@ def event_rows(prices):
             for window, low, high in [("[-1,+1]", -1, 1), ("[-2,+2]", -2, 2), ("[-5,+5]", -5, 5)]:
                 sample = returns[returns.event_day.between(low, high)]
                 n = len(sample)
-                if n != high - low + 1:
+                window_dates = pd.bdate_range(
+                    event_date + pd.offsets.BDay(low),
+                    event_date + pd.offsets.BDay(high),
+                )
+                missing_dates = window_dates.difference(calendar_returns.index)
+                if n != high - low + 1 or len(missing_dates):
                     rows.append({
                         "deal": event["deal"],
                         "announcement_date": event["announcement_date"],
@@ -333,6 +343,7 @@ def event_rows(prices):
                         "status": "incomplete event window",
                         "observations_available": n,
                         "observations_required": high - low + 1,
+                        "missing_dates": ";".join(d.date().isoformat() for d in missing_dates),
                         "target_status": event["target_status"],
                     })
                     continue
