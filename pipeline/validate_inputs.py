@@ -45,10 +45,12 @@ def main():
 
     targets = pd.read_csv(ROOT / "research" / "announced_synergy_targets.csv")
     require(targets.deal_id.is_unique, "Announced synergy target deal IDs must be unique.")
-    require(targets[["deal_id", "source_id", "classification", "caveat"]].notna().all().all(),
-            "Announced targets require source, classification and caveat fields.")
+    require(targets[["deal_id", "source_id", "target_type", "target_value", "caveat"]].notna().all().all(),
+            "Announced targets require source, type, value and caveat fields.")
     require(set(targets.source_id).issubset(set(sources.source_id)),
             "Announced targets reference unknown sources.")
+    require(targets.target_value.ge(0).all(),
+            "Announced synergy target values must be non-negative.")
 
     print(
         f"Validated {len(sources)} sources, {len(assumptions)} assumptions, "
