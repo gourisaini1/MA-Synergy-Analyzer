@@ -63,7 +63,7 @@ The gold set contains 46 manually curated claims across HDFC and Kraft Heinz. Th
 | Precision | undefined |
 | Recall | undefined |
 
-Precision and recall remain undefined until the manual extraction workflow has run with the repository OPENAI_API_KEY secret. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return. The evaluator does not write 0.000/0.000 for an empty file.
+Manual extraction workflow run #2 completed, but the OpenAI API returned HTTP 429 because the account had no remaining credits. No claims were extracted, so precision and recall are undefined. Add API credits and rerun before treating the agent as operational. Kraft's SEC S-4 also discloses a move from USD 61.33 on 24 March to USD 89.40 on 9 April 2015 (+45.8% cumulative); this is not a market-adjusted event-window return.
 
 ## Run the model and tests
 
