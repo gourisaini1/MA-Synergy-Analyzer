@@ -64,7 +64,7 @@ def main():
 
     matches = match_predictions(gold, predictions)
     true_positive = len(matches)
-        precision = true_positive / len(predictions)
+    precision = true_positive / len(predictions)
     recall = true_positive / len(gold) if len(gold) else None
     OUT.parent.mkdir(parents=True, exist_ok=True)
     pd.DataFrame([{
