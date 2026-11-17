@@ -18,7 +18,7 @@ The USD 23bn cost pool is an analyst proxy, not an audited combined cost base. T
 A true ex-ante estimate would require pre-close COGS, SG&A, procurement category spend, plant footprint, freight, headcount and vendor-rate data, plus a comparable-deal benchmark set.
 
 ## Integration cost and value destruction
-The approximately USD 1.9bn integration programme cost was multi-year, not a year-one cash outflow. The model spreads scenario costs over three programme years and calculates first-year net contribution and a five-year discounted NPV at a 10% analyst discount rate. The discount rate and ramp are scenario assumptions.
+The integration programme was multi-year, not a year-one cash outflow. The FY2016 Form 10-K reported programme expenses of USD 829m in 2015 and USD 887m in 2016, and an expected total pre-tax programme cost of USD 2.0bn. The FY2017 Form 10-K later reported USD 339m of programme expense in 2017 and cumulative pre-tax programme costs of USD 2.055bn by 30 December 2017; approximately 60% of cumulative costs were expected to be cash. The company separately reported cumulative integration capital expenditures of approximately USD 801m by end-2016 and USD 1.4bn by end-2017. These are cumulative capex figures, not annual amounts, and must not be added together. The model's USD 1.9bn cost input remains an analyst scenario, not the final reported cost. It spreads scenario costs over three programme years and calculates first-year net contribution and a five-year discounted NPV at a 10% analyst discount rate. The discount rate and ramp are scenario assumptions.
 
 The later financial record materially changes the conclusion:
 - FY2018 reported goodwill impairment: USD 7.008bn.
@@ -35,5 +35,7 @@ The 2018 and 2019 impairment charges total USD 17.835bn across goodwill and inta
 ## Primary sources
 1. March 2015 merger announcement: https://www.sec.gov/Archives/edgar/data/1545158/000119312515104005/d895300dex991.htm
 2. 2016 Q3 integration programme filing: https://www.sec.gov/Archives/edgar/data/1637459/000163745916000207/khc10q10216.htm
-3. 2018 post-integration presentation: https://www.sec.gov/Archives/edgar/data/1637459/000163745918000008/ex9922018khcpost-integrati.htm
-4. Kraft Heinz FY2019 Form 10-K: https://www.sec.gov/Archives/edgar/data/1637459/000163745920000027/form10-k2019.htm
+3. FY2016 Form 10-K: https://www.sec.gov/Archives/edgar/data/1637459/000163745917000007/khc201610k.htm
+4. FY2017 Form 10-K: https://www.sec.gov/Archives/edgar/data/1637459/000163745918000015/form10-k2017.htm
+5. 2018 post-integration presentation: https://www.sec.gov/Archives/edgar/data/1637459/000163745918000008/ex9922018khcpost-integrati.htm
+6. Kraft Heinz FY2019 Form 10-K: https://www.sec.gov/Archives/edgar/data/1637459/000163745920000027/form10-k2019.htm
