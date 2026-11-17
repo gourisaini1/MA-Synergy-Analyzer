@@ -1,9 +1,9 @@
 # Tableau Public dashboard specification
 
 ## Executive overview
-Lead with the two core cases: HDFC's funding-led net synergy bridge and Kraft Heinz's announced-versus-estimated-versus-realised back-test. Keep announced, estimated, realised and unverified classifications distinct. Never aggregate values across currencies.
+Lead with a four-deal coverage and evidence-status scorecard using deal_comparability.csv. The four core cases are HDFC–HDFC Bank, Air India–Vistara, Zomato–Blinkit and Kraft Heinz; Microsoft–LinkedIn is an additional reference case. Keep announced, estimated, realised and unverified classifications distinct. Never aggregate values across currencies. Show blank/unknown fields as not disclosed or not quantified, never as zero.
 
-## HDFC funding bridge
+## Air India–Vistara financial context\nUse financial_due_diligence.csv and deal_evidence_backtest.csv:\n- FY24 Air India revenue ₹51,364.89cr and Vistara revenue ₹15,191.27cr.\n- FY25 merged Air India revenue ₹76,754.10cr and loss after tax ₹10,858.82cr.\n- Show 4,000+ vendor contracts consolidated and 140+ IT systems aligned as integration milestones, not financial savings.\n- Explicitly flag FY24 standalone and FY25 merged periods as non-like-for-like; no attributable financial synergy target or realised savings is identified.\n\n## Zomato–Blinkit operating-cost context\nUse financial_due_diligence.csv and deal_evidence_backtest.csv:\n- FY24 consolidated delivery and related charges ₹3,915cr, advertising/sales promotion ₹1,432cr, IT support ₹485cr, outsourced support ₹330cr and other expenses ₹1,179cr.\n- These are consolidated food-delivery plus quick-commerce expense lines; do not present them as Blinkit-only cost pools.\n- Show Blinkit adjusted EBITDA and NOV trajectory separately from integration synergies.\n- Keep numeric synergy unquantified until cohort, city and segment-level cost evidence is available.\n\n## HDFC funding bridge
 Use tableau_synergy_data.csv:
 - Funding substitution benefit from market borrowings refinanced through bank deposits.
 - CRR/SLR reserve opportunity-cost drag as a negative synergy.
