@@ -12,7 +12,7 @@ from pptx.enum.chart import XL_CHART_TYPE
 from pptx.enum.shapes import MSO_SHAPE
 from pptx.util import Inches, Pt
 
-from .run_model import HDFC_STRESS_INPUTS
+from .run_model import HDFC_MATCHED_LEVERS, HDFC_STRESS_CASES
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "output"
@@ -62,33 +62,27 @@ def build_workbook():
     columns = {name: get_column_letter(index + 1) for index, name in enumerate(inputs.columns)}
     for index, row in enumerate(inputs.itertuples(index=False), start=2):
         scenario_specs = [(name, None) for name in ("low", "base", "high")]
-        if row.deal_id == "HDFC":
-            for stress_name, lever_inputs in HDFC_STRESS_INPUTS.items():
-                if row.lever in lever_inputs:
-                    scenario_specs.append((stress_name, lever_inputs[row.lever]))
+        if row.deal_id == "HDFC" and row.stress_scenario in ("low", "high"):
+            scenario_specs.extend(
+                (stress_name, case_inputs)
+                for stress_name, case_inputs in HDFC_STRESS_CASES.items()
+            )
         for scenario, stress_values in scenario_specs:
             target_row = calc.max_row + 1
-            if stress_values:
-                fields = [
-                    f"'Scenario Inputs'!{columns['baseline_amount']}{index}",
-                    str(stress_values["overlap"]), str(stress_values["addressable"]),
-                    str(stress_values["achievable"]), str(stress_values["ramp"]),
-                    str(stress_values["one_off"]), str(stress_values["margin"]),
-                    f"'Scenario Inputs'!{columns['direction']}{index}",
-                    f"'Scenario Inputs'!{columns['integration_program_years']}{index}",
-                    f"'Scenario Inputs'!{columns['discount_rate']}{index}",
-                ]
-            else:
-                fields = [
-                    f"'Scenario Inputs'!{columns[name]}{index}"
-                    for name in (
-                        "baseline_amount", f"overlap_{scenario}",
-                        f"addressable_{scenario}", f"achievable_{scenario}",
-                        f"ramp_{scenario}", f"one_off_cost_{scenario}",
-                        f"contribution_margin_{scenario}", "direction",
-                        "integration_program_years", "discount_rate",
-                    )
-                ]
+            source_scenario = row.stress_scenario if stress_values else scenario
+            fields = [
+                f"'Scenario Inputs'!{columns[name]}{index}"
+                for name in (
+                    "baseline_amount", f"overlap_{source_scenario}",
+                    f"addressable_{source_scenario}", f"achievable_{source_scenario}",
+                    f"ramp_{source_scenario}", f"one_off_cost_{source_scenario}",
+                    f"contribution_margin_{source_scenario}", "direction",
+                    "integration_program_years", "discount_rate",
+                )
+            ]
+            if stress_values and row.lever in HDFC_MATCHED_LEVERS:
+                fields[1] = str(stress_values["matched_share"])
+                fields[4] = str(stress_values["ramp"])
             gross = (
                 "*".join((fields[0], fields[1], fields[2], fields[3], fields[6]))
                 + f'*IF({fields[7]}="negative",-1,1)'
