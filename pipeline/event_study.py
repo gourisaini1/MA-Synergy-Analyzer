@@ -390,7 +390,7 @@ def main():
         return
     results = event_rows(prices)
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(results).to_csv(OUT, index=False)
+    pd.DataFrame(results).round(6).to_csv(OUT, index=False)
     update_readme_event_table(results)
     print(f"Wrote {len(results)} event-study rows to {OUT}")
 
