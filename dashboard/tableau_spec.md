@@ -31,7 +31,7 @@ Use event_study_results.csv and market_prices.csv:
 - Market model estimation window: -120 to -20 trading sessions; event windows: [-1,+1], [-2,+2], [-5,+5].
 Show CAR, t-statistic, estimation observations and data availability status. Where daily data is unavailable, show the sourced raw price reference separately and never label it CAR.
 
-## Evidence back-test and risk heatmap
+## Integration cost tracker\nUse research/integration_cost_tracker.csv. Display programme budget (where disclosed), annual reported accounting expense, currency, period, workstream, owner and status. Do not equate accounting expense with cash paid. For Air India, HDFC and Zomato, undisclosed integration costs remain blank; milestones must not be converted into cost or saving estimates.\n\n## Evidence back-test and risk heatmap
 Use deal_evidence_backtest.csv and research/integration_risk_register.csv. Include classification, source ID, synergy relevance, attribution caveat, likelihood, impact, leading indicator, mitigation and owner.
 
 ## Tableau Public
