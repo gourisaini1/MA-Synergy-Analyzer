@@ -93,3 +93,13 @@ def test_kraft_year_one_deducts_only_one_third_of_programme_cost():
     assert abs(first_year - 200) < 1e-9
     assert npv > first_year
     assert status == "estimated"
+
+
+def test_hdfc_stress_scenario_uses_adverse_lever_assumptions():
+    inputs = pd.read_csv(ROOT / "model" / "synergy_inputs.csv")
+    funding = inputs[inputs.lever.str.contains("funding substitution", case=False)].iloc[0]
+    reserve = inputs[inputs.lever.str.contains("reserve opportunity", case=False)].iloc[0]
+    cost = inputs[inputs.lever.str.contains("standalone operating cost", case=False)].iloc[0]
+    assert funding.overlap_low < funding.overlap_base
+    assert reserve.overlap_high > reserve.overlap_base
+    assert cost.one_off_cost_high > cost.one_off_cost_base
