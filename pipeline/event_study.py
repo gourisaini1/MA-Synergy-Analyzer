@@ -142,6 +142,7 @@ def _fetch_nse_day(day):
 def _price_panel(cached):
     """Build a single-provider price panel for each ticker."""
     cached = cached.copy()
+    cached["date"] = pd.to_datetime(cached["date"])
     if "price_source" not in cached.columns:
         cached["price_source"] = "Legacy cached price; provider not tagged"
     source_priority = {
