@@ -16,5 +16,9 @@ def test_integration_cost_tracker_preserves_undisclosed_costs():
         assert rows.status.eq("not_disclosed").all()
 
     khc = costs[costs.deal_id.eq("KRAFT_HEINZ")]
-    assert khc.reported_cost_value.sum() == 2055
-    assert set(khc.reported_cost_value) == {339, 829, 887}
+    expenses = khc[khc.cost_category.eq("Restructuring and integration expenses")]
+    capex = khc[khc.cost_category.eq("Capital expenditures")]
+    assert expenses.reported_cost_value.sum() == 2055
+    assert set(expenses.reported_cost_value) == {339, 829, 887}
+    assert set(capex.reported_cost_value) == {801, 1400}
+    assert capex.status.eq("reported_cumulative").all()
