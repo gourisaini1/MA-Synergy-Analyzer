@@ -115,6 +115,13 @@ def build_workbook():
         ])
     style_header(bridge)
 
+    comparability = pd.read_csv(ROOT / "dashboard" / "deal_comparability.csv").fillna("")
+    comparable_sheet = workbook.create_sheet("Four-Deal Comparability")
+    comparable_sheet.append(list(comparability.columns))
+    for row in comparability.itertuples(index=False, name=None):
+        comparable_sheet.append(list(row))
+    style_header(comparable_sheet)
+
     evidence = pd.read_csv(RESEARCH / "quantitative_backtest.csv").fillna("")
     evidence_sheet = workbook.create_sheet("Evidence Back-test")
     evidence_sheet.append(list(evidence.columns))
