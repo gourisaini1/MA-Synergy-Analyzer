@@ -136,6 +136,18 @@ def build_workbook():
         cost_sheet.append(list(row))
     style_header(cost_sheet)
 
+    operational_specs = [
+        ("Blinkit Unit Economics", ROOT / "dashboard" / "zomato_operational_sensitivities.csv"),
+        ("Air India Procurement Hurdles", ROOT / "dashboard" / "air_india_procurement_hurdles.csv"),
+    ]
+    for title, path in operational_specs:
+        operational = pd.read_csv(path).fillna("")
+        operational_sheet = workbook.create_sheet(title)
+        operational_sheet.append(list(operational.columns))
+        for row in operational.itertuples(index=False, name=None):
+            operational_sheet.append(list(row))
+        style_header(operational_sheet)
+
     financial = pd.read_csv(RESEARCH / "financial_due_diligence.csv").fillna("")
     financial_sheet = workbook.create_sheet("Financial Diligence")
     financial_sheet.append(list(financial.columns))
