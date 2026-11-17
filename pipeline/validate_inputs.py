@@ -43,6 +43,21 @@ def main():
             "Evidence ledger references a source missing from the source register.")
     require(ledger.analyst_note.notna().all(), "Every evidence item must include an attribution caveat.")
 
+    costs = pd.read_csv(ROOT / "research" / "integration_cost_tracker.csv")
+    cost_fields = {
+        "deal_id", "workstream", "cost_category", "budget_value",
+        "reported_cost_value", "currency", "period", "amount_basis",
+        "source_id", "status", "owner_role", "notes",
+    }
+    require(cost_fields.issubset(set(costs.columns)),
+            "Integration cost tracker is missing required fields.")
+    require(costs.source_id.notna().all() and set(costs.source_id).issubset(set(sources.source_id)),
+            "Integration cost tracker references missing source IDs.")
+    require(costs[["deal_id", "workstream", "cost_category", "status", "notes"]].notna().all().all(),
+            "Integration cost tracker rows require deal, workstream, status and notes.")
+    require(costs.reported_cost_value.dropna().ge(0).all(),
+            "Reported integration costs must be non-negative.")
+
     targets = pd.read_csv(ROOT / "research" / "announced_synergy_targets.csv")
     require(targets.deal_id.is_unique, "Announced synergy target deal IDs must be unique.")
     require(targets[["deal_id", "source_id", "target_type", "target_value", "caveat"]].notna().all().all(),
