@@ -5,7 +5,7 @@ on:
       max_chunks_per_source:
         description: Maximum keyword-matched chunks to send per PDF
         required: true
-        default: "20"
+        default: "2"
 permissions:
   contents: write
 jobs:
@@ -17,6 +17,7 @@ jobs:
       OPENAI_MODEL: gpt-4.1-mini
       SEC_USER_AGENT: MA-Synergy-Analyzer research contact@users.noreply.github.com
       AGENT_MAX_CHUNKS_PER_SOURCE: ${{ inputs.max_chunks_per_source }}
+      AGENT_MAX_TOTAL_CHUNKS: "50"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
