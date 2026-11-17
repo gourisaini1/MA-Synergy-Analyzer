@@ -33,6 +33,7 @@ jobs:
             output/executive_deck/evidence_backtest_summary.md
             dashboard/tableau_synergy_data.csv
             dashboard/deal_evidence_backtest.csv
+            dashboard/deal_comparability.csv
             dashboard/financial_due_diligence.csv
             dashboard/microsoft_sec_companyfacts.csv
             dashboard/event_study_results.csv
