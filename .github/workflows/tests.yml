@@ -35,6 +35,8 @@ jobs:
             dashboard/deal_evidence_backtest.csv
             dashboard/deal_comparability.csv
             research/integration_cost_tracker.csv
+            dashboard/zomato_operational_sensitivities.csv
+            dashboard/air_india_procurement_hurdles.csv
             dashboard/financial_due_diligence.csv
             dashboard/microsoft_sec_companyfacts.csv
             dashboard/event_study_results.csv
