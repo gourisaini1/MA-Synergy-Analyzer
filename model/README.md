@@ -39,8 +39,8 @@ These shared column names are a schema convenience, not interchangeable economic
 
 ## HDFC stress cases
 
-Two matched migration stresses are generated. In each case, funding substitution and CRR/SLR reserve drag use the same share of market borrowings migrated and the same ramp:
-- **30% / 80%:** low funding spread and execution assumptions, high reserve opportunity-cost spread, and high operating-cost programme cost.
-- **20% / 65%:** the same low funding spread/execution, high reserve spread and high operating-cost programme cost, with the lower matched migration share and ramp.
+Two matched migration stresses are generated from the `stress_scenario` column in `synergy_inputs.csv`. Funding substitution selects its low columns; CRR/SLR reserve drag and legacy operating cost select their high columns. Only the matched migration share and ramp are overridden by the two-case dictionary:
+- **30% / 80%:** funding and reserve drag share a 30% migration assumption and 80% ramp.
+- **20% / 65%:** funding and reserve drag share a 20% migration assumption and 65% ramp.
 
-The operating-cost lever uses the high overlap, addressability, execution and programme-cost assumptions in both stresses. These are analyst sensitivities, not management forecasts or observed outcomes. Five-year NPV includes programme costs.
+The operating-cost lever retains its high-column overlap, addressability, execution, ramp and programme-cost inputs in both stresses. All other stress parameters are read from the selected low/high input columns; the workbook formulas point to those same input cells. These are analyst sensitivities, not management forecasts or observed outcomes. Five-year NPV includes programme costs.
